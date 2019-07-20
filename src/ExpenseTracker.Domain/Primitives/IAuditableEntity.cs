@@ -3,7 +3,7 @@
 namespace ExpenseTracker.Domain.Primitives
 {
     /// <summary>
-    /// Represents a marker interface for an auditable entity.
+    /// Represents an interface for an auditable entity.
     /// </summary>
     public interface IAuditableEntity
     {
@@ -13,8 +13,8 @@ namespace ExpenseTracker.Domain.Primitives
         DateTime CreatedOnUtc { get; }
 
         /// <summary>
-        /// Gets the updated on date and time in UTC format.
+        /// Gets the modified on date and time in UTC format.
         /// </summary>
-        DateTime? UpdatedOnUtc { get; }
+        DateTime? ModifiedOnUtc { get; }
     }
 }
