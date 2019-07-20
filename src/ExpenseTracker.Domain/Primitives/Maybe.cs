@@ -8,13 +8,7 @@ namespace ExpenseTracker.Domain.Primitives
     /// <typeparam name="T">The type of the value.</typeparam>
     public struct Maybe<T> : IEquatable<Maybe<T>> where T : class
     {
-        #region Fields
-
         private readonly T _value;
-
-        #endregion
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Maybe{T}"/> class with the specified value.
@@ -24,10 +18,6 @@ namespace ExpenseTracker.Domain.Primitives
         {
             _value = value;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the value.
@@ -55,65 +45,6 @@ namespace ExpenseTracker.Domain.Primitives
         /// </summary>
         public bool HasNoValue => !HasValue;
 
-        #endregion
-
-        #region Public methods
-
-        /// <summary>
-        /// Unwraps the <see cref="Maybe{T}"/> object, returning the contained value or the default value for its type.
-        /// </summary>
-        /// <returns>The containing value, or the default value for its type.</returns>
-        public T Unwrap()
-        {
-            return HasValue ? Value : default;
-        }
-
-        /// <summary>
-        /// Unwraps the <see cref="Maybe{T}"/> object, returning the result of the specified selector function or the default value for its type.
-        /// </summary>
-        /// <typeparam name="TProperty">The property selector for the value.</typeparam>
-        /// <param name="selector">The selector function.</param>
-        /// <returns>The result of the specified selector function or the default value for its type.</returns>
-        public TProperty Unwrap<TProperty>(Func<T, TProperty> selector)
-        {
-            return HasValue ? selector(Value) : default;
-        }
-
-        /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Maybe<T>))
-            {
-                return false;
-            }
-
-            var other = (Maybe<T>)obj;
-
-            return Equals(other);
-        }
-
-        /// <inheritdoc />
-        public bool Equals(Maybe<T> other)
-        {
-            if (HasNoValue && other.HasNoValue)
-            {
-                return true;
-            }
-
-            if (HasNoValue || other.HasNoValue)
-            {
-                return false;
-            }
-
-            return _value.Equals(other._value);
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return _value.GetHashCode();
-        }
-
         public static bool operator ==(Maybe<T> maybe, T value)
         {
             return maybe.HasValue && maybe.Value.Equals(value);
@@ -139,6 +70,59 @@ namespace ExpenseTracker.Domain.Primitives
             return new Maybe<T>(value);
         }
 
-        #endregion
+        /// <inheritdoc />
+        public bool Equals(Maybe<T> other)
+        {
+            if (HasNoValue && other.HasNoValue)
+            {
+                return true;
+            }
+
+            if (HasNoValue || other.HasNoValue)
+            {
+                return false;
+            }
+
+            return _value.Equals(other._value);
+        }
+
+        /// <inheritdoc />
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Maybe<T>))
+            {
+                return false;
+            }
+
+            var other = (Maybe<T>)obj;
+
+            return Equals(other);
+        }
+
+        /// <inheritdoc />
+        public override int GetHashCode()
+        {
+            return _value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Unwraps the <see cref="Maybe{T}"/> object, returning the contained value or the default value for its type.
+        /// </summary>
+        /// <returns>The containing value, or the default value for its type.</returns>
+        public T Unwrap()
+        {
+            return HasValue ? Value : default;
+        }
+
+        /// <summary>
+        /// Unwraps the <see cref="Maybe{T}"/> object, returning the result of the specified selector function or the default value for its type.
+        /// </summary>
+        /// <typeparam name="TProperty">The property selector for the value.</typeparam>
+        /// <param name="selector">The selector function.</param>
+        /// <returns>The result of the specified selector function or the default value for its type.</returns>
+        public TProperty Unwrap<TProperty>(Func<T, TProperty> selector)
+        {
+            return HasValue ? selector(Value) : default;
+        }
     }
 }

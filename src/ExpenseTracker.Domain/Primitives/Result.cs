@@ -7,8 +7,6 @@ namespace ExpenseTracker.Domain.Primitives
     /// </summary>
     public class Result
     {
-        #region Constructor
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Result"/> class with the specified parameters.
         /// </summary>
@@ -30,10 +28,6 @@ namespace ExpenseTracker.Domain.Primitives
             Error = error;
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the success flag.
         /// </summary>
@@ -49,9 +43,19 @@ namespace ExpenseTracker.Domain.Primitives
         /// </summary>
         public string Error { get; }
 
-        #endregion
+        /// <summary>
+        /// Returns a success <see cref="Result"/>.
+        /// </summary>
+        /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
+        public static Result Ok() => new Result(true, string.Empty);
 
-        #region Public methods
+        /// <summary>
+        /// Returns a success <see cref="Result"/> with the specified value.
+        /// </summary>
+        /// <typeparam name="TValue">The result type.</typeparam>
+        /// <param name="value">The result value.</param>
+        /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
+        public static Result<TValue> Ok<TValue>(TValue value) => new Result<TValue>(value, true, string.Empty);
 
         /// <summary>
         /// Returns a fail <see cref="Result"/> with the specified error message.
@@ -67,20 +71,6 @@ namespace ExpenseTracker.Domain.Primitives
         /// <param name="error">The error message.</param>
         /// <returns>A new instance of <see cref="Result{T}"/> with the specified error message and failure flag set.</returns>
         public static Result<TValue> Fail<TValue>(string error) => new Result<TValue>(default, false, error);
-
-        /// <summary>
-        /// Returns a success <see cref="Result"/>.
-        /// </summary>
-        /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
-        public static Result Ok() => new Result(true, string.Empty);
-
-        /// <summary>
-        /// Returns a success <see cref="Result"/> with the specified value.
-        /// </summary>
-        /// <typeparam name="TValue">The result type.</typeparam>
-        /// <param name="value">The result value.</param>
-        /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
-        public static Result<TValue> Ok<TValue>(TValue value) => new Result<TValue>(value, true, string.Empty);
 
         /// <summary>
         /// Combines multiple <see cref="Result"/> instances, returning the first failure or a success result.
@@ -99,8 +89,6 @@ namespace ExpenseTracker.Domain.Primitives
 
             return Ok();
         }
-
-        #endregion
     }
 
     /// <summary>
@@ -109,13 +97,7 @@ namespace ExpenseTracker.Domain.Primitives
     /// <typeparam name="TValue">The result value type.</typeparam>
     public class Result<TValue> : Result
     {
-        #region Fields
-
         private readonly TValue _value;
-
-        #endregion
-
-        #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TValueType}"/> class with the specified parameters.
@@ -128,10 +110,6 @@ namespace ExpenseTracker.Domain.Primitives
         {
             _value = value;
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         /// Gets the result value.
@@ -148,7 +126,5 @@ namespace ExpenseTracker.Domain.Primitives
                 return _value;
             }
         }
-
-        #endregion
     }
 }
