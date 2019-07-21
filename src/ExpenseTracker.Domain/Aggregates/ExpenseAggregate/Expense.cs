@@ -1,4 +1,5 @@
 ﻿using System;
+using ExpenseTracker.Domain.Exceptions;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
@@ -53,5 +54,33 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
 
         /// <inheritdoc />
         public DateTime? DeletedOnUtc { get; }
+
+        /// <summary>
+        /// Changes the amount of the expense.
+        /// </summary>
+        /// <param name="amount">The amount.</param>
+        public void ChangeAmount(decimal amount)
+        {
+            if (amount < decimal.Zero)
+            {
+                throw new DomainException("Amount can not be less than zero.");
+            }
+
+            Money = Money.ChangeAmount(amount);
+        }
+
+        /// <summary>
+        /// Changes the currency of the expense.
+        /// </summary>
+        /// <param name="currency">The currency.</param>
+        public void ChangeCurrency(Currency currency)
+        {
+            if (currency == null)
+            {
+                throw new DomainException("Currency can not be null.");
+            }
+
+            Money = Money.ChangeCurrency(currency);
+        }
     }
 }
