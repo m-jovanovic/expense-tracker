@@ -50,7 +50,7 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         public DateTime? ModifiedOnUtc { get; }
 
         /// <inheritdoc />
-        public bool Deleted { get; }
+        public bool IsDeleted { get; }
 
         /// <inheritdoc />
         public DateTime? DeletedOnUtc { get; }

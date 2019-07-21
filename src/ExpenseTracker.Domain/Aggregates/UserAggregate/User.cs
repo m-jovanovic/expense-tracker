@@ -107,6 +107,6 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// </summary>
         /// <param name="expense">The expense.</param>
         /// <returns>The expense if it exists, otherwise null.</returns>
-        private Maybe<Expense> GetExpenseIfExists(Expense expense) => _expenses.SingleOrDefault(e => !e.Deleted && e.Equals(expense));
+        private Maybe<Expense> GetExpenseIfExists(Expense expense) => _expenses.SingleOrDefault(e => !e.IsDeleted && e.Equals(expense));
     }
 }

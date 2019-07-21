@@ -10,7 +10,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <summary>
         /// Gets the flag indicating if the entity was deleted.
         /// </summary>
-        bool Deleted { get; }
+        bool IsDeleted { get; }
 
         /// <summary>
         /// Gets the deleted on date and time in UTC format.
