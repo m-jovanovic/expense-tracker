@@ -1,7 +1,7 @@
 ﻿using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
-namespace ExpenseTracker.Application.Users.Commands
+namespace ExpenseTracker.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommand : IRequest<Result>
     {

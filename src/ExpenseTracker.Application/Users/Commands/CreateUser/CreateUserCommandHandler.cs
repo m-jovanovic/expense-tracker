@@ -5,7 +5,7 @@ using ExpenseTracker.Domain.Aggregates.UserAggregate;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
-namespace ExpenseTracker.Application.Users.Commands
+namespace ExpenseTracker.Application.Users.Commands.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result>
     {
@@ -20,7 +20,7 @@ namespace ExpenseTracker.Application.Users.Commands
         {
             Result<Email> emailResult = Email.Create(request.Email);
 
-            if (emailResult.IsSuccess)
+            if (emailResult.IsFailure)
             {
                 return  Result.Fail(emailResult.Error);
             }
