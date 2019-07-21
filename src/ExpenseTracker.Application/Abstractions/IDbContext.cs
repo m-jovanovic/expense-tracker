@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Specification;
@@ -17,7 +18,7 @@ namespace ExpenseTracker.Application.Abstractions
         /// <typeparam name="TEntity">The entity type.</typeparam>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>The entity if found, or null if no entity is found.</returns>
-        Task<TEntity> GetByIdAsync<TEntity>(object id) where TEntity : Entity;
+        Task<TEntity> GetByIdAsync<TEntity>(Guid id) where TEntity : Entity;
 
         /// <summary>
         /// Gets an entity based on the provided specification.
