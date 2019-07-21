@@ -33,20 +33,24 @@ namespace ExpenseTracker.Persistence.Configuration
                 moneyBuilder.OwnsOne(m => m.Currency, currencyBuilder =>
                 {
                     currencyBuilder.Property(c => c.Value)
-                        .HasColumnName($"{nameof(Money.Currency)}_{nameof(Currency.Value)}")
+                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Value)}")
                         .IsRequired();
 
                     currencyBuilder.Property(c => c.Name)
-                        .HasColumnName($"{nameof(Money.Currency)}_{nameof(Currency.Name)}")
-                        .HasMaxLength(200)
+                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Name)}")
+                        .HasMaxLength(50)
                         .IsRequired();
 
                     currencyBuilder.Property(c => c.Symbol)
-                        .HasColumnName($"{nameof(Money.Currency)}_{nameof(Currency.Symbol)}")
-                        .HasMaxLength(20)
+                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Symbol)}")
+                        .HasMaxLength(10)
                         .IsRequired();
                 });
             });
+
+            builder.Property(e => e.IsDeleted).HasDefaultValue(false);
+
+            builder.HasQueryFilter(e => e.IsDeleted == false);
             
             base.Configure(builder);
         }

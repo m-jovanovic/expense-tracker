@@ -24,6 +24,6 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         /// <summary>
         /// Gets the currency symbol.
         /// </summary>
-        public string Symbol { get; }
+        public string Symbol { get; private set; }
     }
 }

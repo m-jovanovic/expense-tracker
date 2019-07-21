@@ -27,11 +27,6 @@ namespace ExpenseTracker.Infrastructure.Repository
         /// <inheritdoc />
         public async Task<Maybe<User>> GetByIdAsync(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                return null;
-            }
-
             return await _dbContext.GetByIdAsync<User>(id);
         }
 

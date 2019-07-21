@@ -10,8 +10,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
     /// </summary>
     public sealed class Email : ValueObject
     {
-        private const string EmailRegexPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|
-([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
+        private const string EmailRegexPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Email"/> class with the specified value.
@@ -21,11 +20,15 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         {
             Value = email;
         }
+
+        private Email()
+        {
+        }
         
         /// <summary>
         /// Gets the email value.
         /// </summary>
-        public string Value { get; }
+        public string Value { get; private set; }
 
         /// <summary>
         /// Creates a new <see cref="Email"/> object with the specified email.
@@ -39,7 +42,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
                 .OnSuccess(email => email.Trim())
                 .Ensure(email => email != string.Empty, "Email should not be empty")
                 .Ensure(email => email.Length < 256, "Email is too long.")
-                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern),"Email is invalid.")
+                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase),"Email is invalid.")
                 .Map(email => new Email(email));
         }
 

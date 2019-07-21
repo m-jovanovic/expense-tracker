@@ -18,16 +18,20 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
             Amount = amount;
             Currency = currency;
         }
+
+        private Money()
+        {
+        }
         
         /// <summary>
         /// Gets the amount.
         /// </summary>
-        public decimal Amount { get; }
+        public decimal Amount { get; private set; }
 
         /// <summary>
         /// Gets the currency.
         /// </summary>
-        public Currency Currency { get; }
+        public Currency Currency { get; private set; }
 
         /// <summary>
         /// Returns a new <see cref="Money"/> instance with the specified amount and the current currency.

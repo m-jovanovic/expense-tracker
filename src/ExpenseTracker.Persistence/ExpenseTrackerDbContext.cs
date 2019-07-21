@@ -51,6 +51,11 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc />
         public async Task<TEntity> GetByIdAsync<TEntity>(Guid id) where TEntity : Entity
         {
+            if (id == Guid.Empty)
+            {
+                return null;
+            }
+
             return await Set<TEntity>().FindAsync(id);
         }
 

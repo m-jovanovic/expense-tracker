@@ -18,15 +18,19 @@ namespace ExpenseTracker.Domain.Primitives
             Name = name;
         }
 
+        private Enumeration()
+        {
+        }
+
         /// <summary>
         /// Gets the value.
         /// </summary>
-        public int Value { get; }
+        public int Value { get; private set; }
 
         /// <summary>
         /// Gets the name.
         /// </summary>
-        public string Name { get; }
+        public string Name { get; private set; }
 
         /// <inheritdoc />
         public int CompareTo(object other)

@@ -56,10 +56,10 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         public IReadOnlyList<Expense> Expenses => _expenses.ToList();
 
         /// <inheritdoc />
-        public DateTime CreatedOnUtc { get; }
+        public DateTime CreatedOnUtc { get; private set; }
 
         /// <inheritdoc />
-        public DateTime? ModifiedOnUtc { get; }
+        public DateTime? ModifiedOnUtc { get; private set; }
 
         /// <summary>
         /// Adds the specified expense to the users expenses.
@@ -107,6 +107,6 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// </summary>
         /// <param name="expense">The expense.</param>
         /// <returns>The expense if it exists, otherwise null.</returns>
-        private Maybe<Expense> GetExpenseIfExists(Expense expense) => _expenses.SingleOrDefault(e => !e.IsDeleted && e.Equals(expense));
+        private Maybe<Expense> GetExpenseIfExists(Expense expense) => _expenses.SingleOrDefault(e => e.Equals(expense));
     }
 }

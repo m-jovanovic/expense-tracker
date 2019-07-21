@@ -24,6 +24,10 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
             Date = date;
         }
 
+        private Expense()
+        {
+        }
+
         /// <summary>
         /// Gets or sets the user identifier.
         /// </summary>
@@ -44,16 +48,16 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         }
 
         /// <inheritdoc />
-        public DateTime CreatedOnUtc { get; }
+        public DateTime CreatedOnUtc { get; private set; }
 
         /// <inheritdoc />
-        public DateTime? ModifiedOnUtc { get; }
+        public DateTime? ModifiedOnUtc { get; private set; }
 
         /// <inheritdoc />
-        public bool IsDeleted { get; }
+        public bool IsDeleted { get; private set; }
 
         /// <inheritdoc />
-        public DateTime? DeletedOnUtc { get; }
+        public DateTime? DeletedOnUtc { get; private set; }
 
         /// <summary>
         /// Changes the amount of the expense.
