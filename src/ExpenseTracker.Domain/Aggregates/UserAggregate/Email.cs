@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ExpenseTracker.Domain.Extensions;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Domain.Aggregates.UserAggregate
@@ -29,20 +30,17 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// <summary>
         /// Creates a new <see cref="Email"/> object with the specified email.
         /// </summary>
-        /// <param name="email">The email value.</param>
+        /// <param name="emailOrNothing">The email value or nothing.</param>
         /// <returns>A new <see cref="Email"/> instance, or an error result.</returns>
-        public static Result<Email> Create(string email)
+        public static Result<Email> Create(Maybe<string> emailOrNothing)
         {
-            email = (email ?? string.Empty).Trim();
-
-            if (email.Length == 0)
-            {
-                return Result.Fail<Email>("Email should not be empty.");
-            }
-
-            bool isRegexMatch = Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase);
-
-            return isRegexMatch ? Result.Ok(new Email(email)) : Result.Fail<Email>("Email is invalid.");
+            return emailOrNothing
+                .ToResult("Email should not be empty.")
+                .OnSuccess(email => email.Trim())
+                .Ensure(email => email != string.Empty, "Email should not be empty")
+                .Ensure(email => email.Length < 256, "Email is too long.")
+                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern),"Email is invalid.")
+                .Map(email => new Email(email));
         }
 
         public static implicit operator string(Email email) => email.Value;

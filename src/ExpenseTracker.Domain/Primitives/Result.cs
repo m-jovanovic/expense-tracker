@@ -1,4 +1,5 @@
 ﻿using System;
+using ExpenseTracker.Domain.Aggregates.UserAggregate;
 
 namespace ExpenseTracker.Domain.Primitives
 {
@@ -10,33 +11,33 @@ namespace ExpenseTracker.Domain.Primitives
         /// <summary>
         /// Initializes a new instance of the <see cref="Result"/> class with the specified parameters.
         /// </summary>
-        /// <param name="success">The flag indicating if the result is successful.</param>
+        /// <param name="isSuccess">The flag indicating if the result is successful.</param>
         /// <param name="error">The error message.</param>
-        protected Result(bool success, string error)
+        protected Result(bool isSuccess, string error)
         {
-            if (success && !string.IsNullOrWhiteSpace(error))
+            if (isSuccess && !string.IsNullOrWhiteSpace(error))
             {
                 throw new InvalidOperationException();
             }
 
-            if (!success && string.IsNullOrWhiteSpace(error))
+            if (!isSuccess && string.IsNullOrWhiteSpace(error))
             {
                 throw new InvalidOperationException();
             }
 
-            Success = success;
+            IsSuccess = isSuccess;
             Error = error;
         }
 
         /// <summary>
         /// Gets the success flag.
         /// </summary>
-        public bool Success { get; }
+        public bool IsSuccess { get; }
 
         /// <summary>
         /// Gets the failure flag.
         /// </summary>
-        public bool Failure => !Success;
+        public bool IsFailure => !IsSuccess;
 
         /// <summary>
         /// Gets the error string.
@@ -76,12 +77,12 @@ namespace ExpenseTracker.Domain.Primitives
         /// Combines multiple <see cref="Result"/> instances, returning the first failure or a success result.
         /// </summary>
         /// <param name="results">The result instances to combine.</param>
-        /// <returns>THe first failure <see cref="Result"/> instance or a new success <see cref="Result"/> instance.</returns>
+        /// <returns>The first failure <see cref="Result"/> instance or a new success <see cref="Result"/> instance.</returns>
         public static Result FirstFailureOrSuccess(params Result[] results)
         {
             foreach (Result result in results)
             {
-                if (result.Failure)
+                if (result.IsFailure)
                 {
                     return result;
                 }
@@ -103,10 +104,10 @@ namespace ExpenseTracker.Domain.Primitives
         /// Initializes a new instance of the <see cref="Result{TValueType}"/> class with the specified parameters.
         /// </summary>
         /// <param name="value">The result value.</param>
-        /// <param name="success">The flag indicating if the result is successful.</param>
+        /// <param name="isSuccess">The flag indicating if the result is successful.</param>
         /// <param name="error">The error message.</param>
-        protected internal Result(TValue value, bool success, string error)
-            : base(success, error)
+        protected internal Result(TValue value, bool isSuccess, string error)
+            : base(isSuccess, error)
         {
             _value = value;
         }
@@ -118,7 +119,7 @@ namespace ExpenseTracker.Domain.Primitives
         {
             get
             {
-                if (!Success)
+                if (!IsSuccess)
                 {
                     throw new InvalidOperationException();
                 }
