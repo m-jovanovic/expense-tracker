@@ -3,7 +3,7 @@ using ExpenseTracker.Application.Specification;
 using ExpenseTracker.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpenseTracker.Persistence.Infrastructure
+namespace ExpenseTracker.Persistence
 {
     /// <summary>
     /// Represents an <see cref="ISpecification{TEntity}"/> evaluator.
