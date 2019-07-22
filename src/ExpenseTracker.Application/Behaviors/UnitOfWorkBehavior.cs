@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ExpenseTracker.Application.Extensions;
 using ExpenseTracker.Domain.Abstractions;
 using MediatR;
 
@@ -20,7 +21,7 @@ namespace ExpenseTracker.Application.Behaviors
 
             // Only use the unit of work if the current request is a command.
             // There is no need to save changes in any other case.
-            if (request.GetType().Name.EndsWith("Command"))
+            if (request.IsCommand())
             {
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
             }

@@ -50,7 +50,7 @@ namespace ExpenseTracker.Persistence.Configuration
 
             builder.Property(e => e.IsDeleted).HasDefaultValue(false);
 
-            builder.HasQueryFilter(e => e.IsDeleted == false);
+            builder.HasQueryFilter(e => !e.IsDeleted);
             
             base.Configure(builder);
         }
