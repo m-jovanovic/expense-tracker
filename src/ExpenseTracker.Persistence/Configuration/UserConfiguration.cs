@@ -39,6 +39,9 @@ namespace ExpenseTracker.Persistence.Configuration
                 .HasForeignKey(e => e.UserId)
                 .IsRequired();
 
+            builder.Metadata.FindNavigation(nameof(User.Expenses))
+                .SetPropertyAccessMode(PropertyAccessMode.Field);
+
             base.Configure(builder);
         }
     }

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using ExpenseTracker.Domain.Exceptions;
 
 namespace ExpenseTracker.Domain.Primitives
 {
@@ -18,7 +22,7 @@ namespace ExpenseTracker.Domain.Primitives
             Name = name;
         }
 
-        private Enumeration()
+        protected Enumeration()
         {
         }
 
@@ -31,6 +35,36 @@ namespace ExpenseTracker.Domain.Primitives
         /// Gets the name.
         /// </summary>
         public string Name { get; private set; }
+
+        public static T FromValue<T>(int value) where T : Enumeration
+        {
+            T matchingItem = GetAll<T>()
+                .FirstOrDefault(item => item.Value == value);
+
+            if (matchingItem == null)
+            {
+                throw new DomainException($"The value {value} is not a valid value in {typeof(T)}.");
+            }
+
+            return matchingItem;
+        }
+
+        public static IEnumerable<T> GetAll<T>() where T : Enumeration
+        {
+            Type type = typeof(T);
+
+            FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
+
+            foreach (FieldInfo info in fields)
+            {
+                var instance = (T)Activator.CreateInstance(typeof(T), true);
+
+                if (info.GetValue(instance) is T locatedValue)
+                {
+                    yield return locatedValue;
+                }
+            }
+        }
 
         /// <inheritdoc />
         public int CompareTo(object other)

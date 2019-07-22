@@ -62,7 +62,7 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc />
         public async Task<TEntity> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification) where TEntity : Entity
         {
-            return await ApplySpecification(specification).FirstOrDefaultAsync();
+            return await ApplySpecification(specification).SingleOrDefaultAsync();
         }
 
         /// <inheritdoc />

@@ -13,7 +13,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
     /// </summary>
     public sealed class User : AggregateRoot, IAuditableEntity
     {
-        private readonly IList<Expense> _expenses;
+        private readonly List<Expense> _expenses;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="User"/> class.
@@ -53,7 +53,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// </summary>
         public Email Email { get; private set; }
 
-        public IReadOnlyList<Expense> Expenses => _expenses.ToList();
+        public IReadOnlyList<Expense> Expenses => _expenses.AsReadOnly();
 
         /// <inheritdoc />
         public DateTime CreatedOnUtc { get; private set; }

@@ -41,7 +41,23 @@ namespace ExpenseTracker.Infrastructure.Repository
         /// <inheritdoc />
         public async Task<Maybe<User>> GetUserByEmailAsync(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return null;
+            }
+
             return await _dbContext.GetBySpecificationAsync(new UserSpecification(email));
+        }
+
+        /// <inheritdoc />
+        public async Task<Maybe<User>> GetUserWithExpensesByIdAsync(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return null;
+            }
+
+            return await _dbContext.GetBySpecificationAsync(new UserWithExpensesSpecification(id));
         }
     }
 }

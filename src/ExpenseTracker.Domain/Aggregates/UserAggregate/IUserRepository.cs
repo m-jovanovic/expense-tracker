@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Primitives;
 
@@ -18,5 +19,12 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// <param name="email">The email of the user.</param>
         /// <returns>The user if it is found, otherwise null.</returns>
         Task<Maybe<User>> GetUserByEmailAsync(string email);
+        
+        /// <summary>
+        /// Gets the user and expenses with the specified identifier.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <returns>The user with expenses included.</returns>
+        Task<Maybe<User>> GetUserWithExpensesByIdAsync(Guid id);
     }
 }

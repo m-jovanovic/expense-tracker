@@ -7,8 +7,8 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
     /// </summary>
     public sealed class Currency : Enumeration
     {
-        public static readonly Currency Rsd = new Currency(0, "Serbian Dinar", "RSD");
-        public static readonly Currency Eur = new Currency(1, "Euro", "€");
+        public static readonly Currency Rsd = new Currency(1, "Serbian Dinar", "RSD");
+        public static readonly Currency Eur = new Currency(2, "Euro", "€");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Currency"/> class.
@@ -19,6 +19,10 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         private Currency(int value, string name, string symbol) : base(value, name)
         {
             Symbol = symbol;
+        }
+
+        private Currency()
+        {
         }
 
         /// <summary>

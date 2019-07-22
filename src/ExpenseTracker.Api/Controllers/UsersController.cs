@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExpenseTracker.Application.Users.Commands;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
 using ExpenseTracker.Application.Users.Queries.GetUser;
 using ExpenseTracker.Domain.Aggregates.UserAggregate;
@@ -10,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseTracker.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IMediator _mediator;
