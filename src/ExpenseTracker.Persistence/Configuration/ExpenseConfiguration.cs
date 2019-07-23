@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ExpenseTracker.Persistence.Configuration
 {
+    /// <summary>
+    /// Represents the <see cref="Expense"/> entity configuration.
+    /// </summary>
     public class ExpenseConfiguration : EntityTypeConfiguration<Expense>
     {
         /// <inheritdoc />

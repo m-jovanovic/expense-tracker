@@ -30,11 +30,12 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 
             var money = new Money(request.Amount, currency);
 
+            User user = userOrNothing.Value;
+
             var expense = new Expense(Guid.NewGuid(),
+                user.Id,
                 money,
                 request.Date);
-
-            User user = userOrNothing.Value;
 
             user.AddExpense(expense);
 

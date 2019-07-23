@@ -15,11 +15,13 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         /// Initializes a new instance of the <see cref="Expense"/> class.
         /// </summary>
         /// <param name="id">The identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="money">The money of the expense.</param>
         /// <param name="date">The date of the expense.</param>
-        public Expense(Guid id, Money money, DateTime date)
+        public Expense(Guid id, Guid userId, Money money, DateTime date)
         {
             Id = id;
+            UserId = userId;
             Money = money;
             Date = date;
         }
