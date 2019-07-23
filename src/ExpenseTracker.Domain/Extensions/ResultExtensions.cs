@@ -3,6 +3,9 @@ using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Domain.Extensions
 {
+    /// <summary>
+    /// Contains extensions methods for the common uses of the <see cref="Result"/> class.
+    /// </summary>
     public static class ResultExtensions
     {
         /// <summary>

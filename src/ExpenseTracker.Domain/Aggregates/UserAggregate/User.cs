@@ -53,6 +53,9 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// </summary>
         public Email Email { get; private set; }
 
+        /// <summary>
+        /// Gets the expenses. This collection is readonly.
+        /// </summary>
         public IReadOnlyList<Expense> Expenses => _expenses.AsReadOnly();
 
         /// <inheritdoc />
@@ -81,7 +84,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
 
             _expenses.Add(expense);
 
-            //TODO: Add a domain event. Is it really necessary here?
+            AddDomainEvent(new ExpenseAddedEvent(expense.Id));
         }
 
         /// <summary>

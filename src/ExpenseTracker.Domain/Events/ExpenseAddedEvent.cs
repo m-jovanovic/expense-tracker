@@ -3,19 +3,19 @@
 namespace ExpenseTracker.Domain.Events
 {
     /// <summary>
-    /// Represents the event that fires after an expense is removed.
+    /// Represents the event that fires after an expense is added.
     /// </summary>
-    public sealed class ExpenseRemovedEvent : BaseDomainEvent
+    public sealed  class ExpenseAddedEvent : BaseDomainEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpenseRemovedEvent"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseAddedEvent"/> class.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
-        public ExpenseRemovedEvent(Guid expenseId)
+        public ExpenseAddedEvent(Guid expenseId)
         {
             ExpenseId = expenseId;
         }
-        
+
         /// <summary>
         /// Gets the expense identifier.
         /// </summary>

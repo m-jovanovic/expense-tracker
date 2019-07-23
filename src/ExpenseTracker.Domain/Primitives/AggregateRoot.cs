@@ -13,7 +13,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <summary>
         /// Gets the domain events. This collection is readonly.
         /// </summary>
-        public virtual IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
+        public virtual IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
         /// <summary>
         /// Clears all the domain events from the <see cref="AggregateRoot"/>.

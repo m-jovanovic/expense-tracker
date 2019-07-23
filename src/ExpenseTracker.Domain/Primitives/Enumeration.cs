@@ -36,6 +36,13 @@ namespace ExpenseTracker.Domain.Primitives
         /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Creates an enumeration of the specified type based on the specified value.
+        /// </summary>
+        /// <typeparam name="T">The enumeration type.</typeparam>
+        /// <param name="value">The value.</param>
+        /// <returns>The enumeration instance that matches the specified value.</returns>
+        /// <exception cref="DomainException"> if the specified value doesn't match any value in the enumeration.</exception>
         public static T FromValue<T>(int value) where T : Enumeration
         {
             T matchingItem = GetAll<T>()
@@ -43,12 +50,17 @@ namespace ExpenseTracker.Domain.Primitives
 
             if (matchingItem == null)
             {
-                throw new DomainException($"The value {value} is not a valid value in {typeof(T)}.");
+                throw new DomainException($"The value {value} is not a valid value in {typeof(T).Name}.");
             }
 
             return matchingItem;
         }
 
+        /// <summary>
+        /// Gets all of the enumeration values for the specified type.
+        /// </summary>
+        /// <typeparam name="T">The enumeration type.</typeparam>
+        /// <returns>The enumerable collection of values for the specified type.</returns>
         public static IEnumerable<T> GetAll<T>() where T : Enumeration
         {
             Type type = typeof(T);

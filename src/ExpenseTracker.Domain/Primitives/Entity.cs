@@ -7,8 +7,6 @@ namespace ExpenseTracker.Domain.Primitives
     /// </summary>
     public abstract class Entity
     {
-        private const int HashMultiplier = 41;
-
         /// <summary>
         /// Gets or sets the entity identifier.
         /// </summary>
@@ -63,7 +61,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            return Id.GetHashCode() * HashMultiplier;
+            return Id.GetHashCode() * 41;
         }
     }
 }
