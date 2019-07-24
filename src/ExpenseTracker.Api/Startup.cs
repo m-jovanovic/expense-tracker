@@ -51,7 +51,7 @@ namespace ExpenseTracker.Api
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
             services.AddTransient<IDateTime, MachineDateTime>();
-            services.AddTransient<IDbConnectionFactory, SqlDbConnectionFactory>();
+            services.AddTransient<IDbConnectionFactory, SqlServerDbConnectionFactory>();
 
             services.AddMvc(options => options.Filters.Add(typeof(ApplicationExceptionFilterAttribute)))
                 .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>())

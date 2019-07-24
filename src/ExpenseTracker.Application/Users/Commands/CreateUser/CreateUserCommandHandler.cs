@@ -7,15 +7,23 @@ using MediatR;
 
 namespace ExpenseTracker.Application.Users.Commands.CreateUser
 {
-    public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result>
+    /// <summary>
+    /// Represents the command handler for the <see cref="CreateUserCommand"/> command.
+    /// </summary>
+    public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result>
     {
         private readonly IUserRepository _userRepository;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreateUserCommandHandler"/> class.
+        /// </summary>
+        /// <param name="userRepository">The user repository instance.</param>
         public CreateUserCommandHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
+        /// <inheritdoc />
         public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
             Result<Email> emailResult = Email.Create(request.Email);

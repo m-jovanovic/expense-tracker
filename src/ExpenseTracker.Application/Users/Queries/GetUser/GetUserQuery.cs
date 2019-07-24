@@ -5,8 +5,14 @@ using MediatR;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
-    public class GetUserQuery : IRequest<Maybe<User>>
+    /// <summary>
+    /// Represents the query for getting a user.
+    /// </summary>
+    public sealed class GetUserQuery : IRequest<Maybe<User>>
     {
+        /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
         public Guid Id { get; set; }
     }
 }

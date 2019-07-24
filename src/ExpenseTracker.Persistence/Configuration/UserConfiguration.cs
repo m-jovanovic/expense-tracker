@@ -8,7 +8,7 @@ namespace ExpenseTracker.Persistence.Configuration
     /// <summary>
     /// Represents the <see cref="User"/> entity configuration.
     /// </summary>
-    public class UserConfiguration : EntityTypeConfiguration<User>
+    public sealed class UserConfiguration : EntityTypeConfiguration<User>
     {
         /// <inheritdoc />
         public override void Configure(EntityTypeBuilder<User> builder)

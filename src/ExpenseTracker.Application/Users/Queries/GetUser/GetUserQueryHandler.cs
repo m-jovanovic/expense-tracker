@@ -10,15 +10,23 @@ using MediatR;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
-    public class  GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
+    /// <summary>
+    /// Represents the handler for the <see cref="GetUserQueryHandler"/> query.
+    /// </summary>
+    public sealed class  GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
     {
-        private readonly IDbConnectionFactory _connectionFactory;
+        private readonly IDbConnectionFactory _dbConnectionFactory;
 
-        public GetUserQueryHandler(IDbConnectionFactory connectionFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUserQueryHandler"/> class.
+        /// </summary>
+        /// <param name="dbConnectionFactory">The database connection factory instance.</param>
+        public GetUserQueryHandler(IDbConnectionFactory dbConnectionFactory)
         {
-            _connectionFactory = connectionFactory;
+            _dbConnectionFactory = dbConnectionFactory;
         }
 
+        /// <inheritdoc />
         public async Task<Maybe<User>> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             if (request.Id == Guid.Empty)
@@ -28,7 +36,7 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
 
             const string sql = "SELECT * FROM [User] WHERE Id = @Id";
 
-            using (IDbConnection connection = _connectionFactory.GetOpenConnection())
+            using (IDbConnection connection = _dbConnectionFactory.GetOpenConnection())
             {
                 return await connection.QuerySingleOrDefaultAsync<User>(sql, request);
             }

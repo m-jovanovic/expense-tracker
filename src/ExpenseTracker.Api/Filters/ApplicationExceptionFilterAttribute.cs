@@ -29,7 +29,7 @@ namespace ExpenseTracker.Api.Filters
 
             var code = HttpStatusCode.InternalServerError;
 
-            if (context.Exception is NotFoundException)
+            if (context.Exception is EntityNotFoundException)
             {
                 code = HttpStatusCode.NotFound;
             }

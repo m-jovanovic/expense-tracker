@@ -10,12 +10,19 @@ namespace ExpenseTracker.Application.Exceptions
     /// </summary>
     public sealed class ValidationException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidationException"/> class.
+        /// </summary>
         public ValidationException()
             : base("One or more validation failures have occurred.")
         {
             Failures = new Dictionary<string, string[]>();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ValidationException"/> class.
+        /// </summary>
+        /// <param name="failures">The collection of validation failures.</param>
         public ValidationException(IReadOnlyCollection<ValidationFailure> failures)
             : this()
         {

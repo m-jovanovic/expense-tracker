@@ -5,11 +5,18 @@ using ExpenseTracker.Application.Infrastructure;
 
 namespace ExpenseTracker.Infrastructure
 {
-    public sealed class SqlDbConnectionFactory : IDbConnectionFactory
+    /// <summary>
+    /// Represents the SQL Server database connection factory.
+    /// </summary>
+    public class SqlServerDbConnectionFactory : IDbConnectionFactory
     {
         private readonly ConnectionString _connectionString;
 
-        public SqlDbConnectionFactory(ConnectionString connectionString)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SqlServerDbConnectionFactory"/> class.
+        /// </summary>
+        /// <param name="connectionString">The connection string.</param>
+        public SqlServerDbConnectionFactory(ConnectionString connectionString)
         {
             _connectionString = connectionString;
         }

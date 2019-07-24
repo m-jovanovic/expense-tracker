@@ -6,10 +6,19 @@ using MediatR;
 
 namespace ExpenseTracker.Application.Behaviors
 {
-    public class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    /// <summary>
+    /// Represents a unit of work behavior that wraps a request and manages the unit of work.
+    /// </summary>
+    /// <typeparam name="TRequest">The request type.</typeparam>
+    /// <typeparam name="TResponse">The response type.</typeparam>
+    public sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWorkBehavior{TRequest,TResponse}"/> class.
+        /// </summary>
+        /// <param name="unitOfWork">The unit of work instance.</param>
         public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

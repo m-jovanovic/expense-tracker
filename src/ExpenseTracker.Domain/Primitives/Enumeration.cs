@@ -43,15 +43,10 @@ namespace ExpenseTracker.Domain.Primitives
         /// <param name="value">The value.</param>
         /// <returns>The enumeration instance that matches the specified value.</returns>
         /// <exception cref="DomainException"> if the specified value doesn't match any value in the enumeration.</exception>
-        public static T FromValue<T>(int value) where T : Enumeration
+        public static Maybe<T> FromValue<T>(int value) where T : Enumeration
         {
             T matchingItem = GetAll<T>()
                 .FirstOrDefault(item => item.Value == value);
-
-            if (matchingItem == null)
-            {
-                throw new DomainException($"The value {value} is not a valid value in {typeof(T).Name}.");
-            }
 
             return matchingItem;
         }
