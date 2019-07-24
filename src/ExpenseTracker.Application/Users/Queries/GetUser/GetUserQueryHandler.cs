@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Data.SqlClient;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
-using ExpenseTracker.Application.Infrastructure;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.UserAggregate;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
@@ -12,11 +12,11 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
     public class  GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
     {
-        private readonly ConnectionString _connectionString;
+        private readonly IDbConnectionFactory _connectionFactory;
 
-        public GetUserQueryHandler(ConnectionString connectionString)
+        public GetUserQueryHandler(IDbConnectionFactory connectionFactory)
         {
-            _connectionString = connectionString;
+            _connectionFactory = connectionFactory;
         }
 
         public async Task<Maybe<User>> Handle(GetUserQuery request, CancellationToken cancellationToken)
@@ -28,9 +28,9 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
 
             const string sql = "SELECT * FROM [User] WHERE Id = @Id";
 
-            using (var sqlConnection = new SqlConnection(_connectionString))
+            using (IDbConnection connection = _connectionFactory.GetOpenConnection())
             {
-                return await sqlConnection.QuerySingleOrDefaultAsync<User>(sql, request);
+                return await connection.QuerySingleOrDefaultAsync<User>(sql, request);
             }
         }
     }
