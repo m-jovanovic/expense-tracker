@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using ExpenseTracker.Application.Exceptions;
 using ExpenseTracker.Domain.Aggregates.ExpenseAggregate;
 using ExpenseTracker.Domain.Aggregates.UserAggregate;
 using ExpenseTracker.Domain.Primitives;
@@ -23,7 +24,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 
             if (userOrNothing.HasNoValue)
             {
-                return Result.Fail("User could not be found.");
+                throw new NotFoundException(nameof(User), request.UserId);
             }
 
             var currency = Enumeration.FromValue<Currency>(request.CurrencyId);

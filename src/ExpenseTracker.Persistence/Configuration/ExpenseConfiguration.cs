@@ -36,7 +36,7 @@ namespace ExpenseTracker.Persistence.Configuration
                 moneyBuilder.OwnsOne(m => m.Currency, currencyBuilder =>
                 {
                     currencyBuilder.Property(c => c.Value)
-                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Value)}")
+                        .HasColumnName($"CurrencyId")
                         .IsRequired();
 
                     currencyBuilder.Property(c => c.Name)

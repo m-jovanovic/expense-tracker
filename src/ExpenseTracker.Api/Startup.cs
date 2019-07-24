@@ -1,4 +1,5 @@
-﻿using ExpenseTracker.Application.Abstractions;
+﻿using ExpenseTracker.Api.Filters;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Behaviors;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Users.Commands;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FluentValidation.AspNetCore;
 
 [assembly: ApiController]
 namespace ExpenseTracker.Api
@@ -40,16 +42,22 @@ namespace ExpenseTracker.Api
                 options.UseSqlServer(connectionString));
 
             services.AddMediatR(typeof(CreateUserCommand));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
-
-            services.AddTransient<IDateTime, MachineDateTime>();
 
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddTransient<IDateTime, MachineDateTime>();
+            services.AddTransient<IDbConnectionFactory, SqlDbConnectionFactory>();
+
+            services.AddMvc(options => options.Filters.Add(typeof(ApplicationExceptionFilterAttribute)))
+                .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
