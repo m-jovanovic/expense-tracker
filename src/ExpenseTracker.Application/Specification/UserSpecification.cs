@@ -11,7 +11,7 @@ namespace ExpenseTracker.Application.Specification
         /// Initializes a new instance of the <see cref="UserSpecification"/> class.
         /// </summary>
         /// <param name="email">The email that will be used for creating the filter criteria.</param>
-        public UserSpecification(string email) 
+        public UserSpecification(string email)
             : base(u => u.Email == email)
         {
         }

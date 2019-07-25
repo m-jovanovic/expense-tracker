@@ -9,7 +9,8 @@ namespace ExpenseTracker.Persistence
     /// Represents an <see cref="ISpecification{TEntity}"/> evaluator.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public static class SpecificationEvaluator<TEntity> where TEntity : Entity
+    public static class SpecificationEvaluator<TEntity>
+        where TEntity : Entity
     {
         /// <summary>
         /// Gets the query for the specified <see cref="ISpecification{T}"/> object.

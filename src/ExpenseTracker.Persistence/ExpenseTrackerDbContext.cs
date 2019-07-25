@@ -31,7 +31,8 @@ namespace ExpenseTracker.Persistence
         /// <param name="options">The database context options.</param>
         /// <param name="dateTime">The date time instance.</param>
         /// <param name="mediator">The mediator instance.</param>
-        public ExpenseTrackerDbContext(DbContextOptions options, IDateTime dateTime, IMediator mediator) : base(options)
+        public ExpenseTrackerDbContext(DbContextOptions options, IDateTime dateTime, IMediator mediator)
+            : base(options)
         {
             _dateTime = dateTime;
             _mediator = mediator;
@@ -44,12 +45,13 @@ namespace ExpenseTracker.Persistence
             UpdateSoftDeletableEntities();
 
             await PublishDomainEvents(cancellationToken);
-            
+
             return await base.SaveChangesAsync(cancellationToken);
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetByIdAsync<TEntity>(Guid id) where TEntity : Entity
+        public async Task<TEntity> GetByIdAsync<TEntity>(Guid id)
+            where TEntity : Entity
         {
             if (id == Guid.Empty)
             {
@@ -60,37 +62,43 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification) where TEntity : Entity
+        public async Task<TEntity> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+            where TEntity : Entity
         {
             return await ApplySpecification(specification).SingleOrDefaultAsync();
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<TEntity>> ListAsync<TEntity>() where TEntity : Entity
+        public async Task<IEnumerable<TEntity>> ListAsync<TEntity>()
+            where TEntity : Entity
         {
             return await Table<TEntity>().ToListAsync();
         }
 
         /// <inheritdoc />
-        public async Task<IEnumerable<TEntity>> ListBySpecificationAsync<TEntity>(ISpecification<TEntity> specification) where TEntity : Entity
+        public async Task<IEnumerable<TEntity>> ListBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+            where TEntity : Entity
         {
             return await ApplySpecification(specification).ToListAsync();
         }
 
         /// <inheritdoc />
-        public async Task<int> CountAsync<TEntity>() where TEntity : Entity
+        public async Task<int> CountAsync<TEntity>()
+            where TEntity : Entity
         {
             return await Table<TEntity>().CountAsync();
         }
 
         /// <inheritdoc />
-        public async Task<int> CountBySpecificationAsync<TEntity>(ISpecification<TEntity> specification) where TEntity : Entity
+        public async Task<int> CountBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+            where TEntity : Entity
         {
             return await ApplySpecification(specification).CountAsync();
         }
 
         /// <inheritdoc />
-        public void Insert<TEntity>(TEntity entity) where TEntity : Entity
+        public void Insert<TEntity>(TEntity entity)
+            where TEntity : Entity
         {
             Check.NotNull(entity, nameof(entity));
 
@@ -98,7 +106,8 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public void Insert<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        public void Insert<TEntity>(IEnumerable<TEntity> entities)
+            where TEntity : Entity
         {
             Check.NotNull(entities, nameof(entities));
 
@@ -106,7 +115,8 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public new void Update<TEntity>(TEntity entity) where TEntity : Entity
+        public new void Update<TEntity>(TEntity entity)
+            where TEntity : Entity
         {
             Check.NotNull(entity, nameof(entity));
 
@@ -114,7 +124,8 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public void Update<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        public void Update<TEntity>(IEnumerable<TEntity> entities)
+            where TEntity : Entity
         {
             Check.NotNull(entities, nameof(entities));
 
@@ -122,7 +133,8 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public void Delete<TEntity>(TEntity entity) where TEntity : Entity
+        public void Delete<TEntity>(TEntity entity)
+            where TEntity : Entity
         {
             Check.NotNull(entity, nameof(entity));
 
@@ -130,7 +142,8 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public void Delete<TEntity>(IEnumerable<TEntity> entities) where TEntity : Entity
+        public void Delete<TEntity>(IEnumerable<TEntity> entities)
+            where TEntity : Entity
         {
             Check.NotNull(entities, nameof(entities));
 
@@ -138,24 +151,14 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public IQueryable<TEntity> Table<TEntity>() where TEntity : Entity
+        public IQueryable<TEntity> Table<TEntity>()
+            where TEntity : Entity
             => Set<TEntity>();
 
         /// <inheritdoc />
-        public IQueryable<TEntity> TableAsNoTracking<TEntity>() where TEntity : Entity
+        public IQueryable<TEntity> TableAsNoTracking<TEntity>()
+            where TEntity : Entity
             => Set<TEntity>().AsNoTracking();
-
-        /// <summary>
-        /// Applies the provided specification.
-        /// </summary>
-        /// <param name="specification">The specification.</param>
-        /// <returns>An <see cref="IQueryable{T}"/> for the specified entity type.</returns>
-        private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> specification) where TEntity : Entity
-        {
-            Check.NotNull(specification, nameof(specification));
-
-            return SpecificationEvaluator<TEntity>.GetQuery(Table<TEntity>(), specification);
-        }
 
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -171,6 +174,19 @@ namespace ExpenseTracker.Persistence
             }
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        /// <summary>
+        /// Applies the provided specification.
+        /// </summary>
+        /// <param name="specification">The specification.</param>
+        /// <returns>An <see cref="IQueryable{T}"/> for the specified entity type.</returns>
+        private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> specification)
+            where TEntity : Entity
+        {
+            Check.NotNull(specification, nameof(specification));
+
+            return SpecificationEvaluator<TEntity>.GetQuery(Table<TEntity>(), specification);
         }
 
         /// <summary>
@@ -201,7 +217,7 @@ namespace ExpenseTracker.Persistence
                 {
                     SetPropertyValue(entityEntry, nameof(IAuditableEntity.CreatedOnUtc), utcNow);
                 }
-                
+
                 if (entityEntry.State == EntityState.Modified)
                 {
                     SetPropertyValue(entityEntry, nameof(IAuditableEntity.ModifiedOnUtc), utcNow);

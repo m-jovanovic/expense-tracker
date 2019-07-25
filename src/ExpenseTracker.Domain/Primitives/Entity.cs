@@ -35,6 +35,11 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
             if (!(obj is Entity other))
             {
                 return false;

@@ -16,7 +16,8 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         /// <param name="value">The value.</param>
         /// <param name="name">The name.</param>
         /// <param name="symbol">The symbol.</param>
-        private Currency(int value, string name, string symbol) : base(value, name)
+        private Currency(int value, string name, string symbol)
+            : base(value, name)
         {
             Symbol = symbol;
         }

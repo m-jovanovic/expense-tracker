@@ -8,7 +8,8 @@ namespace ExpenseTracker.Persistence.Infrastructure
     /// Represents an entity type configuration.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public class EntityTypeConfiguration<TEntity> : IEntityTypeConfiguration, IEntityTypeConfiguration<TEntity> where TEntity : Entity
+    public class EntityTypeConfiguration<TEntity> : IEntityTypeConfiguration, IEntityTypeConfiguration<TEntity>
+        where TEntity : Entity
     {
         /// <inheritdoc />
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)

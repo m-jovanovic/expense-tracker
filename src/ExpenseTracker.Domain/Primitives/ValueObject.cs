@@ -28,7 +28,7 @@ namespace ExpenseTracker.Domain.Primitives
         {
             return !(a == b);
         }
-        
+
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
@@ -50,7 +50,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            var hashCode = new HashCode();
+            HashCode hashCode = default;
 
             // Since a value object may contain more than 8 properties we can't use HashCode.Combine.
             foreach (object obj in GetAtomicValues())

@@ -14,4 +14,6 @@
     <ProjectReference Include="..\ExpenseTracker.Application\ExpenseTracker.Application.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\ExpenseTracker.CodeAnalysis.targets" />
+
 </Project>

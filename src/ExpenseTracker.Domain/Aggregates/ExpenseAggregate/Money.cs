@@ -22,7 +22,7 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         private Money()
         {
         }
-        
+
         /// <summary>
         /// Gets the amount.
         /// </summary>

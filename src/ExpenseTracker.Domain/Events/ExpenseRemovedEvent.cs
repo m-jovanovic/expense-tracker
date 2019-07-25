@@ -15,7 +15,7 @@ namespace ExpenseTracker.Domain.Events
         {
             ExpenseId = expenseId;
         }
-        
+
         /// <summary>
         /// Gets the expense identifier.
         /// </summary>

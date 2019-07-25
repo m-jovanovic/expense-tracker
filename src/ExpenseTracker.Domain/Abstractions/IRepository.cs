@@ -8,7 +8,8 @@ namespace ExpenseTracker.Domain.Abstractions
     /// Represents a repository interface.
     /// </summary>
     /// <typeparam name="TAggregateRoot">The aggregate root type.</typeparam>
-    public interface IRepository<TAggregateRoot> where TAggregateRoot : AggregateRoot
+    public interface IRepository<TAggregateRoot>
+        where TAggregateRoot : AggregateRoot
     {
         /// <summary>
         /// Gets the aggregate root with the specified identifier if it exists.

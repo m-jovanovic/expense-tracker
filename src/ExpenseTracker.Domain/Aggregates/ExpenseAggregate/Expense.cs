@@ -31,17 +31,17 @@ namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
         }
 
         /// <summary>
-        /// Gets or sets the user identifier.
+        /// Gets the user identifier.
         /// </summary>
         public Guid UserId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the money of the expense.
+        /// Gets the money of the expense.
         /// </summary>
         public Money Money { get; private set; }
 
         /// <summary>
-        /// Gets or sets the date of the expense.
+        /// Gets the date of the expense.
         /// </summary>
         public DateTime Date
         {

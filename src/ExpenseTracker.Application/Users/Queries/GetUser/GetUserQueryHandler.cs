@@ -13,7 +13,7 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// <summary>
     /// Represents the handler for the <see cref="GetUserQueryHandler"/> query.
     /// </summary>
-    public sealed class  GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
+    public sealed class GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 

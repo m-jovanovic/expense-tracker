@@ -1,5 +1,4 @@
 ﻿using System;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
 
 namespace ExpenseTracker.Domain.Primitives
 {
@@ -30,12 +29,12 @@ namespace ExpenseTracker.Domain.Primitives
         }
 
         /// <summary>
-        /// Gets the success flag.
+        /// Gets a value indicating whether the result is a success result.
         /// </summary>
         public bool IsSuccess { get; }
 
         /// <summary>
-        /// Gets the failure flag.
+        /// Gets a value indicating whether the result is a failure result.
         /// </summary>
         public bool IsFailure => !IsSuccess;
 
@@ -80,6 +79,8 @@ namespace ExpenseTracker.Domain.Primitives
         /// <returns>The first failure <see cref="Result"/> instance or a new success <see cref="Result"/> instance.</returns>
         public static Result FirstFailureOrSuccess(params Result[] results)
         {
+            Check.NotNull(results, nameof(results));
+
             foreach (Result result in results)
             {
                 if (result.IsFailure)

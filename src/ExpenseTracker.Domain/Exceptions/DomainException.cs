@@ -13,12 +13,14 @@ namespace ExpenseTracker.Domain.Exceptions
         }
 
         /// <inheritdoc />
-        public DomainException(string message) : base(message)
+        public DomainException(string message)
+            : base(message)
         {
         }
 
         /// <inheritdoc />
-        public DomainException(string message, Exception innerException) : base(message, innerException)
+        public DomainException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
     }

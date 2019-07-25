@@ -19,7 +19,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// <param name="email">The email of the user.</param>
         /// <returns>The user if it is found, otherwise null.</returns>
         Task<Maybe<User>> GetUserByEmailAsync(string email);
-        
+
         /// <summary>
         /// Gets the user and expenses with the specified identifier.
         /// </summary>

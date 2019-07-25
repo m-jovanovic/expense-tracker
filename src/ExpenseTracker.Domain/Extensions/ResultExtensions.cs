@@ -15,7 +15,8 @@ namespace ExpenseTracker.Domain.Extensions
         /// <param name="maybe">The maybe instance.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <returns>The result instance with the specified maybe value.</returns>
-        public static Result<T> ToResult<T>(this Maybe<T> maybe, string errorMessage) where T : class
+        public static Result<T> ToResult<T>(this Maybe<T> maybe, string errorMessage)
+            where T : class
         {
             return maybe.HasValue ? Result.Ok(maybe.Value) : Result.Fail<T>(errorMessage);
         }
@@ -30,6 +31,16 @@ namespace ExpenseTracker.Domain.Extensions
         /// <returns>The result instance of the function if the current result is successful, otherwise a fail result.</returns>
         public static Result<T2> OnSuccess<T1, T2>(this Result<T1> result, Func<T1, T2> onSuccessFunc)
         {
+            if (result == null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
+
+            if (onSuccessFunc == null)
+            {
+                return Result.Fail<T2>("The on success function can not be null.");
+            }
+
             return result.IsSuccess ? Result.Ok(onSuccessFunc(result.Value)) : Result.Fail<T2>(result.Error);
         }
 
@@ -43,6 +54,16 @@ namespace ExpenseTracker.Domain.Extensions
         /// <returns>The current result if it is a failure or satisfies the predicate, otherwise a fail result.</returns>
         public static Result<T> Ensure<T>(this Result<T> result, Func<T, bool> predicate, string errorMessage)
         {
+            if (result == null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
+
+            if (predicate == null)
+            {
+                return Result.Fail<T>("The predicate can not be null.");
+            }
+
             if (result.IsFailure)
             {
                 return result;
@@ -61,6 +82,16 @@ namespace ExpenseTracker.Domain.Extensions
         /// <returns>The result of the map function is the current result is successful, otherwise a fail result.</returns>
         public static Result<TOut> Map<TIn, TOut>(this Result<TIn> result, Func<TIn, TOut> mapFunc)
         {
+            if (result == null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
+
+            if (mapFunc == null)
+            {
+                return Result.Fail<TOut>("The map function can not be null.");
+            }
+
             return result.IsSuccess ? Result.Ok(mapFunc(result.Value)) : Result.Fail<TOut>(result.Error);
         }
     }

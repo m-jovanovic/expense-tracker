@@ -6,12 +6,13 @@ namespace ExpenseTracker.Domain.Primitives
     /// Represents a wrapper around a value, which may be empty.
     /// </summary>
     /// <typeparam name="T">The type of the value.</typeparam>
-    public struct Maybe<T> : IEquatable<Maybe<T>> where T : class
+    public struct Maybe<T> : IEquatable<Maybe<T>>
+        where T : class
     {
         private readonly T _value;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Maybe{T}"/> class with the specified value.
+        /// Initializes a new instance of the <see cref="Maybe{T}"/> struct with the specified value.
         /// </summary>
         /// <param name="value">The value.</param>
         private Maybe(T value)
@@ -36,12 +37,12 @@ namespace ExpenseTracker.Domain.Primitives
         }
 
         /// <summary>
-        /// Gets the flag indicating if the object contains a value.
+        /// Gets a value indicating whether the object contains a value.
         /// </summary>
         public bool HasValue => _value != null;
 
         /// <summary>
-        /// Gets the flag indicating if the object does not contain a value.
+        /// Gets a value indicating whether the object does not contain a value.
         /// </summary>
         public bool HasNoValue => !HasValue;
 
@@ -65,10 +66,7 @@ namespace ExpenseTracker.Domain.Primitives
             return !(first == second);
         }
 
-        public static implicit operator Maybe<T>(T value)
-        {
-            return new Maybe<T>(value);
-        }
+        public static implicit operator Maybe<T>(T value) => new Maybe<T>(value);
 
         /// <inheritdoc />
         public bool Equals(Maybe<T> other)
@@ -122,6 +120,8 @@ namespace ExpenseTracker.Domain.Primitives
         /// <returns>The result of the specified selector function or the default value for its type.</returns>
         public TProperty Unwrap<TProperty>(Func<T, TProperty> selector)
         {
+            Check.NotNull(selector, nameof(selector));
+
             return HasValue ? selector(Value) : default;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Application.Specification
@@ -10,12 +9,13 @@ namespace ExpenseTracker.Application.Specification
     /// Represents the base specification class that all specifications derive from.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public abstract class SpecificationBase<TEntity> : ISpecification<TEntity> where TEntity : Entity
+    public abstract class SpecificationBase<TEntity> : ISpecification<TEntity>
+        where TEntity : Entity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SpecificationBase{TAggregate}"/> class.
         /// </summary>
-        /// <param name="criteria"></param>
+        /// <param name="criteria">The filter criteria.</param>
         protected SpecificationBase(Expression<Func<TEntity, bool>> criteria)
         {
             Criteria = criteria;

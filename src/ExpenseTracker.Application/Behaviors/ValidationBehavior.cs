@@ -14,14 +14,15 @@ namespace ExpenseTracker.Application.Behaviors
     /// </summary>
     /// <typeparam name="TRequest">The request type.</typeparam>
     /// <typeparam name="TResponse">The response type.</typeparam>
-    public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+    public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : IRequest<TResponse>
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationBehavior{TRequest,TResponse}"/> class.
         /// </summary>
-        /// <param name="validators"></param>
+        /// <param name="validators">The collection of validators.</param>
         public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
         {
             _validators = validators;

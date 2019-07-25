@@ -24,7 +24,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         private Email()
         {
         }
-        
+
         /// <summary>
         /// Gets the email value.
         /// </summary>
@@ -40,13 +40,13 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
             return emailOrNothing
                 .ToResult("Email should not be empty.")
                 .OnSuccess(email => email.Trim())
-                .Ensure(email => email != string.Empty, "Email should not be empty")
+                .Ensure(email => email.Length != 0, "Email should not be empty")
                 .Ensure(email => email.Length < 256, "Email is too long.")
-                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase),"Email is invalid.")
+                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase), "Email is invalid.")
                 .Map(email => new Email(email));
         }
 
-        public static implicit operator string(Email email) => email.Value;
+        public static implicit operator string(Email email) => email?.Value ?? string.Empty;
 
         public static explicit operator Email(string email) => Create(email).Value;
 

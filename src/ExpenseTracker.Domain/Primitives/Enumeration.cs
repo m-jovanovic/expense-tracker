@@ -43,7 +43,8 @@ namespace ExpenseTracker.Domain.Primitives
         /// <param name="value">The value.</param>
         /// <returns>The enumeration instance that matches the specified value.</returns>
         /// <exception cref="DomainException"> if the specified value doesn't match any value in the enumeration.</exception>
-        public static Maybe<T> FromValue<T>(int value) where T : Enumeration
+        public static Maybe<T> FromValue<T>(int value)
+            where T : Enumeration
         {
             T matchingItem = GetAll<T>()
                 .FirstOrDefault(item => item.Value == value);
@@ -56,7 +57,8 @@ namespace ExpenseTracker.Domain.Primitives
         /// </summary>
         /// <typeparam name="T">The enumeration type.</typeparam>
         /// <returns>The enumerable collection of values for the specified type.</returns>
-        public static IEnumerable<T> GetAll<T>() where T : Enumeration
+        public static IEnumerable<T> GetAll<T>()
+            where T : Enumeration
         {
             Type type = typeof(T);
 
@@ -76,12 +78,17 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public int CompareTo(object other)
         {
-            return Value.CompareTo(((Enumeration)other).Value);
+            return other is null ? 1 : Value.CompareTo(((Enumeration)other).Value);
         }
 
         /// <inheritdoc />
         public override bool Equals(object obj)
         {
+            if (ReferenceEquals(obj, null))
+            {
+                return false;
+            }
+
             if (!(obj is Enumeration otherValue))
             {
                 return false;
@@ -101,6 +108,5 @@ namespace ExpenseTracker.Domain.Primitives
         {
             return Name;
         }
-
     }
 }

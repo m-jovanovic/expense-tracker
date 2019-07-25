@@ -2,7 +2,6 @@
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Behaviors;
 using ExpenseTracker.Application.Infrastructure;
-using ExpenseTracker.Application.Users.Commands;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Aggregates.ExpenseAggregate;
@@ -10,6 +9,7 @@ using ExpenseTracker.Domain.Aggregates.UserAggregate;
 using ExpenseTracker.Infrastructure;
 using ExpenseTracker.Infrastructure.Repository;
 using ExpenseTracker.Persistence;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -17,9 +17,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation.AspNetCore;
 
 [assembly: ApiController]
+
 namespace ExpenseTracker.Api
 {
     public class Startup
@@ -61,7 +61,7 @@ namespace ExpenseTracker.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

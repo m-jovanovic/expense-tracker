@@ -22,7 +22,8 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// <param name="firstName">The user first name.</param>
         /// <param name="lastName">The user last name.</param>
         /// <param name="email">The user email.</param>
-        public User(Guid id, string firstName, string lastName, Email email) : this()
+        public User(Guid id, string firstName, string lastName, Email email)
+            : this()
         {
             Id = id;
             FirstName = firstName;
@@ -39,17 +40,17 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         }
 
         /// <summary>
-        /// Gets or sets the first name.
+        /// Gets the first name.
         /// </summary>
         public string FirstName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the last name.
+        /// Gets the last name.
         /// </summary>
         public string LastName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the email.
+        /// Gets the email.
         /// </summary>
         public Email Email { get; private set; }
 
@@ -72,7 +73,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         {
             if (expense == null)
             {
-                throw  new DomainException("Expense can not be null.");
+                throw new DomainException("Expense can not be null.");
             }
 
             Maybe<Expense> expenseOrNothing = GetExpenseIfExists(expense);
@@ -93,6 +94,8 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
         /// <param name="expense">The expense.</param>
         public void RemoveExpense(Expense expense)
         {
+            Check.NotNull(expense, nameof(expense));
+
             Maybe<Expense> expenseOrNothing = GetExpenseIfExists(expense);
 
             if (expenseOrNothing.HasNoValue)
@@ -104,7 +107,7 @@ namespace ExpenseTracker.Domain.Aggregates.UserAggregate
 
             AddDomainEvent(new ExpenseRemovedEvent(expense.Id));
         }
-        
+
         /// <summary>
         /// Gets the specified expense if it exists.
         /// </summary>

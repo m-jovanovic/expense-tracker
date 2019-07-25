@@ -30,7 +30,7 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
 
             if (emailResult.IsFailure)
             {
-                return  Result.Fail(emailResult.Error);
+                return Result.Fail(emailResult.Error);
             }
 
             Email email = emailResult.Value;
@@ -42,15 +42,15 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
                 return Result.Fail("The specified email is already in use.");
             }
 
-            var user = new User(Guid.NewGuid(),
+            var user = new User(
+                Guid.NewGuid(),
                 request.FirstName,
                 request.LastName,
                 email);
 
             _userRepository.InsertUser(user);
 
-            //TODO: Send confirmation email.
-
+            // TODO: Send confirmation email.
             return Result.Ok();
         }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ExpenseTracker.Application.Infrastructure
+namespace ExpenseTracker.Domain.Primitives
 {
     /// <summary>
     /// Contains methods for often performed validation checks.
@@ -26,6 +26,7 @@ namespace ExpenseTracker.Application.Infrastructure
         /// <summary>
         /// Checks if the specified collection is not null or empty, otherwise throws an <see cref="ArgumentNullException"/>.
         /// </summary>
+        /// <typeparam name="T">The argument type.</typeparam>
         /// <param name="arg">The argument to check.</param>
         /// <param name="argName">The name of the argument.</param>
         /// <exception cref="ArgumentNullException"> if the argument collection is null or empty.</exception>
