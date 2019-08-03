@@ -1,4 +1,6 @@
-﻿using ExpenseTracker.Domain.Aggregates.UserAggregate;
+﻿using System.Globalization;
+using System.Linq;
+using ExpenseTracker.Domain.Aggregates.UserAggregate;
 using ExpenseTracker.Domain.Primitives;
 using Shouldly;
 using Xunit;
@@ -56,7 +58,7 @@ namespace ExpenseTracker.Domain.Tests.ValueObjects
         [Fact]
         public void EmailShouldBeConvertedFromStringExplicitly()
         {
-            var emailString = "test@email.com";
+            const string emailString = "test@email.com";
 
             var email = (Email)emailString;
 
@@ -66,12 +68,41 @@ namespace ExpenseTracker.Domain.Tests.ValueObjects
         [Fact]
         public void EmailsShouldBeEqualIfValuesAreEqual()
         {
-            var email1 = Email.Create("test@email.test").Value;
-            var email2 = Email.Create("test@email.test").Value;
+            Email email1 = Email.Create("test@email.test").Value;
+            Email email2 = Email.Create("test@email.test").Value;
 
             email1.ShouldBe(email2);
 
             email1.Value.ShouldBe(email2.Value);
+        }
+
+        [Fact]
+        public void EmailCreateShouldFailIfEmailIsNull()
+        {
+            Result<Email> emailResult = Email.Create(null);
+
+            emailResult.IsFailure.ShouldBeTrue();
+            emailResult.IsSuccess.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void EmailCreateShouldFailIfEmailIsEmpty()
+        {
+            Result<Email> emailResult = Email.Create(string.Empty);
+
+            emailResult.IsFailure.ShouldBeTrue();
+            emailResult.IsSuccess.ShouldBeFalse();
+        }
+
+        [Fact]
+        public void EmailCreateShouldFailIfEmailIsMoreThan255CharactersLong()
+        {
+            string emailString = string.Concat(Enumerable.Range(0, 256).SelectMany(num => num.ToString(CultureInfo.InvariantCulture)));
+
+            Result<Email> emailResult = Email.Create(emailString);
+
+            emailResult.IsFailure.ShouldBeTrue();
+            emailResult.IsSuccess.ShouldBeFalse();
         }
     }
 }
