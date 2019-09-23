@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 [assembly: ApiController]
 
@@ -53,15 +54,19 @@ namespace ExpenseTracker.Api
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddTransient<IDbConnectionFactory, SqlServerDbConnectionFactory>();
 
-            services.AddMvc(options => options.Filters.Add(typeof(ApplicationExceptionFilterAttribute)))
+            services.AddMvc(options =>
+                {
+                    options.Filters.Add(typeof(ApplicationExceptionFilterAttribute));
+                    options.EnableEndpointRouting = false;
+                })
                 .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

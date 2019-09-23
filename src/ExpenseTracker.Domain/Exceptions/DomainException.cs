@@ -5,7 +5,7 @@ namespace ExpenseTracker.Domain.Exceptions
     /// <summary>
     /// Represents an error that occurs in the domain layer.
     /// </summary>
-    public class DomainException : Exception
+    public sealed class DomainException : Exception
     {
         /// <inheritdoc />
         public DomainException()
