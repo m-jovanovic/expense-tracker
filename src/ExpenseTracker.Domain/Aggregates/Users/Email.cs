@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using ExpenseTracker.Domain.Extensions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Domain.Aggregates.UserAggregate
+namespace ExpenseTracker.Domain.Aggregates.Users
 {
     /// <summary>
     /// Represents an email.

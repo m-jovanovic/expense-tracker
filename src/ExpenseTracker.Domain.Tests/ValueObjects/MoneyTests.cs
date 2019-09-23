@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ExpenseTracker.Domain.Aggregates.ExpenseAggregate;
+using ExpenseTracker.Domain.Aggregates.Expenses;
 using Shouldly;
 using Xunit;
 

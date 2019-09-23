@@ -17,9 +17,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D177C0A1-838
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{07C75F7E-0CA3-4BC4-A32C-D320AB727F44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Domain.Tests", "ExpenseTracker.Domain.Tests\ExpenseTracker.Domain.Tests.csproj", "{8FDACD78-A13F-4E6A-8502-315997B0EDEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Domain.Tests", "ExpenseTracker.Domain.Tests\ExpenseTracker.Domain.Tests.csproj", "{8FDACD78-A13F-4E6A-8502-315997B0EDEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseTracker.Application.Tests", "ExpenseTracker.Application.Tests\ExpenseTracker.Application.Tests.csproj", "{51F0C713-C61A-444D-B855-3BBC437F1544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseTracker.Application.Tests", "ExpenseTracker.Application.Tests\ExpenseTracker.Application.Tests.csproj", "{51F0C713-C61A-444D-B855-3BBC437F1544}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

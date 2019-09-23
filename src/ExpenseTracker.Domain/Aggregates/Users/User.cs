@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ExpenseTracker.Domain.Aggregates.ExpenseAggregate;
+using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Exceptions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Domain.Aggregates.UserAggregate
+namespace ExpenseTracker.Domain.Aggregates.Users
 {
     /// <summary>
     /// Represents the user entity.

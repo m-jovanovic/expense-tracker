@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapper;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 

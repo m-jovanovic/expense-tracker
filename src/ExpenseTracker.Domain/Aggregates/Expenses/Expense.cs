@@ -2,7 +2,7 @@
 using ExpenseTracker.Domain.Exceptions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
+namespace ExpenseTracker.Domain.Aggregates.Expenses
 {
     /// <summary>
     /// Represents the expense entity.

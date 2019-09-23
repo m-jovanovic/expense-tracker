@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Domain.Aggregates.UserAggregate
+namespace ExpenseTracker.Domain.Aggregates.Users
 {
     public interface IUserRepository : IRepository<User>
     {

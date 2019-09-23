@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
 using ExpenseTracker.Application.Users.Queries.GetUser;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

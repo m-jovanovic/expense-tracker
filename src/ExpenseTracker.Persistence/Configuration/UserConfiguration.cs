@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.Domain.Aggregates.UserAggregate;
+﻿using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Persistence.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

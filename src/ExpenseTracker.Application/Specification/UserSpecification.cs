@@ -1,4 +1,4 @@
-﻿using ExpenseTracker.Domain.Aggregates.UserAggregate;
+﻿using ExpenseTracker.Domain.Aggregates.Users;
 
 namespace ExpenseTracker.Application.Specification
 {

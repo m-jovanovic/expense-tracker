@@ -1,6 +1,6 @@
 ﻿using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Domain.Aggregates.ExpenseAggregate
+namespace ExpenseTracker.Domain.Aggregates.Expenses
 {
     /// <summary>
     /// Represents a currency.

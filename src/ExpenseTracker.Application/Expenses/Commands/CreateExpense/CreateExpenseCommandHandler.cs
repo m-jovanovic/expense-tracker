@@ -2,8 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
-using ExpenseTracker.Domain.Aggregates.ExpenseAggregate;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
+using ExpenseTracker.Domain.Aggregates.Expenses;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 

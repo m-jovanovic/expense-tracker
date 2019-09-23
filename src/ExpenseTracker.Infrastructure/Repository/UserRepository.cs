@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Specification;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Infrastructure.Repository

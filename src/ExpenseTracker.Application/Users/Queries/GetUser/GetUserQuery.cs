@@ -1,5 +1,5 @@
 ﻿using System;
-using ExpenseTracker.Domain.Aggregates.UserAggregate;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
