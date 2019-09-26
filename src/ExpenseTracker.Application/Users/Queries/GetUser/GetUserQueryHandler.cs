@@ -36,10 +36,9 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
 
             const string sql = "SELECT * FROM [User] WHERE Id = @Id";
 
-            using (IDbConnection connection = _dbConnectionFactory.GetOpenConnection())
-            {
-                return await connection.QuerySingleOrDefaultAsync<User>(sql, request);
-            }
+            using IDbConnection connection = _dbConnectionFactory.GetOpenConnection();
+
+            return await connection.QuerySingleOrDefaultAsync<User>(sql, request);
         }
     }
 }
