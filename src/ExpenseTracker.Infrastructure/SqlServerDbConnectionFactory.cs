@@ -1,7 +1,7 @@
 ﻿using System.Data;
-using System.Data.SqlClient;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Infrastructure;
+using Microsoft.Data.SqlClient;
 
 namespace ExpenseTracker.Infrastructure
 {

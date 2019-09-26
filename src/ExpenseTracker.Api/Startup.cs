@@ -4,7 +4,6 @@ using ExpenseTracker.Application.Behaviors;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
 using ExpenseTracker.Domain.Abstractions;
-using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Infrastructure;
 using ExpenseTracker.Infrastructure.Repository;
@@ -49,7 +48,6 @@ namespace ExpenseTracker.Api
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddTransient<IDbConnectionFactory, SqlServerDbConnectionFactory>();
