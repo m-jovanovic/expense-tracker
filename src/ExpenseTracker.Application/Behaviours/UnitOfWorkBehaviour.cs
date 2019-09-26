@@ -4,23 +4,23 @@ using ExpenseTracker.Application.Extensions;
 using ExpenseTracker.Domain.Abstractions;
 using MediatR;
 
-namespace ExpenseTracker.Application.Behaviors
+namespace ExpenseTracker.Application.Behaviours
 {
     /// <summary>
     /// Represents a unit of work behavior that wraps a request and manages the unit of work.
     /// </summary>
     /// <typeparam name="TRequest">The request type.</typeparam>
     /// <typeparam name="TResponse">The response type.</typeparam>
-    public sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public sealed class UnitOfWorkBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="UnitOfWorkBehavior{TRequest,TResponse}"/> class.
+        /// Initializes a new instance of the <see cref="UnitOfWorkBehaviour{TRequest,TResponse}"/> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work instance.</param>
-        public UnitOfWorkBehavior(IUnitOfWork unitOfWork)
+        public UnitOfWorkBehaviour(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }

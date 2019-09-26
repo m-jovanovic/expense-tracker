@@ -1,6 +1,6 @@
 ﻿using ExpenseTracker.Api.Filters;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Behaviors;
+using ExpenseTracker.Application.Behaviours;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
 using ExpenseTracker.Domain.Abstractions;
@@ -42,8 +42,9 @@ namespace ExpenseTracker.Api
                 options.UseSqlServer(connectionString));
 
             services.AddMediatR(typeof(CreateUserCommand));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
 
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
