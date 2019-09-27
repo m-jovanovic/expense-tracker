@@ -24,6 +24,8 @@ namespace ExpenseTracker.Domain.Primitives
 
         protected Enumeration()
         {
+            Value = default;
+            Name = string.Empty;
         }
 
         /// <summary>
@@ -66,7 +68,14 @@ namespace ExpenseTracker.Domain.Primitives
 
             foreach (FieldInfo info in fields)
             {
-                var instance = (T)Activator.CreateInstance(typeof(T), true);
+                object? o = Activator.CreateInstance(typeof(T), true);
+
+                if (o is null)
+                {
+                    throw new Exception("Test");
+                }
+
+                var instance = (T)o;
 
                 if (info.GetValue(instance) is T locatedValue)
                 {
@@ -76,13 +85,13 @@ namespace ExpenseTracker.Domain.Primitives
         }
 
         /// <inheritdoc />
-        public int CompareTo(object other)
+        public int CompareTo(object? other)
         {
             return other is null ? 1 : Value.CompareTo(((Enumeration)other).Value);
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(obj, null))
             {

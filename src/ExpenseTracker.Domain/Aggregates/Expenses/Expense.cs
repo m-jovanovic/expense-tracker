@@ -28,6 +28,7 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
 
         private Expense()
         {
+            Money = Money.Empty;
         }
 
         /// <summary>

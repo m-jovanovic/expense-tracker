@@ -9,6 +9,11 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
     public sealed class Money : ValueObject
     {
         /// <summary>
+        /// Returns an empty <see cref="Money"/> object.
+        /// </summary>
+        internal static readonly Money Empty = new Money();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Money"/> class.
         /// </summary>
         /// <param name="amount">The amount.</param>
@@ -21,6 +26,7 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
 
         private Money()
         {
+            Currency = Currency.None;
         }
 
         /// <summary>

@@ -85,7 +85,7 @@ namespace ExpenseTracker.Domain.Primitives
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (!(obj is Maybe<T>))
             {
@@ -107,7 +107,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// Unwraps the <see cref="Maybe{T}"/> object, returning the contained value or the default value for its type.
         /// </summary>
         /// <returns>The containing value, or the default value for its type.</returns>
-        public T Unwrap()
+        public T? Unwrap()
         {
             return HasValue ? Value : default;
         }

@@ -36,6 +36,9 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// </summary>
         private User()
         {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            Email = Email.Empty;
             _expenses = new List<Expense>();
         }
 
@@ -71,11 +74,6 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// <param name="expense">The expense.</param>
         public void AddExpense(Expense expense)
         {
-            if (expense == null)
-            {
-                throw new DomainException("Expense can not be null.");
-            }
-
             Maybe<Expense> expenseOrNothing = GetExpenseIfExists(expense);
 
             if (expenseOrNothing.HasValue)

@@ -10,6 +10,11 @@ namespace ExpenseTracker.Domain.Aggregates.Users
     /// </summary>
     public sealed class Email : ValueObject
     {
+        /// <summary>
+        /// Returns an empty email object.
+        /// </summary>
+        internal static readonly Email Empty = new Email();
+
         private const string EmailRegexPattern = @"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$";
 
         /// <summary>
@@ -23,6 +28,7 @@ namespace ExpenseTracker.Domain.Aggregates.Users
 
         private Email()
         {
+            Value = string.Empty;
         }
 
         /// <summary>
@@ -39,16 +45,23 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         {
             return emailOrNothing
                 .ToResult("Email should not be empty.")
-                .OnSuccess(email => email.Trim())
-                .Ensure(email => email.Length != 0, "Email should not be empty")
-                .Ensure(email => email.Length < 256, "Email is too long.")
+                .OnSuccess(email => email?.Trim())
+                .Ensure(email => email?.Length != 0, "Email should not be empty")
+                .Ensure(email => email?.Length < 256, "Email is too long.")
                 .Ensure(email => Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase), "Email is invalid.")
-                .Map(email => new Email(email));
+                .Map(email => email is null ? Empty : new Email(email));
         }
 
         public static implicit operator string(Email email) => email?.Value ?? string.Empty;
 
-        public static explicit operator Email(string email) => Create(email).Value;
+        public static explicit operator Email(string email)
+        {
+            Result<Email> emailResult = Create(email);
+
+            Email? emailValue = emailResult.Value();
+
+            return emailResult.IsFailure || emailValue is null ? Empty : emailValue;
+        }
 
         /// <inheritdoc />
         protected override IEnumerable<object> GetAtomicValues()

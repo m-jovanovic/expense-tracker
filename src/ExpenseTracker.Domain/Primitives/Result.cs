@@ -55,7 +55,9 @@ namespace ExpenseTracker.Domain.Primitives
         /// <typeparam name="TValue">The result type.</typeparam>
         /// <param name="value">The result value.</param>
         /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
-        public static Result<TValue> Ok<TValue>(TValue value) => new Result<TValue>(value, true, string.Empty);
+        public static Result<TValue> Ok<TValue>(TValue? value)
+            where TValue : class
+            => new Result<TValue>(value, true, string.Empty);
 
         /// <summary>
         /// Returns a fail <see cref="Result"/> with the specified error message.
@@ -70,7 +72,9 @@ namespace ExpenseTracker.Domain.Primitives
         /// <typeparam name="TValue">The result type.</typeparam>
         /// <param name="error">The error message.</param>
         /// <returns>A new instance of <see cref="Result{T}"/> with the specified error message and failure flag set.</returns>
-        public static Result<TValue> Fail<TValue>(string error) => new Result<TValue>(default, false, error);
+        public static Result<TValue> Fail<TValue>(string error)
+            where TValue : class
+            => new Result<TValue>(default, false, error);
 
         /// <summary>
         /// Combines multiple <see cref="Result"/> instances, returning the first failure or a success result.
@@ -98,8 +102,9 @@ namespace ExpenseTracker.Domain.Primitives
     /// </summary>
     /// <typeparam name="TValue">The result value type.</typeparam>
     public class Result<TValue> : Result
+        where TValue : class
     {
-        private readonly TValue _value;
+        private readonly TValue? _value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TValueType}"/> class with the specified parameters.
@@ -107,26 +112,25 @@ namespace ExpenseTracker.Domain.Primitives
         /// <param name="value">The result value.</param>
         /// <param name="isSuccess">The flag indicating if the result is successful.</param>
         /// <param name="error">The error message.</param>
-        protected internal Result(TValue value, bool isSuccess, string error)
+        protected internal Result(TValue? value, bool isSuccess, string error)
             : base(isSuccess, error)
         {
             _value = value;
         }
 
         /// <summary>
-        /// Gets the result value.
+        /// Returns the result value if the result is successful, otherwise throws an exception.
         /// </summary>
-        public TValue Value
+        /// <returns>The result value if the result is successful.</returns>
+        /// <exception cref="InvalidOperationException"> when IsSuccess is false.</exception>
+        public TValue? Value()
         {
-            get
+            if (!IsSuccess)
             {
-                if (!IsSuccess)
-                {
-                    throw new InvalidOperationException();
-                }
-
-                return _value;
+                throw new InvalidOperationException();
             }
+
+            return _value;
         }
     }
 }
