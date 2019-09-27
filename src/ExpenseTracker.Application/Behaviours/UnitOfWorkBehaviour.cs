@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Extensions;
 using ExpenseTracker.Domain.Abstractions;
 using MediatR;

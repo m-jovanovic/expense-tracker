@@ -34,7 +34,7 @@ namespace ExpenseTracker.Application.Abstractions
         /// Gets an enumerable collection of all the entities in the database.
         /// </summary>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        /// <returns>An enumerable collection of all the entities in the database</returns>
+        /// <returns>An enumerable collection of all the entities in the database.</returns>
         Task<IEnumerable<TEntity>> ListAsync<TEntity>()
             where TEntity : Entity;
 

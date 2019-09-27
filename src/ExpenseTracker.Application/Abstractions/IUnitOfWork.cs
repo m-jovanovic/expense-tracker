@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace ExpenseTracker.Domain.Abstractions
+namespace ExpenseTracker.Application.Abstractions
 {
     /// <summary>
     /// Represents the interface for a unit of work.
