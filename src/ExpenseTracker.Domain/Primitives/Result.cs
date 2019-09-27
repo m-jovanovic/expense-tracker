@@ -83,8 +83,6 @@ namespace ExpenseTracker.Domain.Primitives
         /// <returns>The first failure <see cref="Result"/> instance or a new success <see cref="Result"/> instance.</returns>
         public static Result FirstFailureOrSuccess(params Result[] results)
         {
-            Check.NotNull(results, nameof(results));
-
             foreach (Result result in results)
             {
                 if (result.IsFailure)

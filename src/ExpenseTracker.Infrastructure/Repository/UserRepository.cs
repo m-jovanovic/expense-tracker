@@ -33,8 +33,6 @@ namespace ExpenseTracker.Infrastructure.Repository
         /// <inheritdoc />
         public void InsertUser(User user)
         {
-            Check.NotNull(user, nameof(user));
-
             _dbContext.Insert(user);
         }
 

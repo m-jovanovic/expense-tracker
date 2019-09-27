@@ -92,8 +92,6 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// <param name="expense">The expense.</param>
         public void RemoveExpense(Expense expense)
         {
-            Check.NotNull(expense, nameof(expense));
-
             Maybe<Expense> expenseOrNothing = GetExpenseIfExists(expense);
 
             if (expenseOrNothing.HasNoValue)

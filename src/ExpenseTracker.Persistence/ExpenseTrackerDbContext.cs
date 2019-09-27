@@ -100,8 +100,6 @@ namespace ExpenseTracker.Persistence
         public void Insert<TEntity>(TEntity entity)
             where TEntity : Entity
         {
-            Check.NotNull(entity, nameof(entity));
-
             Set<TEntity>().Add(entity);
         }
 
@@ -109,8 +107,6 @@ namespace ExpenseTracker.Persistence
         public void Insert<TEntity>(IEnumerable<TEntity> entities)
             where TEntity : Entity
         {
-            Check.NotNull(entities, nameof(entities));
-
             Set<TEntity>().AddRange(entities);
         }
 
@@ -118,8 +114,6 @@ namespace ExpenseTracker.Persistence
         public new void Update<TEntity>(TEntity entity)
             where TEntity : Entity
         {
-            Check.NotNull(entity, nameof(entity));
-
             Set<TEntity>().Update(entity);
         }
 
@@ -127,8 +121,6 @@ namespace ExpenseTracker.Persistence
         public void Update<TEntity>(IEnumerable<TEntity> entities)
             where TEntity : Entity
         {
-            Check.NotNull(entities, nameof(entities));
-
             Set<TEntity>().UpdateRange(entities);
         }
 
@@ -136,8 +128,6 @@ namespace ExpenseTracker.Persistence
         public void Delete<TEntity>(TEntity entity)
             where TEntity : Entity
         {
-            Check.NotNull(entity, nameof(entity));
-
             Set<TEntity>().Remove(entity);
         }
 
@@ -145,8 +135,6 @@ namespace ExpenseTracker.Persistence
         public void Delete<TEntity>(IEnumerable<TEntity> entities)
             where TEntity : Entity
         {
-            Check.NotNull(entities, nameof(entities));
-
             Set<TEntity>().RemoveRange(entities);
         }
 
@@ -184,8 +172,6 @@ namespace ExpenseTracker.Persistence
         private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> specification)
             where TEntity : Entity
         {
-            Check.NotNull(specification, nameof(specification));
-
             return SpecificationEvaluator<TEntity>.GetQuery(Table<TEntity>(), specification);
         }
 

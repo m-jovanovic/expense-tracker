@@ -41,14 +41,14 @@ namespace ExpenseTracker.Domain.Tests.ValueObjects
 
             if (expected)
             {
-                email.ShouldBe(emailResult.Value);
+                email.ShouldBe(emailResult.Value());
             }
         }
 
         [Fact]
         public void EmailShouldConvertToStringImplicitly()
         {
-            Email email = Email.Create("test@email.com").Value;
+            Email email = Email.Create("test@email.com").Value();
 
             string emailString = email;
 
@@ -68,8 +68,8 @@ namespace ExpenseTracker.Domain.Tests.ValueObjects
         [Fact]
         public void EmailsShouldBeEqualIfValuesAreEqual()
         {
-            Email email1 = Email.Create("test@email.test").Value;
-            Email email2 = Email.Create("test@email.test").Value;
+            Email email1 = Email.Create("test@email.test").Value();
+            Email email2 = Email.Create("test@email.test").Value();
 
             email1.ShouldBe(email2);
 

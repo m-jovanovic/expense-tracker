@@ -120,8 +120,6 @@ namespace ExpenseTracker.Domain.Primitives
         /// <returns>The result of the specified selector function or the default value for its type.</returns>
         public TProperty Unwrap<TProperty>(Func<T, TProperty> selector)
         {
-            Check.NotNull(selector, nameof(selector));
-
             return HasValue ? selector(Value) : default;
         }
     }

@@ -44,8 +44,6 @@ namespace ExpenseTracker.Application.Specification
         /// <param name="includeExpression">The include expression.</param>
         protected virtual void AddInclude(Expression<Func<TEntity, object>> includeExpression)
         {
-            Check.NotNull(includeExpression, nameof(includeExpression));
-
             IncludeExpressions.Add(includeExpression);
         }
 
@@ -55,8 +53,6 @@ namespace ExpenseTracker.Application.Specification
         /// <param name="includeString">The include string.</param>
         protected virtual void AddInclude(string includeString)
         {
-            Check.NotNullOrEmpty(includeString, nameof(includeString));
-
             IncludeStrings.Add(includeString);
         }
 
@@ -66,8 +62,6 @@ namespace ExpenseTracker.Application.Specification
         /// <param name="orderByExpression">The order by expression.</param>
         protected virtual void ApplyOrderBy(Expression<Func<TEntity, object>> orderByExpression)
         {
-            Check.NotNull(orderByExpression, nameof(orderByExpression));
-
             OrderByExpression = orderByExpression;
 
             OrderByDescendingExpression = null;
@@ -79,8 +73,6 @@ namespace ExpenseTracker.Application.Specification
         /// <param name="orderByDescendingExpression">The order by descending expression.</param>
         protected virtual void ApplyOrderByDescending(Expression<Func<TEntity, object>> orderByDescendingExpression)
         {
-            Check.NotNull(orderByDescendingExpression, nameof(orderByDescendingExpression));
-
             OrderByDescendingExpression = orderByDescendingExpression;
 
             OrderByExpression = null;

@@ -33,7 +33,7 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
                 return Result.Fail(emailResult.Error);
             }
 
-            Email email = emailResult.Value;
+            Email email = emailResult.Value();
 
             Maybe<User> existingUserOrNothing = await _userRepository.GetUserByEmailAsync(email);
 
