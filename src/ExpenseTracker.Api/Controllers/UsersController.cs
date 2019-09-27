@@ -13,7 +13,7 @@ namespace ExpenseTracker.Api.Controllers
     /// Represents the controller for managing the users resource.
     /// </summary>
     [Route("api/users")]
-    public class UsersController : ApiControllerBase
+    public class UsersController : ApiController
     {
         /// <summary>
         /// Gets the user with the specified identifier.
@@ -52,6 +52,7 @@ namespace ExpenseTracker.Api.Controllers
                 return BadRequest(result.Error);
             }
 
+            // TODO: Refactor this to return 201 (Created).
             return NoContent();
         }
     }
