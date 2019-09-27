@@ -38,10 +38,11 @@ namespace ExpenseTracker.Api
 
             services.AddSingleton(connectionString);
 
-            services.AddDbContext<ExpenseTrackerDbContext>(options =>
-                options.UseSqlServer(connectionString));
+            services.AddDbContext<ExpenseTrackerDbContext>(options => options.UseSqlServer(connectionString));
 
             services.AddMediatR(typeof(CreateUserCommand));
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
