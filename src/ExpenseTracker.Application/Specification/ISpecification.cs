@@ -30,11 +30,11 @@ namespace ExpenseTracker.Application.Specification
         /// <summary>
         /// Gets the order by expression.
         /// </summary>
-        Expression<Func<TEntity, object>> OrderByExpression { get; }
+        Expression<Func<TEntity, object>>? OrderByExpression { get; }
 
         /// <summary>
         /// Gets the order by descending expression.
         /// </summary>
-        Expression<Func<TEntity, object>> OrderByDescendingExpression { get; }
+        Expression<Func<TEntity, object>>? OrderByDescendingExpression { get; }
     }
 }

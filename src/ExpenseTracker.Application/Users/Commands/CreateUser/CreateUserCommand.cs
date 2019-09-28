@@ -11,16 +11,16 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
         /// <summary>
         /// Gets or sets the user email.
         /// </summary>
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /// <summary>
         /// Gets or sets the user first name.
         /// </summary>
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets the user last name.
         /// </summary>
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
     }
 }

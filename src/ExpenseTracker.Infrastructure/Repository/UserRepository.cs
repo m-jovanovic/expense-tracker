@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Specification;
 using ExpenseTracker.Domain.Aggregates.Users;
-using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Infrastructure.Repository
 {
@@ -25,34 +23,28 @@ namespace ExpenseTracker.Infrastructure.Repository
         }
 
         /// <inheritdoc />
-        public async Task<Maybe<User>> GetByIdAsync(Guid id)
-        {
-            return await _dbContext.GetByIdAsync<User>(id);
-        }
-
-        /// <inheritdoc />
         public void InsertUser(User user)
         {
             _dbContext.Insert(user);
         }
 
         /// <inheritdoc />
-        public async Task<Maybe<User>> GetUserByEmailAsync(string email)
+        public async Task<User?> GetUserByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                return null;
+                return default;
             }
 
             return await _dbContext.GetBySpecificationAsync(new UserSpecification(email));
         }
 
         /// <inheritdoc />
-        public async Task<Maybe<User>> GetUserWithExpensesByIdAsync(Guid id)
+        public async Task<User?> GetUserByIdWithExpensesAsync(Guid id)
         {
             if (id == Guid.Empty)
             {
-                return null;
+                return default;
             }
 
             return await _dbContext.GetBySpecificationAsync(new UserWithExpensesSpecification(id));

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Events;
-using ExpenseTracker.Domain.Exceptions;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Domain.Aggregates.Users

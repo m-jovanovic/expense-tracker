@@ -12,7 +12,7 @@ namespace ExpenseTracker.Application.Specification
         /// </summary>
         /// <param name="email">The email that will be used for creating the filter criteria.</param>
         public UserSpecification(string email)
-            : base(u => u.Email == email)
+            : base(u => u.Email.Value == email)
         {
         }
     }

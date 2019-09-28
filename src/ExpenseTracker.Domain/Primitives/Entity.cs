@@ -14,12 +14,12 @@ namespace ExpenseTracker.Domain.Primitives
 
         public static bool operator ==(Entity a, Entity b)
         {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
+            if (a is null && b is null)
             {
                 return true;
             }
 
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
+            if (a is null || b is null)
             {
                 return false;
             }
@@ -35,7 +35,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(obj, null))
+            if (obj is null)
             {
                 return false;
             }

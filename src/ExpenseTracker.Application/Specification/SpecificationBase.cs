@@ -33,10 +33,10 @@ namespace ExpenseTracker.Application.Specification
         public List<string> IncludeStrings { get; }
 
         /// <inheritdoc />
-        public Expression<Func<TEntity, object>> OrderByExpression { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderByExpression { get; private set; }
 
         /// <inheritdoc />
-        public Expression<Func<TEntity, object>> OrderByDescendingExpression { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderByDescendingExpression { get; private set; }
 
         /// <summary>
         /// Adds the specified include expression to the list of include expressions.

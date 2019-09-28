@@ -32,6 +32,7 @@
     <Rule Id="CA1000" Action="None" />
     <Rule Id="CA1721" Action="None" />
     <Rule Id="CA1065" Action="None" />
+    <Rule Id="CA1040" Action="None" />
   </Rules>
   <Rules AnalyzerId="Microsoft.ApiDesignGuidelines.Analyzers" RuleNamespace="Microsoft.ApiDesignGuidelines.Analyzers">
   </Rules>

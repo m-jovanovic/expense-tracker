@@ -20,8 +20,11 @@ namespace ExpenseTracker.Persistence
     /// </summary>
     public sealed class ExpenseTrackerDbContext : DbContext, IDbContext, IUnitOfWork
     {
+        // TODO: Remove pragma when [AllowNull] attribute starts working.
+        #nullable disable
         private readonly IDateTime _dateTime;
         private readonly IMediator _mediator;
+        #nullable enable
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseTrackerDbContext"/> class.
@@ -36,11 +39,24 @@ namespace ExpenseTracker.Persistence
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpenseTrackerDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The database context options.</param>
+        internal ExpenseTrackerDbContext(DbContextOptions options)
+            : base(options)
+        {
+        }
+
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            UpdateAuditableEntities();
+            ChangeTracker.DetectChanges();
 
-            UpdateSoftDeletableEntities();
+            DateTime utcNow = _dateTime.UtcNow();
+
+            UpdateAuditableEntities(utcNow);
+
+            UpdateSoftDeletableEntities(utcNow);
 
             await PublishDomainEvents(cancellationToken);
 
@@ -48,19 +64,19 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetByIdAsync<TEntity>(Guid id)
+        public async Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : Entity
         {
             if (id == Guid.Empty)
             {
-                return null;
+                return default;
             }
 
             return await Set<TEntity>().FindAsync(id);
         }
 
         /// <inheritdoc />
-        public async Task<TEntity> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+        public async Task<TEntity?> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
             where TEntity : Entity
         {
             return await ApplySpecification(specification).SingleOrDefaultAsync();
@@ -149,10 +165,17 @@ namespace ExpenseTracker.Persistence
         /// <inheritdoc />
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            IEnumerable<IEntityTypeConfiguration> entityTypeConfigurations = from t in Assembly.GetAssembly(GetType()).GetTypes()
+            Assembly? assembly = Assembly.GetAssembly(GetType());
+
+            if (assembly is null)
+            {
+                throw new InvalidOperationException($"No assembly was found for {GetType().Name}.");
+            }
+
+            IEnumerable<IEntityTypeConfiguration> entityTypeConfigurations = from t in assembly.GetTypes()
                 where (t.BaseType?.IsGenericType ?? false) &&
-                      t.BaseType.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)
-                select (IEntityTypeConfiguration)Activator.CreateInstance(t);
+                      t.BaseType?.GetGenericTypeDefinition() == typeof(EntityTypeConfiguration<>)
+                select Activator.CreateInstance(t) as IEntityTypeConfiguration;
 
             foreach (IEntityTypeConfiguration entityTypeConfiguration in entityTypeConfigurations)
             {
@@ -185,54 +208,68 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <summary>
+        /// Updates the specified entity entry's referenced entries in the deleted state to the modified state.
+        /// This method is recursive.
+        /// </summary>
+        /// <param name="entityEntry">The entity entry.</param>
+        private static void UpdateDeletedReferencedEntriesToModified(EntityEntry entityEntry)
+        {
+            if (!entityEntry.References.Any())
+            {
+                return;
+            }
+
+            foreach (ReferenceEntry referenceEntry in entityEntry.References)
+            {
+                if (referenceEntry.TargetEntry.State != EntityState.Deleted)
+                {
+                    continue;
+                }
+
+                referenceEntry.TargetEntry.State = EntityState.Modified;
+
+                UpdateDeletedReferencedEntriesToModified(referenceEntry.TargetEntry);
+            }
+        }
+
+        /// <summary>
         /// Updates all the entities that implement the <see cref="IAuditableEntity"/> interface.
         /// </summary>
-        private void UpdateAuditableEntities()
+        private void UpdateAuditableEntities(DateTime utcNow)
         {
-            List<EntityEntry<IAuditableEntity>> auditableEntities = ChangeTracker
-                .Entries<IAuditableEntity>()
-                .ToList();
-
-            DateTime utcNow = _dateTime.UtcNow();
-
-            auditableEntities.ForEach(entityEntry =>
+            foreach (EntityEntry<IAuditableEntity> entityEntry in ChangeTracker.Entries<IAuditableEntity>())
             {
                 if (entityEntry.State == EntityState.Added)
                 {
                     SetPropertyValue(entityEntry, nameof(IAuditableEntity.CreatedOnUtc), utcNow);
                 }
-
-                if (entityEntry.State == EntityState.Modified)
+                else if (entityEntry.State == EntityState.Modified)
                 {
                     SetPropertyValue(entityEntry, nameof(IAuditableEntity.ModifiedOnUtc), utcNow);
                 }
-            });
+            }
         }
 
         /// <summary>
         /// Updates all the entities that implement the <see cref="ISoftDeletableEntity"/> interface.
         /// </summary>
-        private void UpdateSoftDeletableEntities()
+        private void UpdateSoftDeletableEntities(DateTime utcNow)
         {
-            List<EntityEntry<ISoftDeletableEntity>> softDeletableEntities = ChangeTracker
-                .Entries<ISoftDeletableEntity>()
-                .ToList();
-
-            DateTime utcNow = _dateTime.UtcNow();
-
-            softDeletableEntities.ForEach(entityEntry =>
+            foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>())
             {
                 if (entityEntry.State != EntityState.Deleted)
                 {
-                    return;
+                    continue;
                 }
 
                 entityEntry.State = EntityState.Modified;
 
+                UpdateDeletedReferencedEntriesToModified(entityEntry);
+
                 SetPropertyValue(entityEntry, nameof(ISoftDeletableEntity.IsDeleted), true);
 
                 SetPropertyValue(entityEntry, nameof(ISoftDeletableEntity.DeletedOnUtc), utcNow);
-            });
+            }
         }
 
         /// <summary>

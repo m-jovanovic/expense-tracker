@@ -25,6 +25,9 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
             Symbol = symbol;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Currency"/> class.
+        /// </summary>
         private Currency()
         {
             Symbol = string.Empty;

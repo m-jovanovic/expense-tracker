@@ -9,7 +9,10 @@ namespace ExpenseTracker.Api.Controllers
     /// </summary>
     public abstract class ApiController : ControllerBase
     {
+        // TODO: Remove pragma when [AllowNull] attribute starts working.
+        #nullable disable
         private IMediator _mediator;
+        #nullable enable
 
         /// <summary>
         /// Gets the <see cref="IMediator"/> instance.

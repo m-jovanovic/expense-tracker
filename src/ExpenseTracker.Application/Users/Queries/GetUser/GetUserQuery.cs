@@ -1,6 +1,5 @@
 ﻿using System;
 using ExpenseTracker.Domain.Aggregates.Users;
-using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
@@ -8,7 +7,7 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// <summary>
     /// Represents the query for getting a user.
     /// </summary>
-    public sealed class GetUserQuery : IRequest<Maybe<User>>
+    public sealed class GetUserQuery : IRequest<User?>
     {
         /// <summary>
         /// Gets or sets the user identifier.

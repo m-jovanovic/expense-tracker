@@ -28,9 +28,9 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
         /// <inheritdoc />
         public async Task<Result> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
         {
-            Maybe<User> userOrNothing = await _userRepository.GetUserWithExpensesByIdAsync(request.UserId);
+            User? user = await _userRepository.GetUserByIdWithExpensesAsync(request.UserId);
 
-            if (userOrNothing.HasNoValue)
+            if (user is null)
             {
                 throw new EntityNotFoundException(nameof(User), request.UserId);
             }
@@ -45,8 +45,6 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
             Currency currency = currencyOrNothing.Value;
 
             var money = new Money(request.Amount, currency);
-
-            User user = userOrNothing.Value;
 
             var expense = new Expense(
             	Guid.NewGuid(),

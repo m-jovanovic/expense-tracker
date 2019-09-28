@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Dapper;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Users;
-using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
@@ -13,7 +12,7 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// <summary>
     /// Represents the handler for the <see cref="GetUserQueryHandler"/> query.
     /// </summary>
-    public sealed class GetUserQueryHandler : IRequestHandler<GetUserQuery, Maybe<User>>
+    public sealed class GetUserQueryHandler : IRequestHandler<GetUserQuery, User?>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
@@ -27,11 +26,11 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
         }
 
         /// <inheritdoc />
-        public async Task<Maybe<User>> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<User?> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
             if (request.Id == Guid.Empty)
             {
-                return null;
+                return default;
             }
 
             const string sql = "SELECT * FROM [User] WHERE Id = @Id";

@@ -17,17 +17,16 @@ namespace ExpenseTracker.Persistence.Configuration
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.UserId)
-                .IsRequired();
+            builder.Property(e => e.UserId).IsRequired();
 
-            builder.Property(e => e.Date)
-                .IsRequired();
+            builder.Property(e => e.Date).IsRequired();
 
-            builder.Property(e => e.CreatedOnUtc)
-                .IsRequired();
+            builder.Property(e => e.CreatedOnUtc).IsRequired();
 
             builder.OwnsOne(e => e.Money, moneyBuilder =>
             {
+                moneyBuilder.WithOwner();
+
                 moneyBuilder.Property(m => m.Amount)
                     .HasColumnName(nameof(Money.Amount))
                     .HasColumnType("decimal(19,4)")
@@ -35,17 +34,19 @@ namespace ExpenseTracker.Persistence.Configuration
 
                 moneyBuilder.OwnsOne(m => m.Currency, currencyBuilder =>
                 {
+                    currencyBuilder.WithOwner();
+
                     currencyBuilder.Property(c => c.Value)
-                        .HasColumnName($"CurrencyId")
+                        .HasColumnName("CurrencyId")
                         .IsRequired();
 
                     currencyBuilder.Property(c => c.Name)
-                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Name)}")
+                        .HasColumnName("CurrencyName")
                         .HasMaxLength(50)
                         .IsRequired();
 
                     currencyBuilder.Property(c => c.Symbol)
-                        .HasColumnName($"{nameof(Money.Currency)}{nameof(Currency.Symbol)}")
+                        .HasColumnName("CurrencySymbol")
                         .HasMaxLength(10)
                         .IsRequired();
                 });

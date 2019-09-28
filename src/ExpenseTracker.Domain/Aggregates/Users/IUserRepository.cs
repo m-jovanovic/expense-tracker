@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ExpenseTracker.Domain.Abstractions;
-using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Domain.Aggregates.Users
 {
-    public interface IUserRepository : IRepository<User>
+    /// <summary>
+    /// Represents the user repository interface.
+    /// </summary>
+    public interface IUserRepository
     {
         /// <summary>
         /// Inserts the specified user to the database.
@@ -18,13 +19,13 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>The user if it is found, otherwise null.</returns>
-        Task<Maybe<User>> GetUserByEmailAsync(string email);
+        Task<User?> GetUserByEmailAsync(string email);
 
         /// <summary>
         /// Gets the user and expenses with the specified identifier.
         /// </summary>
         /// <param name="id">The user identifier.</param>
         /// <returns>The user with expenses included.</returns>
-        Task<Maybe<User>> GetUserWithExpensesByIdAsync(Guid id);
+        Task<User?> GetUserByIdWithExpensesAsync(Guid id);
     }
 }

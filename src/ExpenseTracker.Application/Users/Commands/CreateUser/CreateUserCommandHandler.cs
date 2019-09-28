@@ -26,26 +26,31 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
         /// <inheritdoc />
         public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            Result<Email> emailResult = Email.Create(request.Email);
+            Result<Email> emailResult = Email.Create(request.Email ?? string.Empty);
 
             if (emailResult.IsFailure)
             {
                 return Result.Fail(emailResult.Error);
             }
 
-            Email email = emailResult.Value();
+            Email? email = emailResult.Value();
 
-            Maybe<User> existingUserOrNothing = await _userRepository.GetUserByEmailAsync(email);
+            if (email is null || string.IsNullOrWhiteSpace(email))
+            {
+                return Result.Fail("The specified email is invalid.");
+            }
 
-            if (existingUserOrNothing.HasValue)
+            User? existingUser = await _userRepository.GetUserByEmailAsync(email);
+
+            if (!(existingUser is null))
             {
                 return Result.Fail("The specified email is already in use.");
             }
 
             var user = new User(
                 Guid.NewGuid(),
-                request.FirstName,
-                request.LastName,
+                request.FirstName ?? string.Empty,
+                request.LastName ?? string.Empty,
                 email);
 
             _userRepository.InsertUser(user);

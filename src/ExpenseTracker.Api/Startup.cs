@@ -3,7 +3,6 @@ using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Behaviours;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Application.Users.Commands.CreateUser;
-using ExpenseTracker.Domain.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Infrastructure;
 using ExpenseTracker.Infrastructure.Repository;
@@ -34,11 +33,12 @@ namespace ExpenseTracker.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = new ConnectionString(Configuration["ConnectionString"]);
+            var connectionString = new ConnectionString(Configuration.GetConnectionString("ExpenseTrackerDb"));
 
             services.AddSingleton(connectionString);
 
-            services.AddDbContext<ExpenseTrackerDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<ExpenseTrackerDbContext>(options =>
+                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("ExpenseTracker.Api")));
 
             services.AddMediatR(typeof(CreateUserCommand));
 

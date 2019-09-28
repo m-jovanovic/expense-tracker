@@ -22,6 +22,9 @@ namespace ExpenseTracker.Domain.Primitives
             Name = name;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Enumeration"/> class.
+        /// </summary>
         protected Enumeration()
         {
             Value = default;
@@ -72,7 +75,8 @@ namespace ExpenseTracker.Domain.Primitives
 
                 if (o is null)
                 {
-                    throw new Exception("Test");
+                    // TODO: Define a custom exception for this case.
+                    throw new Exception("Invalid currency");
                 }
 
                 var instance = (T)o;
@@ -93,7 +97,7 @@ namespace ExpenseTracker.Domain.Primitives
         /// <inheritdoc />
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(obj, null))
+            if (obj is null)
             {
                 return false;
             }

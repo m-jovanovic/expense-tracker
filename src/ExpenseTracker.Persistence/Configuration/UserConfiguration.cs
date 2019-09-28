@@ -28,11 +28,15 @@ namespace ExpenseTracker.Persistence.Configuration
             builder.Property(u => u.CreatedOnUtc)
                 .IsRequired();
 
-            builder.OwnsOne(u => u.Email)
-                .Property(e => e.Value)
-                .HasColumnName(nameof(User.Email))
-                .HasMaxLength(255)
-                .IsRequired();
+            builder.OwnsOne(u => u.Email, emailBuilder =>
+            {
+                emailBuilder.WithOwner();
+
+                emailBuilder.Property(e => e.Value)
+                    .HasColumnName("Email")
+                    .HasMaxLength(255)
+                    .IsRequired();
+            });
 
             builder.HasMany(u => u.Expenses)
                 .WithOne()

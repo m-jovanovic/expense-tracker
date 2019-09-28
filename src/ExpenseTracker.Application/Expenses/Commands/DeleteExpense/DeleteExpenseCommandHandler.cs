@@ -28,14 +28,12 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
         /// <inheritdoc />
         public async Task<Result> Handle(DeleteExpenseCommand request, CancellationToken cancellationToken)
         {
-            Maybe<User> userOrNothing = await _userRepository.GetUserWithExpensesByIdAsync(request.UserId);
+            User? user = await _userRepository.GetUserByIdWithExpensesAsync(request.UserId);
 
-            if (userOrNothing.HasNoValue)
+            if (user is null)
             {
                 throw new EntityNotFoundException(nameof(User), request.UserId);
             }
-
-            User user = userOrNothing.Value;
 
             Expense? expense = user.Expenses.SingleOrDefault(e => e.Id == request.ExpenseId);
 

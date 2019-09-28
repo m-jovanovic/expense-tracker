@@ -18,7 +18,7 @@ namespace ExpenseTracker.Application.Abstractions
         /// <typeparam name="TEntity">The entity type.</typeparam>
         /// <param name="id">The identifier of the entity.</param>
         /// <returns>The entity if found, or null if no entity is found.</returns>
-        Task<TEntity> GetByIdAsync<TEntity>(Guid id)
+        Task<TEntity?> GetByIdAsync<TEntity>(Guid id)
             where TEntity : Entity;
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace ExpenseTracker.Application.Abstractions
         /// <typeparam name="TEntity">The entity type.</typeparam>
         /// <param name="specification">The specification.</param>
         /// <returns>An entity if found, otherwise false.</returns>
-        Task<TEntity> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+        Task<TEntity?> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
             where TEntity : Entity;
 
         /// <summary>
