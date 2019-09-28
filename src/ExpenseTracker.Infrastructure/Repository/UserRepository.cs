@@ -9,7 +9,7 @@ namespace ExpenseTracker.Infrastructure.Repository
     /// <summary>
     /// Represents the user repository.
     /// </summary>
-    public class UserRepository : IUserRepository
+    internal sealed class UserRepository : IUserRepository
     {
         private readonly IDbContext _dbContext;
 
@@ -17,16 +17,10 @@ namespace ExpenseTracker.Infrastructure.Repository
         /// Initializes a new instance of the <see cref="UserRepository"/> class.
         /// </summary>
         /// <param name="dbContext">The database context.</param>
-        public UserRepository(IDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public UserRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
-        public void InsertUser(User user)
-        {
-            _dbContext.Insert(user);
-        }
+        public void InsertUser(User user) => _dbContext.Insert(user);
 
         /// <inheritdoc />
         public async Task<User?> GetUserByEmailAsync(string email)

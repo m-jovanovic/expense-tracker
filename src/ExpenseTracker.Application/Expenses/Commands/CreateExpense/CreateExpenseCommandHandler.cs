@@ -15,14 +15,17 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
     public sealed class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand, Result>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IExpenseRepository _expenseRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateExpenseCommandHandler"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository instance.</param>
-        public CreateExpenseCommandHandler(IUserRepository userRepository)
+        /// <param name="expenseRepository">The expense repository instance.</param>
+        public CreateExpenseCommandHandler(IUserRepository userRepository, IExpenseRepository expenseRepository)
         {
             _userRepository = userRepository;
+            _expenseRepository = expenseRepository;
         }
 
         /// <inheritdoc />
@@ -53,6 +56,8 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
             	request.Date);
 
             user.AddExpense(expense);
+
+            _expenseRepository.InsertExpense(expense);
 
             return Result.Ok();
         }

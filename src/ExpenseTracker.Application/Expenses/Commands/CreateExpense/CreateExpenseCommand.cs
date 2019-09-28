@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
@@ -7,26 +8,31 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
     /// <summary>
     /// Represents the command for creating a user expense.
     /// </summary>
+    [DataContract]
     public sealed class CreateExpenseCommand : IRequest<Result>
     {
         /// <summary>
-        /// Gets or sets the user identifier.
+        /// Gets the user identifier.
         /// </summary>
-        public Guid UserId { get; set; }
+        [DataMember]
+        public Guid UserId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the expense amount.
+        /// Gets the expense amount.
         /// </summary>
-        public decimal Amount { get; set; }
+        [DataMember]
+        public decimal Amount { get; private set; }
 
         /// <summary>
-        /// Gets or sets the currency identifier.
+        /// Gets the currency identifier.
         /// </summary>
-        public int CurrencyId { get; set; }
+        [DataMember]
+        public int CurrencyId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the expense date.
+        /// Gets the expense date.
         /// </summary>
-        public DateTime Date { get; set; }
+        [DataMember]
+        public DateTime Date { get; private set; }
     }
 }

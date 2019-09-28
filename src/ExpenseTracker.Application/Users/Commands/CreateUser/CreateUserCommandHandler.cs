@@ -26,7 +26,7 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
         /// <inheritdoc />
         public async Task<Result> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            Result<Email> emailResult = Email.Create(request.Email ?? string.Empty);
+            Result<Email> emailResult = Email.Create(request.Email);
 
             if (emailResult.IsFailure)
             {
@@ -49,8 +49,8 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
 
             var user = new User(
                 Guid.NewGuid(),
-                request.FirstName ?? string.Empty,
-                request.LastName ?? string.Empty,
+                request.FirstName,
+                request.LastName,
                 email);
 
             _userRepository.InsertUser(user);

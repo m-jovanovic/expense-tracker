@@ -212,7 +212,7 @@ namespace ExpenseTracker.Persistence
         /// This method is recursive.
         /// </summary>
         /// <param name="entityEntry">The entity entry.</param>
-        private static void UpdateDeletedReferencedEntriesToModified(EntityEntry entityEntry)
+        private static void UpdateDeletedEntityEntryReferencesToModified(EntityEntry entityEntry)
         {
             if (!entityEntry.References.Any())
             {
@@ -228,7 +228,7 @@ namespace ExpenseTracker.Persistence
 
                 referenceEntry.TargetEntry.State = EntityState.Modified;
 
-                UpdateDeletedReferencedEntriesToModified(referenceEntry.TargetEntry);
+                UpdateDeletedEntityEntryReferencesToModified(referenceEntry.TargetEntry);
             }
         }
 
@@ -264,7 +264,7 @@ namespace ExpenseTracker.Persistence
 
                 entityEntry.State = EntityState.Modified;
 
-                UpdateDeletedReferencedEntriesToModified(entityEntry);
+                UpdateDeletedEntityEntryReferencesToModified(entityEntry);
 
                 SetPropertyValue(entityEntry, nameof(ISoftDeletableEntity.IsDeleted), true);
 

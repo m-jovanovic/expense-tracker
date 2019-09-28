@@ -11,16 +11,12 @@ namespace ExpenseTracker.Persistence
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = new ConnectionString(configuration.GetConnectionString("ExpenseTrackerDb"));
-
             services.AddSingleton(connectionString);
-
             services.AddDbContext<ExpenseTrackerDbContext>(options =>
             {
                 options.UseSqlServer(connectionString);
             });
-
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
-
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
 
             return services;
