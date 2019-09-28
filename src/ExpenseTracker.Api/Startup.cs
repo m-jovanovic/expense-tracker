@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Api.Filters;
+using ExpenseTracker.Application;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Behaviours;
 using ExpenseTracker.Application.Infrastructure;
@@ -33,36 +34,20 @@ namespace ExpenseTracker.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = new ConnectionString(Configuration.GetConnectionString("ExpenseTrackerDb"));
+            services.AddPersistence(Configuration);
+            services.AddInfrastructure();
+            services.AddApplication();
 
-            services.AddSingleton(connectionString);
-
-            services.AddDbContext<ExpenseTrackerDbContext>(options =>
-                options.UseSqlServer(connectionString, b => b.MigrationsAssembly("ExpenseTracker.Api")));
-
-            services.AddMediatR(typeof(CreateUserCommand));
-
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
-
-            services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
-            services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
-            services.AddScoped<IUserRepository, UserRepository>();
-
-            services.AddTransient<IDateTime, MachineDateTime>();
-            services.AddTransient<IDbConnectionFactory, SqlServerDbConnectionFactory>();
-
-            services.AddMvc(options =>
+            services.AddControllers()
+                .AddFluentValidation(config =>
                 {
-                    options.Filters.Add(typeof(ApplicationExceptionFilterAttribute));
-                    options.EnableEndpointRouting = false;
-                })
-                .AddFluentValidation(config => config.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>())
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+                    config.RegisterValidatorsFromAssemblyContaining<CreateUserCommandValidator>();
+                });
 
-            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,7 +65,12 @@ namespace ExpenseTracker.Api
 
             app.UseHttpsRedirection();
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseEndpoints(endpointRouteBuilder =>
+            {
+                endpointRouteBuilder.MapControllers();
+            });
         }
     }
 }
