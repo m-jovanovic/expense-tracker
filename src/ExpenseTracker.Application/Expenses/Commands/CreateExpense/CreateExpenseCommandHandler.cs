@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
+using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
@@ -16,16 +17,19 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
     {
         private readonly IUserRepository _userRepository;
         private readonly IExpenseRepository _expenseRepository;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateExpenseCommandHandler"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository instance.</param>
         /// <param name="expenseRepository">The expense repository instance.</param>
-        public CreateExpenseCommandHandler(IUserRepository userRepository, IExpenseRepository expenseRepository)
+        /// <param name="mediator">The mediator instance.</param>
+        public CreateExpenseCommandHandler(IUserRepository userRepository, IExpenseRepository expenseRepository, IMediator mediator)
         {
             _userRepository = userRepository;
             _expenseRepository = expenseRepository;
+            _mediator = mediator;
         }
 
         /// <inheritdoc />
@@ -55,9 +59,9 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
             	money,
             	request.Date);
 
-            user.AddExpense(expense);
-
             _expenseRepository.InsertExpense(expense);
+
+            await _mediator.Publish(new ExpenseAddedEvent(expense.Id), cancellationToken);
 
             return Result.Ok();
         }

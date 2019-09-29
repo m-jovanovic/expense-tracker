@@ -1,4 +1,6 @@
-﻿using ExpenseTracker.Application.Abstractions;
+﻿using System;
+using System.Threading.Tasks;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 
 namespace ExpenseTracker.Infrastructure.Repository
@@ -17,9 +19,12 @@ namespace ExpenseTracker.Infrastructure.Repository
         public ExpenseRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
-        public void InsertExpense(Expense expense)
-        {
-            _dbContext.Insert(expense);
-        }
+        public void InsertExpense(Expense expense) => _dbContext.Insert(expense);
+
+        /// <inheritdoc />
+        public void DeleteExpense(Expense expense) => _dbContext.Delete(expense);
+
+        /// <inheritdoc />
+        public async Task<Expense?> GetExpenseByIdAsync(Guid id) => await _dbContext.GetByIdAsync<Expense>(id);
     }
 }

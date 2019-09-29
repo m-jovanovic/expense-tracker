@@ -1,6 +1,6 @@
 ﻿using ExpenseTracker.Domain.Aggregates.Users;
 
-namespace ExpenseTracker.Application.QuerySpecification
+namespace ExpenseTracker.Application.QuerySpecifications
 {
     /// <summary>
     /// Represents the specification for the <see cref="User"/> entity.

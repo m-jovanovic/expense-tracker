@@ -38,14 +38,6 @@ namespace ExpenseTracker.Persistence.Configuration
                     .IsRequired();
             });
 
-            builder.HasMany(u => u.Expenses)
-                .WithOne()
-                .HasForeignKey(e => e.UserId)
-                .IsRequired();
-
-            builder.Metadata.FindNavigation(nameof(User.Expenses))
-                .SetPropertyAccessMode(PropertyAccessMode.Field);
-
             base.Configure(builder);
         }
     }

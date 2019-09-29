@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Application.QuerySpecification
+namespace ExpenseTracker.Application.QuerySpecifications
 {
     /// <summary>
     /// Represents a specification interface that all specifications must implement.

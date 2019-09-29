@@ -1,4 +1,5 @@
 ﻿using ExpenseTracker.Domain.Aggregates.Expenses;
+using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Persistence.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -17,11 +18,14 @@ namespace ExpenseTracker.Persistence.Configuration
 
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.UserId).IsRequired();
-
             builder.Property(e => e.Date).IsRequired();
 
             builder.Property(e => e.CreatedOnUtc).IsRequired();
+
+            builder.HasOne<User>()
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .IsRequired();
 
             builder.OwnsOne(e => e.Money, moneyBuilder =>
             {

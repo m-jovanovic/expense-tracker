@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Application.QuerySpecification
+namespace ExpenseTracker.Application.QuerySpecifications
 {
     /// <summary>
     /// Represents the base specification class that all specifications derive from.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExpenseTracker.Application.QuerySpecification;
+using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Application.Abstractions

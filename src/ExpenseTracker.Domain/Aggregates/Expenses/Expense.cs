@@ -82,9 +82,9 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
         /// <param name="currency">The currency.</param>
         public void ChangeCurrency(Currency currency)
         {
-            if (currency == null)
+            if (currency.Equals(Currency.None))
             {
-                throw new DomainException("Currency can not be null.");
+                throw new DomainException("Currency can not be empty.");
             }
 
             Money = Money.ChangeCurrency(currency);

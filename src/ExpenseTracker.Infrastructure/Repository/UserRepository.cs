@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.QuerySpecification;
+using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Aggregates.Users;
 
 namespace ExpenseTracker.Infrastructure.Repository
@@ -34,17 +34,6 @@ namespace ExpenseTracker.Infrastructure.Repository
             }
 
             return await _dbContext.GetByQuerySpecificationAsync(new UserQuerySpecification(email));
-        }
-
-        /// <inheritdoc />
-        public async Task<User?> GetUserByIdWithExpensesAsync(Guid id, Guid expenseId = default)
-        {
-            if (id == Guid.Empty)
-            {
-                return default;
-            }
-
-            return await _dbContext.GetByQuerySpecificationAsync(new UserWithExpensesQuerySpecification(id, expenseId));
         }
     }
 }

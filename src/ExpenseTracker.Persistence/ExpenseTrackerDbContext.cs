@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.QuerySpecification;
+using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Primitives;
 using ExpenseTracker.Persistence.Infrastructure;

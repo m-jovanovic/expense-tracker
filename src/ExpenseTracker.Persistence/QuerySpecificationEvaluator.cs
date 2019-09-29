@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using ExpenseTracker.Application.QuerySpecification;
+using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 
