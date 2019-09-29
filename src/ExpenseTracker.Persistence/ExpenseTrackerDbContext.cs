@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Specification;
+using ExpenseTracker.Application.QuerySpecification;
 using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Primitives;
 using ExpenseTracker.Persistence.Infrastructure;
@@ -76,81 +76,59 @@ namespace ExpenseTracker.Persistence
         }
 
         /// <inheritdoc />
-        public async Task<TEntity?> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
-            where TEntity : Entity
-        {
-            return await ApplySpecification(specification).SingleOrDefaultAsync();
-        }
+        public async Task<TEntity?> GetByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
+            where TEntity : Entity =>
+            await ApplyQuerySpecification(querySpecification).SingleOrDefaultAsync();
 
         /// <inheritdoc />
         public async Task<IEnumerable<TEntity>> ListAsync<TEntity>()
-            where TEntity : Entity
-        {
-            return await Table<TEntity>().ToListAsync();
-        }
+            where TEntity : Entity =>
+            await Table<TEntity>().ToListAsync();
 
         /// <inheritdoc />
-        public async Task<IEnumerable<TEntity>> ListBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
-            where TEntity : Entity
-        {
-            return await ApplySpecification(specification).ToListAsync();
-        }
+        public async Task<IEnumerable<TEntity>> ListByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
+            where TEntity : Entity =>
+            await ApplyQuerySpecification(querySpecification).ToListAsync();
 
         /// <inheritdoc />
         public async Task<int> CountAsync<TEntity>()
-            where TEntity : Entity
-        {
-            return await Table<TEntity>().CountAsync();
-        }
+            where TEntity : Entity =>
+            await Table<TEntity>().CountAsync();
 
         /// <inheritdoc />
-        public async Task<int> CountBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
-            where TEntity : Entity
-        {
-            return await ApplySpecification(specification).CountAsync();
-        }
+        public async Task<int> CountByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
+            where TEntity : Entity =>
+            await ApplyQuerySpecification(querySpecification).CountAsync();
 
         /// <inheritdoc />
         public void Insert<TEntity>(TEntity entity)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().Add(entity);
-        }
 
         /// <inheritdoc />
         public void Insert<TEntity>(IEnumerable<TEntity> entities)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().AddRange(entities);
-        }
 
         /// <inheritdoc />
         public new void Update<TEntity>(TEntity entity)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().Update(entity);
-        }
 
         /// <inheritdoc />
         public void Update<TEntity>(IEnumerable<TEntity> entities)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().UpdateRange(entities);
-        }
 
         /// <inheritdoc />
         public void Delete<TEntity>(TEntity entity)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().Remove(entity);
-        }
 
         /// <inheritdoc />
         public void Delete<TEntity>(IEnumerable<TEntity> entities)
-            where TEntity : Entity
-        {
+            where TEntity : Entity =>
             Set<TEntity>().RemoveRange(entities);
-        }
 
         /// <inheritdoc />
         public IQueryable<TEntity> Table<TEntity>()
@@ -188,13 +166,11 @@ namespace ExpenseTracker.Persistence
         /// <summary>
         /// Applies the provided specification.
         /// </summary>
-        /// <param name="specification">The specification.</param>
+        /// <param name="querySpecification">The query specification.</param>
         /// <returns>An <see cref="IQueryable{T}"/> for the specified entity type.</returns>
-        private IQueryable<TEntity> ApplySpecification<TEntity>(ISpecification<TEntity> specification)
-            where TEntity : Entity
-        {
-            return SpecificationEvaluator<TEntity>.GetQuery(Table<TEntity>(), specification);
-        }
+        private IQueryable<TEntity> ApplyQuerySpecification<TEntity>(IQuerySpecification<TEntity> querySpecification)
+            where TEntity : Entity =>
+            QuerySpecificationEvaluator<TEntity>.GetQuery(Table<TEntity>(), querySpecification);
 
         /// <summary>
         /// Sets the property value of the given entity to the specified value.
@@ -203,9 +179,7 @@ namespace ExpenseTracker.Persistence
         /// <param name="property">The property name.</param>
         /// <param name="value">The value.</param>
         private static void SetPropertyValue(EntityEntry entityEntry, string property, object value)
-        {
-            entityEntry.Property(property).CurrentValue = value;
-        }
+            => entityEntry.Property(property).CurrentValue = value;
 
         /// <summary>
         /// Updates the specified entity entry's referenced entries in the deleted state to the modified state.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExpenseTracker.Application.Specification;
+using ExpenseTracker.Application.QuerySpecification;
 using ExpenseTracker.Domain.Primitives;
 
 namespace ExpenseTracker.Application.Abstractions
@@ -25,9 +25,9 @@ namespace ExpenseTracker.Application.Abstractions
         /// Gets an entity based on the provided specification.
         /// </summary>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        /// <param name="specification">The specification.</param>
+        /// <param name="querySpecification">The query specification.</param>
         /// <returns>An entity if found, otherwise false.</returns>
-        Task<TEntity?> GetBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+        Task<TEntity?> GetByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
             where TEntity : Entity;
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace ExpenseTracker.Application.Abstractions
         /// Gets an enumerable collection of entities based on the provided specification.
         /// </summary>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        /// <param name="specification">The specification.</param>
+        /// <param name="querySpecification">The query specification.</param>
         /// <returns>An enumerable collection of entities.</returns>
-        Task<IEnumerable<TEntity>> ListBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+        Task<IEnumerable<TEntity>> ListByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
             where TEntity : Entity;
 
         /// <summary>
@@ -59,9 +59,9 @@ namespace ExpenseTracker.Application.Abstractions
         /// Gets the total number of entities based on the provided specification while skipping paging.
         /// </summary>
         /// <typeparam name="TEntity">The entity type.</typeparam>
-        /// <param name="specification">The specification.</param>
+        /// <param name="querySpecification">The query specification.</param>
         /// <returns>The total number of entities.</returns>
-        Task<int> CountBySpecificationAsync<TEntity>(ISpecification<TEntity> specification)
+        Task<int> CountByQuerySpecificationAsync<TEntity>(IQuerySpecification<TEntity> querySpecification)
             where TEntity : Entity;
 
         /// <summary>

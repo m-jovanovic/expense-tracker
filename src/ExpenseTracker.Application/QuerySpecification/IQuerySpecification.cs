@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Application.Specification
+namespace ExpenseTracker.Application.QuerySpecification
 {
     /// <summary>
     /// Represents a specification interface that all specifications must implement.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public interface ISpecification<TEntity>
+    public interface IQuerySpecification<TEntity>
         where TEntity : Entity
     {
         /// <summary>

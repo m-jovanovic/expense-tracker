@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using ExpenseTracker.Domain.Primitives;
 
-namespace ExpenseTracker.Application.Specification
+namespace ExpenseTracker.Application.QuerySpecification
 {
     /// <summary>
     /// Represents the base specification class that all specifications derive from.
     /// </summary>
     /// <typeparam name="TEntity">The entity type.</typeparam>
-    public abstract class SpecificationBase<TEntity> : ISpecification<TEntity>
+    public abstract class QuerySpecificationBase<TEntity> : IQuerySpecification<TEntity>
         where TEntity : Entity
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SpecificationBase{TAggregate}"/> class.
+        /// Initializes a new instance of the <see cref="QuerySpecificationBase{TEntity}"/> class.
         /// </summary>
         /// <param name="criteria">The filter criteria.</param>
-        protected SpecificationBase(Expression<Func<TEntity, bool>> criteria)
+        protected QuerySpecificationBase(Expression<Func<TEntity, bool>> criteria)
         {
             Criteria = criteria;
             IncludeExpressions = new List<Expression<Func<TEntity, object>>>();

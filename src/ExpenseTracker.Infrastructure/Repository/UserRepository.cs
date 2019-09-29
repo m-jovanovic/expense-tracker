@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Specification;
+using ExpenseTracker.Application.QuerySpecification;
 using ExpenseTracker.Domain.Aggregates.Users;
 
 namespace ExpenseTracker.Infrastructure.Repository
@@ -33,7 +33,7 @@ namespace ExpenseTracker.Infrastructure.Repository
                 return default;
             }
 
-            return await _dbContext.GetBySpecificationAsync(new UserSpecification(email));
+            return await _dbContext.GetByQuerySpecificationAsync(new UserQuerySpecification(email));
         }
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace ExpenseTracker.Infrastructure.Repository
                 return default;
             }
 
-            return await _dbContext.GetBySpecificationAsync(new UserWithExpensesSpecification(id, expenseId));
+            return await _dbContext.GetByQuerySpecificationAsync(new UserWithExpensesQuerySpecification(id, expenseId));
         }
     }
 }

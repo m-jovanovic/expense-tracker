@@ -8,7 +8,7 @@ namespace ExpenseTracker.Infrastructure
     /// <summary>
     /// Represents the SQL Server database connection factory.
     /// </summary>
-    public class SqlServerDbConnectionFactory : IDbConnectionFactory
+    internal class SqlServerDbConnectionFactory : IDbConnectionFactory
     {
         private readonly ConnectionString _connectionString;
 
