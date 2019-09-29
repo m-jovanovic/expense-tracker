@@ -15,6 +15,13 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         void InsertUser(User user);
 
         /// <summary>
+        /// Gets the user with the specified identifier, if one exists.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <returns>The user with the specified identifier it it exists, otherwise null.</returns>
+        Task<User?> GetUserByIdAsync(Guid id);
+
+        /// <summary>
         /// Gets the user with the specified email, if such a user exists.
         /// </summary>
         /// <param name="email">The email of the user.</param>
@@ -25,7 +32,8 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// Gets the user and expenses with the specified identifier.
         /// </summary>
         /// <param name="id">The user identifier.</param>
+        /// <param name="expenseId">The expense identifier.</param>
         /// <returns>The user with expenses included.</returns>
-        Task<User?> GetUserByIdWithExpensesAsync(Guid id);
+        Task<User?> GetUserByIdWithExpensesAsync(Guid id, Guid expenseId = default);
     }
 }

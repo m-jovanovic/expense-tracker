@@ -31,7 +31,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
         /// <inheritdoc />
         public async Task<Result> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetUserByIdWithExpensesAsync(request.UserId);
+            User? user = await _userRepository.GetUserByIdAsync(request.UserId);
 
             if (user is null)
             {

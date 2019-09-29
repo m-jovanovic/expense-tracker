@@ -28,7 +28,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
         /// <inheritdoc />
         public async Task<Result> Handle(DeleteExpenseCommand request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetUserByIdWithExpensesAsync(request.UserId);
+            User? user = await _userRepository.GetUserByIdWithExpensesAsync(request.UserId, request.ExpenseId);
 
             if (user is null)
             {

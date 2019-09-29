@@ -23,6 +23,9 @@ namespace ExpenseTracker.Infrastructure.Repository
         public void InsertUser(User user) => _dbContext.Insert(user);
 
         /// <inheritdoc />
+        public async Task<User?> GetUserByIdAsync(Guid id) => await _dbContext.GetByIdAsync<User>(id);
+
+        /// <inheritdoc />
         public async Task<User?> GetUserByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -34,14 +37,14 @@ namespace ExpenseTracker.Infrastructure.Repository
         }
 
         /// <inheritdoc />
-        public async Task<User?> GetUserByIdWithExpensesAsync(Guid id)
+        public async Task<User?> GetUserByIdWithExpensesAsync(Guid id, Guid expenseId = default)
         {
             if (id == Guid.Empty)
             {
                 return default;
             }
 
-            return await _dbContext.GetBySpecificationAsync(new UserWithExpensesSpecification(id));
+            return await _dbContext.GetBySpecificationAsync(new UserWithExpensesSpecification(id, expenseId));
         }
     }
 }
