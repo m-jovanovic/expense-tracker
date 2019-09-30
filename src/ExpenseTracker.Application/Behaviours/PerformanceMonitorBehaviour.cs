@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace ExpenseTracker.Application.Behaviours
 {
@@ -14,12 +15,15 @@ namespace ExpenseTracker.Application.Behaviours
         where TRequest : IRequest<TResponse>
     {
         private readonly Stopwatch _stopwatch;
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerformanceMonitorBehaviour{TRequest,TResponse}"/> class.
         /// </summary>
-        public PerformanceMonitorBehaviour()
+        /// <param name="logger">The logger instance.</param>
+        public PerformanceMonitorBehaviour(ILogger<PerformanceMonitorBehaviour<TRequest, TResponse>> logger)
         {
+            _logger = logger;
             _stopwatch = new Stopwatch();
         }
 
@@ -32,7 +36,18 @@ namespace ExpenseTracker.Application.Behaviours
 
             _stopwatch.Stop();
 
-            // TODO: Add Logging later on.
+            string requestName = typeof(TRequest).Name;
+
+            if (_stopwatch.ElapsedMilliseconds > 500)
+            {
+                // TODO: Send some kind of notification?
+                _logger.LogWarning("Request {Name} completed in {}ms", requestName, _stopwatch.ElapsedMilliseconds);
+            }
+            else
+            {
+                _logger.LogInformation("Request {Name} completed in {}ms", requestName, _stopwatch.ElapsedMilliseconds);
+            }
+
             return response;
         }
     }
