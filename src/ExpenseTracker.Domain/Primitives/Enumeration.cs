@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using ExpenseTracker.Domain.Exceptions;
 
 namespace ExpenseTracker.Domain.Primitives
@@ -62,23 +63,23 @@ namespace ExpenseTracker.Domain.Primitives
         /// </summary>
         /// <typeparam name="T">The enumeration type.</typeparam>
         /// <returns>The enumerable collection of values for the specified type.</returns>
+        /// <exception cref="EnumerationInvalidException"> when <typeparamref name="T"/> is an invalid enumeration type.</exception>
         public static IEnumerable<T> GetAll<T>()
             where T : Enumeration
         {
             Type type = typeof(T);
 
+            object? o = Activator.CreateInstance(type, true);
+
+            if (o is null)
+            {
+                throw new EnumerationInvalidException(type);
+            }
+
             FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly);
 
             foreach (FieldInfo info in fields)
             {
-                object? o = Activator.CreateInstance(typeof(T), true);
-
-                if (o is null)
-                {
-                    // TODO: Define a custom exception for this case.
-                    throw new Exception("Invalid currency");
-                }
-
                 var instance = (T)o;
 
                 if (info.GetValue(instance) is T locatedValue)
