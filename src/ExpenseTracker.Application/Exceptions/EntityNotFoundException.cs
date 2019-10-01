@@ -13,7 +13,7 @@ namespace ExpenseTracker.Application.Exceptions
         /// <param name="name">The name of the entity.</param>
         /// <param name="key">The entity key.</param>
         public EntityNotFoundException(string name, object key)
-            : base($"Entity ${name} with key {key} was not found.")
+            : base($"Entity {name} with key {key} was not found.")
         {
         }
     }

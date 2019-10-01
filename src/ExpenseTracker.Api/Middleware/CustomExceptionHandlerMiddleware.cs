@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 namespace ExpenseTracker.Api.Middleware
@@ -11,10 +12,12 @@ namespace ExpenseTracker.Api.Middleware
     public class CustomExceptionHandlerMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly ILogger _logger;
 
-        public CustomExceptionHandlerMiddleware(RequestDelegate next)
+        public CustomExceptionHandlerMiddleware(RequestDelegate next, ILogger<CustomExceptionHandlerMiddleware> logger)
         {
             _next = next;
+            _logger = logger;
         }
 
         public async Task Invoke(HttpContext context)
@@ -25,6 +28,8 @@ namespace ExpenseTracker.Api.Middleware
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "An exception occurred: {Message}", ex.Message);
+
                 await HandleExceptionAsync(context, ex);
             }
         }
