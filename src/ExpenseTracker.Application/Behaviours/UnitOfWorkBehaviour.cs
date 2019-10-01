@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Extensions;
 using MediatR;
+using Raven.Client.Documents.Session;
 
 namespace ExpenseTracker.Application.Behaviours
 {
@@ -15,14 +16,17 @@ namespace ExpenseTracker.Application.Behaviours
         where TRequest : IRequest<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncDocumentSession _session;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnitOfWorkBehaviour{TRequest,TResponse}"/> class.
         /// </summary>
         /// <param name="unitOfWork">The unit of work instance.</param>
-        public UnitOfWorkBehaviour(IUnitOfWork unitOfWork)
+        /// <param name="session">The async document session instance.</param>
+        public UnitOfWorkBehaviour(IUnitOfWork unitOfWork, IAsyncDocumentSession session)
         {
             _unitOfWork = unitOfWork;
+            _session = session;
         }
 
         /// <inheritdoc />
@@ -35,6 +39,8 @@ namespace ExpenseTracker.Application.Behaviours
             if (request.IsCommand())
             {
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await _session.SaveChangesAsync(cancellationToken);
             }
 
             return response;

@@ -11,8 +11,6 @@ namespace ExpenseTracker.Persistence.RavenDb
             services.Configure<RavenDbSettings>(configuration.GetSection(nameof(RavenDbSettings)));
             services.AddSingleton<IDocumentStoreProvider, DocumentStoreProvider>();
             services.AddScoped(serviceProvider => serviceProvider.GetRequiredService<IDocumentStoreProvider>()
-                .GetDocumentStore().OpenSession());
-            services.AddScoped(serviceProvider => serviceProvider.GetRequiredService<IDocumentStoreProvider>()
                 .GetDocumentStore().OpenAsyncSession());
 
             return services;
