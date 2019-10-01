@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExpenseTracker.Infrastructure\ExpenseTracker.Infrastructure.csproj" />
+    <ProjectReference Include="..\ExpenseTracker.Persistence.RavenDb\ExpenseTracker.Persistence.RavenDb.csproj" />
     <ProjectReference Include="..\ExpenseTracker.Persistence\ExpenseTracker.Persistence.csproj" />
   </ItemGroup>
 

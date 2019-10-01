@@ -3,6 +3,7 @@ using ExpenseTracker.Application;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Infrastructure;
 using ExpenseTracker.Persistence;
+using ExpenseTracker.Persistence.RavenDb;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,7 +29,11 @@ namespace ExpenseTracker.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistence(Configuration);
+
+            services.AddRavenDb(Configuration);
+
             services.AddInfrastructure();
+
             services.AddApplication();
 
             services.AddControllers()
