@@ -10,14 +10,13 @@
         /// </summary>
         public RavenDbSettings()
         {
-            Url = string.Empty;
             Database = string.Empty;
         }
 
         /// <summary>
         /// Gets or sets the url.
         /// </summary>
-        public string Url { get; set; }
+        public string[] Urls { get; set; }
 
         /// <summary>
         /// Gets or sets the database name.

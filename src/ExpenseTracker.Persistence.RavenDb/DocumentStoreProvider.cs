@@ -20,7 +20,7 @@ namespace ExpenseTracker.Persistence.RavenDb
 
             _documentStore = new DocumentStore
             {
-                Urls = new[] { ravenDbSettings.Url ?? throw new ArgumentException(nameof(RavenDbSettings.Url)) },
+                Urls = ravenDbSettings.Urls ?? throw new ArgumentException(nameof(RavenDbSettings.Urls)),
                 Database = ravenDbSettings.Database ?? throw new ArgumentException(nameof(RavenDbSettings.Database))
             };
 
