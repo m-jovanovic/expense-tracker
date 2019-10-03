@@ -15,7 +15,7 @@ namespace ExpenseTracker.Api.Controllers
     public class UsersController : ApiController
     {
         /// <summary>
-        /// Gets the user with the specified identifier.
+        /// Gets the user with the specified identifier, if it exists.
         /// </summary>
         /// <param name="id">The user identifier.</param>
         /// <returns>The user with the specified identifier, it it exists.</returns>
@@ -24,7 +24,7 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(Guid id)
         {
-            return await ProcessQueryAsync(new GetUserQuery { Id = id });
+            return await ProcessRequestAndReturnOkAsync(new GetUserQuery(id));
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]CreateUserCommand createUserCommand)
         {
-            return await ProcessCreateCommandAsync(createUserCommand, nameof(Get));
+            return await ProcessRequestAndReturnCreatedAsync(createUserCommand, nameof(Get));
         }
     }
 }

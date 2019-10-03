@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using ExpenseTracker.Application.Expenses.Commands.CreateExpense;
 using ExpenseTracker.Application.Expenses.Commands.DeleteExpense;
-using ExpenseTracker.Application.Expenses.Queries.GetExpenses;
+using ExpenseTracker.Application.Expenses.Queries.GetExpense;
+using ExpenseTracker.Domain.Aggregates.Expenses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,19 @@ namespace ExpenseTracker.Api.Controllers
     public class ExpensesController : ApiController
     {
         /// <summary>
+        /// Gets the expense with the specified identifier, if it exists.
+        /// </summary>
+        /// <param name="id">The expense identifier.</param>
+        /// <returns>The expense with the specified identifier, it it exists.</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            return await ProcessRequestAndReturnOkAsync(new GetExpenseQuery(id));
+        }
+
+        /// <summary>
         /// Creates a new expense using the provided <see cref="CreateExpenseCommand"/> command.
         /// </summary>
         /// <param name="createExpenseCommand">The create expense command instance.</param>
@@ -23,7 +38,7 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]CreateExpenseCommand createExpenseCommand)
         {
-            return await ProcessCreateCommandAsync(createExpenseCommand, nameof(Get));
+            return await ProcessRequestAndReturnCreatedAsync(createExpenseCommand, nameof(Get));
         }
 
         /// <summary>
@@ -36,7 +51,7 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromBody]DeleteExpenseCommand deleteExpenseCommand)
         {
-            return await ProcessDeleteCommandAsync(deleteExpenseCommand);
+            return await ProcessRequestAndReturnNoContentAsync(deleteExpenseCommand);
         }
     }
 }

@@ -9,9 +9,14 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// </summary>
     public sealed class GetUserQuery : IRequest<User?>
     {
+        public GetUserQuery(Guid id)
+        {
+            Id = id;
+        }
+
         /// <summary>
         /// Gets or sets the user identifier.
         /// </summary>
-        public Guid Id { get; set; }
+        public Guid Id { get; }
     }
 }

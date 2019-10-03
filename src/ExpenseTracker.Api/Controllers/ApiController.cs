@@ -33,7 +33,7 @@ namespace ExpenseTracker.Api.Controllers
         /// <returns>A 200 (OK) if the request resource was found, otherwise a 404 (Not Found).</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        protected virtual async Task<IActionResult> ProcessQueryAsync<TValue>(IRequest<TValue?> request)
+        protected virtual async Task<IActionResult> ProcessRequestAndReturnOkAsync<TValue>(IRequest<TValue?> request)
             where TValue : class
         {
             if (request.IsCommand())
@@ -59,7 +59,7 @@ namespace ExpenseTracker.Api.Controllers
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        protected virtual async Task<IActionResult> ProcessCreateCommandAsync(IRequest<Result<EntityCreatedResponse>> request, string actionName)
+        protected virtual async Task<IActionResult> ProcessRequestAndReturnCreatedAsync(IRequest<Result<EntityCreatedResponse>> request, string actionName)
         {
             if (request.IsQuery())
             {
@@ -77,25 +77,13 @@ namespace ExpenseTracker.Api.Controllers
         }
 
         /// <summary>
-        /// Processes the specified delete command.
-        /// </summary>
-        /// <param name="request">The request instance.</param>
-        /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        protected virtual async Task<IActionResult> ProcessDeleteCommandAsync(IRequest<Result> request)
-        {
-            return await ProcessDeleteOrUpdateCommandAsync(request);
-        }
-
-        /// <summary>
         /// Processes the specified request.
         /// </summary>
         /// <param name="request">The request instance.</param>
         /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        private async Task<IActionResult> ProcessDeleteOrUpdateCommandAsync(IRequest<Result> request)
+        protected async Task<IActionResult> ProcessRequestAndReturnNoContentAsync(IRequest<Result> request)
         {
             if (request.IsQuery())
             {
