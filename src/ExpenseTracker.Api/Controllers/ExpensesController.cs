@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ExpenseTracker.Application.Expenses.Commands.CreateExpense;
 using ExpenseTracker.Application.Expenses.Commands.DeleteExpense;
-using ExpenseTracker.Domain.Primitives;
+using ExpenseTracker.Application.Expenses.Queries.GetExpenses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,21 +17,13 @@ namespace ExpenseTracker.Api.Controllers
         /// Creates a new expense using the provided <see cref="CreateExpenseCommand"/> command.
         /// </summary>
         /// <param name="createExpenseCommand">The create expense command instance.</param>
-        /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
+        /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateExpense([FromBody]CreateExpenseCommand createExpenseCommand)
+        public async Task<IActionResult> Create([FromBody]CreateExpenseCommand createExpenseCommand)
         {
-            Result result = await Mediator.Send(createExpenseCommand);
-
-            if (result.IsFailure)
-            {
-                return BadRequest(result.Error);
-            }
-
-            // TODO: Refactor this to return 201 (Created).
-            return NoContent();
+            return await ProcessCreateCommandAsync(createExpenseCommand, nameof(Get));
         }
 
         /// <summary>
@@ -42,16 +34,9 @@ namespace ExpenseTracker.Api.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteExpense([FromBody]DeleteExpenseCommand deleteExpenseCommand)
+        public async Task<IActionResult> Delete([FromBody]DeleteExpenseCommand deleteExpenseCommand)
         {
-            Result result = await Mediator.Send(deleteExpenseCommand);
-
-            if (result.IsFailure)
-            {
-                return BadRequest(result.Error);
-            }
-
-            return NoContent();
+            return await ProcessDeleteCommandAsync(deleteExpenseCommand);
         }
     }
 }

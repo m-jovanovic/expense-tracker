@@ -120,10 +120,10 @@ namespace ExpenseTracker.Domain.Primitives
         /// Returns the result value if the result is successful, otherwise throws an exception.
         /// </summary>
         /// <returns>The result value if the result is successful.</returns>
-        /// <exception cref="InvalidOperationException"> when IsSuccess is false.</exception>
+        /// <exception cref="InvalidOperationException"> when <see cref="Result.IsFailure"/> is true.</exception>
         public TValue? Value()
         {
-            if (!IsSuccess)
+            if (IsFailure)
             {
                 throw new InvalidOperationException();
             }

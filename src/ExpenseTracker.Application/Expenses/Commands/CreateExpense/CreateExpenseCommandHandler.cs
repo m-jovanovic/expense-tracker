@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
+using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
-using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
@@ -13,7 +13,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
     /// <summary>
     /// Represents the handler for the <see cref="CreateExpenseCommand"/> command.
     /// </summary>
-    public sealed class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand, Result>
+    public sealed class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand, Result<EntityCreatedResponse>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IExpenseRepository _expenseRepository;
@@ -33,7 +33,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
         }
 
         /// <inheritdoc />
-        public async Task<Result> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
+        public async Task<Result<EntityCreatedResponse>> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetUserByIdAsync(request.UserId);
 
@@ -46,24 +46,20 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 
             if (currencyOrNothing.HasNoValue)
             {
-                return Result.Fail($"Could not find currency with id {request.CurrencyId}.");
+                return Result.Fail<EntityCreatedResponse>($"Could not find currency with id {request.CurrencyId}.");
             }
 
             Currency currency = currencyOrNothing.Value;
 
             var money = new Money(request.Amount, currency);
 
-            var expense = new Expense(
-            	Guid.NewGuid(),
-            	user.Id,
-            	money,
-            	request.Date);
+            var expense = new Expense(Guid.NewGuid(), user.Id, money, request.Date);
 
             _expenseRepository.InsertExpense(expense);
 
-            await _mediator.Publish(new ExpenseAddedEvent(expense.Id), cancellationToken);
+            await _mediator.Publish(new ExpenseCreatedEvent(expense), cancellationToken);
 
-            return Result.Ok();
+            return Result.Ok<EntityCreatedResponse>(expense.Id);
         }
     }
 }

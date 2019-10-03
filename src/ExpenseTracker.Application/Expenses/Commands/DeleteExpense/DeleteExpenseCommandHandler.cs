@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
-using ExpenseTracker.Domain.Events;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
 
@@ -56,7 +55,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
 
             _expenseRepository.DeleteExpense(expense);
 
-            await _mediator.Publish(new ExpenseRemovedEvent(expense.Id), cancellationToken);
+            await _mediator.Publish(new ExpenseDeletedEvent(expense.Id), cancellationToken);
 
             return Result.Ok();
         }

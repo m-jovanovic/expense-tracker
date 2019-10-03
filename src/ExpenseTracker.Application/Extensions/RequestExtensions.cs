@@ -9,6 +9,17 @@ namespace ExpenseTracker.Application.Extensions
     public static class RequestExtensions
     {
         /// <summary>
+        /// Returns a boolean value indicating if the request instance is a query.
+        /// </summary>
+        /// <typeparam name="T">The request type.</typeparam>
+        /// <param name="request">The request instance.</param>
+        /// <returns>True if the request instance is a query, otherwise false.</returns>
+        public static bool IsQuery<T>(this IRequest<T> request)
+        {
+            return request.GetType().Name.EndsWith("Query", StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        /// <summary>
         /// Returns a boolean value indicating if the request instance is a command.
         /// </summary>
         /// <typeparam name="T">The request type.</typeparam>

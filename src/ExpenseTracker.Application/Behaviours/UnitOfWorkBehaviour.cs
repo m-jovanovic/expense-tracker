@@ -34,8 +34,6 @@ namespace ExpenseTracker.Application.Behaviours
         {
             TResponse response = await next();
 
-            // Only use the unit of work if the current request is a command.
-            // There is no need to save changes in any other case.
             if (request.IsCommand())
             {
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
