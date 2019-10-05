@@ -36,7 +36,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
         /// <inheritdoc />
         public async Task<Result<EntityCreatedResponse>> Handle(CreateExpense request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetUserByIdAsync(request.UserId);
+            User? user = await _userRepository.GetByIdAsync(request.UserId);
 
             if (user is null)
             {
@@ -54,7 +54,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 
             var expense = new Expense(Guid.NewGuid(), user.Id, money, request.Date);
 
-            _expenseRepository.InsertExpense(expense);
+            _expenseRepository.Insert(expense);
 
             await _mediator.Publish(new ExpenseCreated(expense), cancellationToken);
 

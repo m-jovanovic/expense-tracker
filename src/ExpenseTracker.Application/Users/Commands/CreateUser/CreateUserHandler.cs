@@ -45,7 +45,7 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
                 return Result.Fail<EntityCreatedResponse>("The specified email is invalid.");
             }
 
-            User? existingUser = await _userRepository.GetUserByEmailAsync(email);
+            User? existingUser = await _userRepository.GetByEmailAsync(email);
 
             if (!(existingUser is null))
             {
@@ -58,7 +58,7 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
                 request.LastName,
                 email);
 
-            _userRepository.InsertUser(user);
+            _userRepository.Insert(user);
 
             await _mediator.Publish(new UserCreated(user), cancellationToken);
 

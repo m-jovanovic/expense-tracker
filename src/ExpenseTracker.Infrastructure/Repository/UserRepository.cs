@@ -20,13 +20,13 @@ namespace ExpenseTracker.Infrastructure.Repository
         public UserRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
-        public void InsertUser(User user) => _dbContext.Insert(user);
+        public void Insert(User user) => _dbContext.Insert(user);
 
         /// <inheritdoc />
-        public async Task<User?> GetUserByIdAsync(Guid id) => await _dbContext.GetByIdAsync<User>(id);
+        public async Task<User?> GetByIdAsync(Guid id) => await _dbContext.GetByIdAsync<User>(id);
 
         /// <inheritdoc />
-        public async Task<User?> GetUserByEmailAsync(string email)
+        public async Task<User?> GetByEmailAsync(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {

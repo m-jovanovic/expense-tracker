@@ -34,14 +34,14 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
         /// <inheritdoc />
         public async Task<Result> Handle(DeleteExpense request, CancellationToken cancellationToken)
         {
-            User? user = await _userRepository.GetUserByIdAsync(request.UserId);
+            User? user = await _userRepository.GetByIdAsync(request.UserId);
 
             if (user is null)
             {
                 throw new EntityNotFoundException(nameof(User), request.UserId);
             }
 
-            Expense? expense = await _expenseRepository.GetExpenseByIdAsync(request.ExpenseId);
+            Expense? expense = await _expenseRepository.GetByIdAsync(request.ExpenseId);
 
             if (expense is null)
             {
@@ -54,7 +54,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
                 return Result.Fail("The expense does not belong to the user.");
             }
 
-            _expenseRepository.DeleteExpense(expense);
+            _expenseRepository.Delete(expense);
 
             await _mediator.Publish(new ExpenseDeleted(expense.Id), cancellationToken);
 

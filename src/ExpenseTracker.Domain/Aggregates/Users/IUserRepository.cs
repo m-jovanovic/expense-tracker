@@ -12,20 +12,20 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         /// Inserts the specified user to the database.
         /// </summary>
         /// <param name="user">The user to insert.</param>
-        void InsertUser(User user);
+        void Insert(User user);
 
         /// <summary>
         /// Gets the user with the specified identifier, if one exists.
         /// </summary>
         /// <param name="id">The user identifier.</param>
         /// <returns>The user with the specified identifier it it exists, otherwise null.</returns>
-        Task<User?> GetUserByIdAsync(Guid id);
+        Task<User?> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Gets the user with the specified email, if such a user exists.
         /// </summary>
         /// <param name="email">The email of the user.</param>
         /// <returns>The user if it is found, otherwise null.</returns>
-        Task<User?> GetUserByEmailAsync(string email);
+        Task<User?> GetByEmailAsync(string email);
     }
 }

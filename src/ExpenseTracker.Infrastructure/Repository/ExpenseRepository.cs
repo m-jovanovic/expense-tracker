@@ -19,12 +19,12 @@ namespace ExpenseTracker.Infrastructure.Repository
         public ExpenseRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
-        public void InsertExpense(Expense expense) => _dbContext.Insert(expense);
+        public void Insert(Expense expense) => _dbContext.Insert(expense);
 
         /// <inheritdoc />
-        public void DeleteExpense(Expense expense) => _dbContext.Delete(expense);
+        public void Delete(Expense expense) => _dbContext.Delete(expense);
 
         /// <inheritdoc />
-        public async Task<Expense?> GetExpenseByIdAsync(Guid id) => await _dbContext.GetByIdAsync<Expense>(id);
+        public async Task<Expense?> GetByIdAsync(Guid id) => await _dbContext.GetByIdAsync<Expense>(id);
     }
 }
