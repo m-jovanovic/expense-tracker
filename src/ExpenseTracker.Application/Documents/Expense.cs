@@ -1,9 +1,11 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseTracker.Application.Abstractions;
 
 namespace ExpenseTracker.Application.Documents
 {
+    /// <summary>
+    /// Represents the expense document.
+    /// </summary>
     public sealed class Expense : IMapFrom<Domain.Aggregates.Expenses.Expense>
     {
         public Expense()
@@ -14,16 +16,34 @@ namespace ExpenseTracker.Application.Documents
             Date = string.Empty;
         }
 
+        /// <summary>
+        /// Gets or sets the expense identifier.
+        /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        /// Gets or sets the user identifier.
+        /// </summary>
         public string UserId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the amount.
+        /// </summary>
         public decimal Amount { get; set; }
 
+        /// <summary>
+        /// Gets or sets the currency symbol.
+        /// </summary>
         public string CurrencySymbol { get; set; }
 
+        /// <summary>
+        /// Gets or sets the date.
+        /// </summary>
         public string Date { get; set; }
 
+        /// <summary>
+        /// Gets the formatted expense.
+        /// </summary>
         public string FormattedExpense => $"{CurrencySymbol} {Amount:N2}";
 
         /// <inheritdoc />

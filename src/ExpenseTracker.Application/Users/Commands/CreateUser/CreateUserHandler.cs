@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Infrastructure;
+using ExpenseTracker.Application.Users.Events;
 using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
@@ -14,14 +15,17 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
     public sealed class CreateUserHandler : IRequestHandler<CreateUser, Result<EntityCreatedResponse>>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateUserHandler"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository instance.</param>
-        public CreateUserHandler(IUserRepository userRepository)
+        /// <param name="mediator">Tbe mediator instance.</param>
+        public CreateUserHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
         /// <inheritdoc />
@@ -56,8 +60,9 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
 
             _userRepository.InsertUser(user);
 
+            await _mediator.Publish(new UserCreated(user), cancellationToken);
+
             // TODO: Send confirmation email? Decide on this.
-            // TODO: Fire event to replicate to RavenDb.
             return Result.Ok<EntityCreatedResponse>(user.Id);
         }
     }

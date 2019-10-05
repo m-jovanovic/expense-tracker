@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Expenses.Commands.CreateExpense;
 using ExpenseTracker.Application.Expenses.Commands.DeleteExpense;
 using ExpenseTracker.Application.Expenses.Queries.GetExpense;
+using ExpenseTracker.Application.Expenses.Queries.GetExpenses;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,17 @@ namespace ExpenseTracker.Api.Controllers
     [Route("api/expenses")]
     public class ExpensesController : ApiController
     {
+        /// <summary>
+        /// Gets the expense that match the specified query.
+        /// </summary>
+        /// <param name="getExpensesForUser">The get expenses for user query instance.</param>
+        /// <returns>The expense with the specified identifier, it it exists.</returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get(GetExpensesForUser getExpensesForUser)
+            => await ProcessQueryAndReturnOkAsync(getExpensesForUser);
+
         /// <summary>
         /// Gets the expense with the specified identifier, if it exists.
         /// </summary>

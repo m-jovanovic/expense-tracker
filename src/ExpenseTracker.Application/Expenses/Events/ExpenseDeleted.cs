@@ -4,14 +4,14 @@ using MediatR;
 namespace ExpenseTracker.Application.Expenses.Events
 {
     /// <summary>
-    /// Represents the event that fires after an expense is removed.
+    /// Represents the event that fires after an expense is deleted.
     /// </summary>
     public sealed class ExpenseDeleted : INotification
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseDeleted"/> class.
         /// </summary>
-        /// <param name="expenseId">The expense identifier.</param>
+        /// <param name="expenseId">The identifier for the deleted expense.</param>
         public ExpenseDeleted(Guid expenseId)
         {
             ExpenseId = expenseId;

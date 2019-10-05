@@ -1,6 +1,6 @@
 ﻿using System;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Domain.Aggregates.Users;
+using User = ExpenseTracker.Application.Documents.User;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
@@ -9,6 +9,10 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// </summary>
     public sealed class GetUser : IQuery<User?>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GetUser"/> class.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
         public GetUser(Guid id)
         {
             Id = id;

@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
-using Dapper;
-using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Domain.Aggregates.Users;
+using ExpenseTracker.Application.Documents;
 using MediatR;
+using Raven.Client.Documents.Session;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
@@ -14,15 +12,15 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
     /// </summary>
     public sealed class GetUserHandler : IRequestHandler<GetUser, User?>
     {
-        private readonly IDbConnectionFactory _dbConnectionFactory;
+        private readonly IAsyncDocumentSession _session;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GetUserHandler"/> class.
         /// </summary>
-        /// <param name="dbConnectionFactory">The database connection factory instance.</param>
-        public GetUserHandler(IDbConnectionFactory dbConnectionFactory)
+        /// <param name="session">The async document session instance.</param>
+        public GetUserHandler(IAsyncDocumentSession session)
         {
-            _dbConnectionFactory = dbConnectionFactory;
+            _session = session;
         }
 
         /// <inheritdoc />
@@ -33,11 +31,7 @@ namespace ExpenseTracker.Application.Users.Queries.GetUser
                 return default;
             }
 
-            const string sql = "SELECT * FROM [User] WHERE Id = @Id";
-
-            using IDbConnection connection = _dbConnectionFactory.GetOpenConnection();
-
-            return await connection.QuerySingleOrDefaultAsync<User>(sql, request);
+            return await _session.LoadAsync<User>(request.Id.ToString(), cancellationToken);
         }
     }
 }
