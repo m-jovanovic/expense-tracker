@@ -43,14 +43,12 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
                 throw new EntityNotFoundException(nameof(User), request.UserId);
             }
 
-            Maybe<Currency> currencyOrNothing = Enumeration.FromValue<Currency>(request.CurrencyId);
+            var currency = Enumeration.FromValue<Currency>(request.CurrencyId);
 
-            if (currencyOrNothing.HasNoValue)
+            if (currency is null)
             {
                 return Result.Fail<EntityCreatedResponse>($"Could not find currency with id {request.CurrencyId}.");
             }
-
-            Currency currency = currencyOrNothing.Value;
 
             var money = new Money(request.Amount, currency);
 

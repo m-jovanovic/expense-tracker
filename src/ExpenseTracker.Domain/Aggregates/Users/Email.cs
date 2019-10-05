@@ -37,19 +37,19 @@ namespace ExpenseTracker.Domain.Aggregates.Users
         public string Value { get; private set; }
 
         /// <summary>
-        /// Creates a new <see cref="Email"/> object with the specified email.
+        /// Creates a new <see cref="Email"/> instance with the specified email.
         /// </summary>
-        /// <param name="emailOrNothing">The email value or nothing.</param>
-        /// <returns>A new <see cref="Email"/> instance, or an error result.</returns>
-        public static Result<Email> Create(Maybe<string> emailOrNothing)
+        /// <param name="email">The email value.</param>
+        /// <returns>A new <see cref="Email"/> instance if the email is valid, or an error result.</returns>
+        public static Result<Email> Create(string? email)
         {
-            return emailOrNothing
+            return email
                 .ToResult("Email should not be empty.")
-                .OnSuccess(email => email?.Trim())
-                .Ensure(email => email?.Length != 0, "Email should not be empty")
-                .Ensure(email => email?.Length < 256, "Email is too long.")
-                .Ensure(email => Regex.IsMatch(email, EmailRegexPattern, RegexOptions.IgnoreCase), "Email is invalid.")
-                .Map(email => email is null ? Empty : new Email(email));
+                .OnSuccess(e => e?.Trim())
+                .Ensure(e => e?.Length != 0, "Email should not be empty")
+                .Ensure(e => e?.Length < 256, "Email is too long.")
+                .Ensure(e => Regex.IsMatch(e, EmailRegexPattern, RegexOptions.IgnoreCase), "Email is invalid.")
+                .Map(e => e is null ? Empty : new Email(e));
         }
 
         public static implicit operator string(Email email) => email?.Value ?? string.Empty;

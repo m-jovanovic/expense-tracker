@@ -9,16 +9,16 @@ namespace ExpenseTracker.Domain.Extensions
     public static class ResultExtensions
     {
         /// <summary>
-        /// Converts the specified <see cref="Maybe{T}"/> instance to a <see cref="Result{T}"/> instance.
+        /// Converts the current instance to a <see cref="Result{T}"/> instance.
         /// </summary>
         /// <typeparam name="T">The type of the result.</typeparam>
-        /// <param name="maybe">The maybe instance.</param>
+        /// <param name="value">The value.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <returns>The result instance with the specified maybe value.</returns>
-        public static Result<T> ToResult<T>(this Maybe<T> maybe, string errorMessage)
+        public static Result<T> ToResult<T>(this T? value, string errorMessage)
             where T : class
         {
-            return maybe.HasValue ? Result.Ok(maybe.Value) : Result.Fail<T>(errorMessage);
+            return value is null ? Result.Fail<T>(errorMessage) : Result.Ok(value);
         }
 
         /// <summary>
@@ -33,12 +33,12 @@ namespace ExpenseTracker.Domain.Extensions
             where T1 : class
             where T2 : class
         {
-            if (result == null)
+            if (result is null)
             {
                 throw new ArgumentNullException(nameof(result));
             }
 
-            if (onSuccessFunc == null)
+            if (onSuccessFunc is null)
             {
                 return Result.Fail<T2>("The on success function can not be null.");
             }
@@ -57,12 +57,12 @@ namespace ExpenseTracker.Domain.Extensions
         public static Result<T> Ensure<T>(this Result<T> result, Func<T?, bool> predicate, string errorMessage)
             where T : class
         {
-            if (result == null)
+            if (result is null)
             {
                 throw new ArgumentNullException(nameof(result));
             }
 
-            if (predicate == null)
+            if (predicate is null)
             {
                 return Result.Fail<T>("The predicate can not be null.");
             }
@@ -87,12 +87,12 @@ namespace ExpenseTracker.Domain.Extensions
             where TIn : class
             where TOut : class
         {
-            if (result == null)
+            if (result is null)
             {
                 throw new ArgumentNullException(nameof(result));
             }
 
-            if (mapFunc == null)
+            if (mapFunc is null)
             {
                 return Result.Fail<TOut>("The map function can not be null.");
             }
