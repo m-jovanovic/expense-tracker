@@ -1,12 +1,12 @@
 ﻿using System;
-using ExpenseTracker.Domain.Events;
+using MediatR;
 
 namespace ExpenseTracker.Application.Expenses.Events
 {
     /// <summary>
     /// Represents the event that fires after an expense is removed.
     /// </summary>
-    public sealed class ExpenseDeleted : BaseDomainEvent
+    public sealed class ExpenseDeleted : INotification
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseDeleted"/> class.

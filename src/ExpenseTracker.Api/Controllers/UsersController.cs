@@ -22,10 +22,7 @@ namespace ExpenseTracker.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            return await ProcessQueryAndReturnOkAsync(new GetUser(id));
-        }
+        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetUser(id));
 
         /// <summary>
         /// Creates a new user using the provided <see cref="CreateUser"/> command.
@@ -36,8 +33,6 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]CreateUser createUser)
-        {
-            return await ProcessCommandAndReturnCreatedAsync(createUser, nameof(Get));
-        }
+            => await ProcessCommandAndReturnCreatedAsync(createUser, nameof(Get));
     }
 }

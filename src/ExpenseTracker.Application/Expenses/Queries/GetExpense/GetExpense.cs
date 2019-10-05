@@ -1,6 +1,6 @@
 ﻿using System;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Domain.Aggregates.Expenses;
+using ExpenseTracker.Application.Documents;
 
 namespace ExpenseTracker.Application.Expenses.Queries.GetExpense
 {

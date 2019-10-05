@@ -23,10 +23,7 @@ namespace ExpenseTracker.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(Guid id)
-        {
-            return await ProcessQueryAndReturnOkAsync(new GetExpense(id));
-        }
+        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetExpense(id));
 
         /// <summary>
         /// Creates a new expense using the provided <see cref="CreateExpense"/> command.
@@ -37,9 +34,7 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]CreateExpense createExpense)
-        {
-            return await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
-        }
+            => await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
 
         /// <summary>
         /// Deletes an expense using the provided <see cref="DeleteExpense"/> command.
@@ -50,8 +45,6 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Delete([FromBody]DeleteExpense deleteExpense)
-        {
-            return await ProcessCommandAndReturnNoContentAsync(deleteExpense);
-        }
+            => await ProcessCommandAndReturnNoContentAsync(deleteExpense);
     }
 }

@@ -56,7 +56,7 @@ namespace ExpenseTracker.Api.Controllers
         /// Processes the specified create command.
         /// </summary>
         /// <param name="request">The request instance.</param>
-        /// <param name="actionName">The action to get the resource from.</param>
+        /// <param name="actionName">The name of the action to get the resource from.</param>
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
