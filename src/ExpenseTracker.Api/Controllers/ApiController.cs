@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Extensions;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Primitives;
@@ -33,7 +34,7 @@ namespace ExpenseTracker.Api.Controllers
         /// <returns>A 200 (OK) if the request resource was found, otherwise a 404 (Not Found).</returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        protected virtual async Task<IActionResult> ProcessRequestAndReturnOkAsync<TValue>(IRequest<TValue?> request)
+        protected virtual async Task<IActionResult> ProcessQueryAndReturnOkAsync<TValue>(IQuery<TValue?> request)
             where TValue : class
         {
             if (request.IsCommand())
@@ -59,12 +60,9 @@ namespace ExpenseTracker.Api.Controllers
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        protected virtual async Task<IActionResult> ProcessRequestAndReturnCreatedAsync(IRequest<Result<EntityCreatedResponse>> request, string actionName)
+        protected virtual async Task<IActionResult> ProcessCommandAndReturnCreatedAsync(ICommand<Result<EntityCreatedResponse>> request, string actionName)
         {
-            if (request.IsQuery())
-            {
-                throw new ArgumentException($"The type {request.GetType().Name} is not a valid command.", nameof(request));
-            }
+            AssertRequestIsCommand(request);
 
             Result<EntityCreatedResponse> result = await Mediator.Send(request);
 
@@ -83,12 +81,9 @@ namespace ExpenseTracker.Api.Controllers
         /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        protected async Task<IActionResult> ProcessRequestAndReturnNoContentAsync(IRequest<Result> request)
+        protected async Task<IActionResult> ProcessCommandAndReturnNoContentAsync(ICommand<Result> request)
         {
-            if (request.IsQuery())
-            {
-                throw new ArgumentException($"The type {request.GetType().Name} is not a valid command.", nameof(request));
-            }
+            AssertRequestIsCommand(request);
 
             Result result = await Mediator.Send(request);
 
@@ -98,6 +93,22 @@ namespace ExpenseTracker.Api.Controllers
             }
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Asserts that the specified request is a command, otherwise throws an exception.
+        /// </summary>
+        /// <typeparam name="T">The request type.</typeparam>
+        /// <param name="request">The request instance.</param>
+        /// <exception cref="ArgumentException"> if <paramref name="request"/> is a query.</exception>
+        private static void AssertRequestIsCommand<T>(IRequest<T> request)
+        {
+            if (request.IsCommand())
+            {
+                return;
+            }
+
+            throw new ArgumentException($"The type {request.GetType().Name} is not a valid command.", nameof(request));
         }
     }
 }

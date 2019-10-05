@@ -9,23 +9,23 @@ using MediatR;
 namespace ExpenseTracker.Application.Users.Commands.CreateUser
 {
     /// <summary>
-    /// Represents the command handler for the <see cref="CreateUserCommand"/> command.
+    /// Represents the command handler for the <see cref="CreateUser"/> command.
     /// </summary>
-    public sealed class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Result<EntityCreatedResponse>>
+    public sealed class CreateUserHandler : IRequestHandler<CreateUser, Result<EntityCreatedResponse>>
     {
         private readonly IUserRepository _userRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateUserCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="CreateUserHandler"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository instance.</param>
-        public CreateUserCommandHandler(IUserRepository userRepository)
+        public CreateUserHandler(IUserRepository userRepository)
         {
             _userRepository = userRepository;
         }
 
         /// <inheritdoc />
-        public async Task<Result<EntityCreatedResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+        public async Task<Result<EntityCreatedResponse>> Handle(CreateUser request, CancellationToken cancellationToken)
         {
             Result<Email> emailResult = Email.Create(request.Email);
 
@@ -56,7 +56,8 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
 
             _userRepository.InsertUser(user);
 
-            // TODO: Send confirmation email.
+            // TODO: Send confirmation email? Decide on this.
+            // TODO: Fire event to replicate to RavenDb.
             return Result.Ok<EntityCreatedResponse>(user.Id);
         }
     }

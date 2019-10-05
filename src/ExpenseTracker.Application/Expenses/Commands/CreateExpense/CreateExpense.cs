@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Primitives;
-using MediatR;
 
 namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 {
@@ -10,7 +10,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
     /// Represents the command for creating a user expense.
     /// </summary>
     [DataContract]
-    public sealed class CreateExpenseCommand : IRequest<Result<EntityCreatedResponse>>
+    public sealed class CreateExpense : ICommand<Result<EntityCreatedResponse>>
     {
         /// <summary>
         /// Gets the user identifier.

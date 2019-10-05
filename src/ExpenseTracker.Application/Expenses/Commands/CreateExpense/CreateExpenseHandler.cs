@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
+using ExpenseTracker.Application.Expenses.Events;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
@@ -11,21 +12,21 @@ using MediatR;
 namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 {
     /// <summary>
-    /// Represents the handler for the <see cref="CreateExpenseCommand"/> command.
+    /// Represents the handler for the <see cref="CreateExpense"/> command.
     /// </summary>
-    public sealed class CreateExpenseCommandHandler : IRequestHandler<CreateExpenseCommand, Result<EntityCreatedResponse>>
+    public sealed class CreateExpenseHandler : IRequestHandler<CreateExpense, Result<EntityCreatedResponse>>
     {
         private readonly IUserRepository _userRepository;
         private readonly IExpenseRepository _expenseRepository;
         private readonly IMediator _mediator;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateExpenseCommandHandler"/> class.
+        /// Initializes a new instance of the <see cref="CreateExpenseHandler"/> class.
         /// </summary>
         /// <param name="userRepository">The user repository instance.</param>
         /// <param name="expenseRepository">The expense repository instance.</param>
         /// <param name="mediator">The mediator instance.</param>
-        public CreateExpenseCommandHandler(IUserRepository userRepository, IExpenseRepository expenseRepository, IMediator mediator)
+        public CreateExpenseHandler(IUserRepository userRepository, IExpenseRepository expenseRepository, IMediator mediator)
         {
             _userRepository = userRepository;
             _expenseRepository = expenseRepository;
@@ -33,7 +34,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
         }
 
         /// <inheritdoc />
-        public async Task<Result<EntityCreatedResponse>> Handle(CreateExpenseCommand request, CancellationToken cancellationToken)
+        public async Task<Result<EntityCreatedResponse>> Handle(CreateExpense request, CancellationToken cancellationToken)
         {
             User? user = await _userRepository.GetUserByIdAsync(request.UserId);
 
@@ -57,7 +58,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
 
             _expenseRepository.InsertExpense(expense);
 
-            await _mediator.Publish(new ExpenseCreatedEvent(expense), cancellationToken);
+            await _mediator.Publish(new ExpenseCreated(expense), cancellationToken);
 
             return Result.Ok<EntityCreatedResponse>(expense.Id);
         }

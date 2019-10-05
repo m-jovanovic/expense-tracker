@@ -25,33 +25,33 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(Guid id)
         {
-            return await ProcessRequestAndReturnOkAsync(new GetExpenseQuery(id));
+            return await ProcessQueryAndReturnOkAsync(new GetExpense(id));
         }
 
         /// <summary>
-        /// Creates a new expense using the provided <see cref="CreateExpenseCommand"/> command.
+        /// Creates a new expense using the provided <see cref="CreateExpense"/> command.
         /// </summary>
-        /// <param name="createExpenseCommand">The create expense command instance.</param>
+        /// <param name="createExpense">The create expense command instance.</param>
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]CreateExpenseCommand createExpenseCommand)
+        public async Task<IActionResult> Create([FromBody]CreateExpense createExpense)
         {
-            return await ProcessRequestAndReturnCreatedAsync(createExpenseCommand, nameof(Get));
+            return await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
         }
 
         /// <summary>
-        /// Deletes an expense using the provided <see cref="DeleteExpenseCommand"/> command.
+        /// Deletes an expense using the provided <see cref="DeleteExpense"/> command.
         /// </summary>
-        /// <param name="deleteExpenseCommand">The delete expense command instance.</param>
+        /// <param name="deleteExpense">The delete expense command instance.</param>
         /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete([FromBody]DeleteExpenseCommand deleteExpenseCommand)
+        public async Task<IActionResult> Delete([FromBody]DeleteExpense deleteExpense)
         {
-            return await ProcessRequestAndReturnNoContentAsync(deleteExpenseCommand);
+            return await ProcessCommandAndReturnNoContentAsync(deleteExpense);
         }
     }
 }

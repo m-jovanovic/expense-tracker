@@ -34,12 +34,14 @@ namespace ExpenseTracker.Application.Behaviours
         {
             TResponse response = await next();
 
-            if (request.IsCommand())
+            if (request.IsQuery())
             {
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-                await _session.SaveChangesAsync(cancellationToken);
+                return response;
             }
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            await _session.SaveChangesAsync(cancellationToken);
 
             return response;
         }

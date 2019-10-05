@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Primitives;
-using MediatR;
 
 namespace ExpenseTracker.Application.Users.Commands.CreateUser
 {
@@ -9,12 +9,12 @@ namespace ExpenseTracker.Application.Users.Commands.CreateUser
     /// Represents the command for creating a user.
     /// </summary>
     [DataContract]
-    public sealed class CreateUserCommand : IRequest<Result<EntityCreatedResponse>>
+    public sealed class CreateUser : ICommand<Result<EntityCreatedResponse>>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CreateUserCommand"/> class.
+        /// Initializes a new instance of the <see cref="CreateUser"/> class.
         /// </summary>
-        public CreateUserCommand()
+        public CreateUser()
         {
             Email = string.Empty;
             FirstName = string.Empty;

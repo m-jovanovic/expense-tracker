@@ -1,18 +1,18 @@
 ﻿using ExpenseTracker.Domain.Aggregates.Expenses;
 using MediatR;
 
-namespace ExpenseTracker.Application.Expenses.Commands.CreateExpense
+namespace ExpenseTracker.Application.Expenses.Events
 {
     /// <summary>
     /// Represents the event that fires after an expense is added.
     /// </summary>
-    public sealed class ExpenseCreatedEvent : INotification
+    public sealed class ExpenseCreated : INotification
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpenseCreatedEvent"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseCreated"/> class.
         /// </summary>
         /// <param name="expense">The expense that was added.</param>
-        public ExpenseCreatedEvent(Expense expense)
+        public ExpenseCreated(Expense expense)
         {
             Expense = expense;
         }

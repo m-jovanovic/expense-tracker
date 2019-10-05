@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Primitives;
-using MediatR;
 
 namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
 {
@@ -9,7 +9,7 @@ namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
     /// Represents the command for deleting a user expense.
     /// </summary>
     [DataContract]
-    public sealed class DeleteExpenseCommand : IRequest<Result>
+    public sealed class DeleteExpense : ICommand<Result>
     {
         /// <summary>
         /// Gets the user identifier.

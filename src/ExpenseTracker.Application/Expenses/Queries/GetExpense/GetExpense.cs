@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Expenses;
-using MediatR;
 
 namespace ExpenseTracker.Application.Expenses.Queries.GetExpense
 {
-    [DataContract]
-    public sealed class GetExpenseQuery : IRequest<Expense?>
+    public sealed class GetExpense : IQuery<Expense?>
     {
-        public GetExpenseQuery(Guid id)
+        public GetExpense(Guid id)
         {
             Id = id;
         }

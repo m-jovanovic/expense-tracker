@@ -1,21 +1,21 @@
 ﻿using System;
+using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Users;
-using MediatR;
 
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
     /// <summary>
     /// Represents the query for getting a user.
     /// </summary>
-    public sealed class GetUserQuery : IRequest<User?>
+    public sealed class GetUser : IQuery<User?>
     {
-        public GetUserQuery(Guid id)
+        public GetUser(Guid id)
         {
             Id = id;
         }
 
         /// <summary>
-        /// Gets or sets the user identifier.
+        /// Gets the user identifier.
         /// </summary>
         public Guid Id { get; }
     }

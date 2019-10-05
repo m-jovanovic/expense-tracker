@@ -1,18 +1,18 @@
 ﻿using System;
 using ExpenseTracker.Domain.Events;
 
-namespace ExpenseTracker.Application.Expenses.Commands.DeleteExpense
+namespace ExpenseTracker.Application.Expenses.Events
 {
     /// <summary>
     /// Represents the event that fires after an expense is removed.
     /// </summary>
-    public sealed class ExpenseDeletedEvent : BaseDomainEvent
+    public sealed class ExpenseDeleted : BaseDomainEvent
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ExpenseDeletedEvent"/> class.
+        /// Initializes a new instance of the <see cref="ExpenseDeleted"/> class.
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
-        public ExpenseDeletedEvent(Guid expenseId)
+        public ExpenseDeleted(Guid expenseId)
         {
             ExpenseId = expenseId;
         }

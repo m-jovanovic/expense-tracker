@@ -1,4 +1,4 @@
-﻿using System;
+﻿using ExpenseTracker.Application.Abstractions;
 using MediatR;
 
 namespace ExpenseTracker.Application.Extensions
@@ -16,7 +16,7 @@ namespace ExpenseTracker.Application.Extensions
         /// <returns>True if the request instance is a query, otherwise false.</returns>
         public static bool IsQuery<T>(this IRequest<T> request)
         {
-            return request.GetType().Name.EndsWith("Query", StringComparison.InvariantCultureIgnoreCase);
+            return request is IQuery<T>;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace ExpenseTracker.Application.Extensions
         /// <returns>True if the request instance is a command, otherwise false.</returns>
         public static bool IsCommand<T>(this IRequest<T> request)
         {
-            return request.GetType().Name.EndsWith("Command", StringComparison.InvariantCultureIgnoreCase);
+            return request is ICommand<T>;
         }
     }
 }

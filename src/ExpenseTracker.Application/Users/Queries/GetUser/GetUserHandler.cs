@@ -10,23 +10,23 @@ using MediatR;
 namespace ExpenseTracker.Application.Users.Queries.GetUser
 {
     /// <summary>
-    /// Represents the handler for the <see cref="GetUserQueryHandler"/> query.
+    /// Represents the handler for the <see cref="GetUser"/> query.
     /// </summary>
-    public sealed class GetUserQueryHandler : IRequestHandler<GetUserQuery, User?>
+    public sealed class GetUserHandler : IRequestHandler<GetUser, User?>
     {
         private readonly IDbConnectionFactory _dbConnectionFactory;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GetUserQueryHandler"/> class.
+        /// Initializes a new instance of the <see cref="GetUserHandler"/> class.
         /// </summary>
         /// <param name="dbConnectionFactory">The database connection factory instance.</param>
-        public GetUserQueryHandler(IDbConnectionFactory dbConnectionFactory)
+        public GetUserHandler(IDbConnectionFactory dbConnectionFactory)
         {
             _dbConnectionFactory = dbConnectionFactory;
         }
 
         /// <inheritdoc />
-        public async Task<User?> Handle(GetUserQuery request, CancellationToken cancellationToken)
+        public async Task<User?> Handle(GetUser request, CancellationToken cancellationToken)
         {
             if (request.Id == Guid.Empty)
             {
