@@ -50,8 +50,6 @@ namespace ExpenseTracker.Persistence
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
-            ChangeTracker.DetectChanges();
-
             DateTime utcNow = _dateTime.UtcNow();
 
             UpdateAuditableEntities(utcNow);
@@ -193,13 +191,8 @@ namespace ExpenseTracker.Persistence
                 return;
             }
 
-            foreach (ReferenceEntry referenceEntry in entityEntry.References)
+            foreach (ReferenceEntry referenceEntry in entityEntry.References.Where(r => r.TargetEntry.State == EntityState.Deleted))
             {
-                if (referenceEntry.TargetEntry.State != EntityState.Deleted)
-                {
-                    continue;
-                }
-
                 referenceEntry.TargetEntry.State = EntityState.Modified;
 
                 UpdateDeletedEntityEntryReferencesToModified(referenceEntry.TargetEntry);
@@ -213,13 +206,14 @@ namespace ExpenseTracker.Persistence
         {
             foreach (EntityEntry<IAuditableEntity> entityEntry in ChangeTracker.Entries<IAuditableEntity>())
             {
-                if (entityEntry.State == EntityState.Added)
+                switch (entityEntry.State)
                 {
-                    SetPropertyValue(entityEntry, nameof(IAuditableEntity.CreatedOnUtc), utcNow);
-                }
-                else if (entityEntry.State == EntityState.Modified)
-                {
-                    SetPropertyValue(entityEntry, nameof(IAuditableEntity.ModifiedOnUtc), utcNow);
+                    case EntityState.Added:
+                        SetPropertyValue(entityEntry, nameof(IAuditableEntity.CreatedOnUtc), utcNow);
+                        break;
+                    case EntityState.Modified:
+                        SetPropertyValue(entityEntry, nameof(IAuditableEntity.ModifiedOnUtc), utcNow);
+                        break;
                 }
             }
         }
@@ -229,13 +223,8 @@ namespace ExpenseTracker.Persistence
         /// </summary>
         private void UpdateSoftDeletableEntities(DateTime utcNow)
         {
-            foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>())
+            foreach (EntityEntry<ISoftDeletableEntity> entityEntry in ChangeTracker.Entries<ISoftDeletableEntity>().Where(e => e.State == EntityState.Deleted))
             {
-                if (entityEntry.State != EntityState.Deleted)
-                {
-                    continue;
-                }
-
                 entityEntry.State = EntityState.Modified;
 
                 UpdateDeletedEntityEntryReferencesToModified(entityEntry);
