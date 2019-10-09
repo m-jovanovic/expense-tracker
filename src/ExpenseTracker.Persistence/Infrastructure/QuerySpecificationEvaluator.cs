@@ -3,7 +3,7 @@ using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Primitives;
 using Microsoft.EntityFrameworkCore;
 
-namespace ExpenseTracker.Persistence
+namespace ExpenseTracker.Persistence.Infrastructure
 {
     /// <summary>
     /// Represents an <see cref="IQuerySpecification{TEntity}"/> evaluator.

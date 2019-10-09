@@ -4,7 +4,7 @@ using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.QuerySpecifications;
 using ExpenseTracker.Domain.Aggregates.Users;
 
-namespace ExpenseTracker.Infrastructure.Repository
+namespace ExpenseTracker.Persistence.Repository
 {
     /// <summary>
     /// Represents the user repository.

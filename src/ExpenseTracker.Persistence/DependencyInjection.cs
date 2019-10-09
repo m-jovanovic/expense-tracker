@@ -1,5 +1,7 @@
 ﻿using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Infrastructure;
+using ExpenseTracker.Domain.Aggregates.Expenses;
+using ExpenseTracker.Domain.Aggregates.Users;
+using ExpenseTracker.Persistence.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,14 +12,14 @@ namespace ExpenseTracker.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = new ConnectionString(configuration.GetConnectionString("ExpenseTrackerDb"));
-            services.AddSingleton(connectionString);
             services.AddDbContext<ExpenseTrackerDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseSqlServer(configuration.GetConnectionString("ExpenseTrackerDb"));
             });
             services.AddScoped<IDbContext>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
 
             return services;
         }

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 
-namespace ExpenseTracker.Infrastructure.Repository
+namespace ExpenseTracker.Persistence.Repository
 {
     /// <summary>
     /// Represents the expense repository.
