@@ -13,9 +13,9 @@ namespace ExpenseTracker.Application.Expenses.Queries.GetExpenses
     public sealed class GetExpensesForUser : IQuery<IEnumerable<Expense>>
     {
         /// <summary>
-        /// Gets the user identifier.
+        /// Gets or sets the user identifier.
         /// </summary>
         [DataMember]
-        public Guid UserId { get; private set; }
+        public Guid UserId { get; set; }
     }
 }

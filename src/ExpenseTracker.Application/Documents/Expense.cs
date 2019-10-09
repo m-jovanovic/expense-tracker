@@ -6,7 +6,7 @@ namespace ExpenseTracker.Application.Documents
     /// <summary>
     /// Represents the expense document.
     /// </summary>
-    public sealed class Expense : IMapFrom<Domain.Aggregates.Expenses.Expense>
+    public sealed class Expense : IMappable
     {
         public Expense()
         {

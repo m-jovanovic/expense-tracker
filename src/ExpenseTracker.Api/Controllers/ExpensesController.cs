@@ -21,10 +21,10 @@ namespace ExpenseTracker.Api.Controllers
         /// </summary>
         /// <param name="getExpensesForUser">The get expenses for user query instance.</param>
         /// <returns>The expense with the specified identifier, it it exists.</returns>
-        [HttpGet("{id}")]
+        [HttpGet]
         [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(GetExpensesForUser getExpensesForUser)
+        public async Task<IActionResult> Get([FromQuery]GetExpensesForUser getExpensesForUser)
             => await ProcessQueryAndReturnOkAsync(getExpensesForUser);
 
         /// <summary>

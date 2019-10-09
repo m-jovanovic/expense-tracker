@@ -6,7 +6,7 @@ namespace ExpenseTracker.Application.Documents
     /// <summary>
     /// Represents the user document.
     /// </summary>
-    public sealed class User : IMapFrom<Domain.Aggregates.Users.User>
+    public sealed class User : IMappable
     {
         public User()
         {

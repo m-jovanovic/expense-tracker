@@ -17,14 +17,14 @@ namespace ExpenseTracker.Application.Infrastructure
         private void ApplyMappingsFromAssembly(Assembly assembly)
         {
             List<Type> types = assembly.GetExportedTypes()
-                .Where(t => t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IMapFrom<>)))
+                .Where(t => t.GetInterfaces().Any(i => i == typeof(IMappable)))
                 .ToList();
 
             foreach (Type type in types)
             {
                 object? instance = Activator.CreateInstance(type);
 
-                MethodInfo? methodInfo = type.GetMethod("Mapping");
+                MethodInfo? methodInfo = type.GetMethod(nameof(IMappable.Mapping));
 
                 methodInfo?.Invoke(instance, new object[] { this });
             }
