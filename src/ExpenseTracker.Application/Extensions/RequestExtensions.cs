@@ -27,7 +27,7 @@ namespace ExpenseTracker.Application.Extensions
         /// <returns>True if the request instance is a command, otherwise false.</returns>
         public static bool IsCommand<T>(this IRequest<T> request)
         {
-            return request is ICommand<T>;
+            return !request.IsQuery();
         }
     }
 }

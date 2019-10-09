@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using ExpenseTracker.Application.Abstractions;
-using ExpenseTracker.Application.Extensions;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Primitives;
 using MediatR;
@@ -37,11 +35,6 @@ namespace ExpenseTracker.Api.Controllers
         protected virtual async Task<IActionResult> ProcessQueryAndReturnOkAsync<TValue>(IQuery<TValue?> request)
             where TValue : class
         {
-            if (request.IsCommand())
-            {
-                throw new ArgumentException($"The type {request.GetType().Name} is not a valid query.", nameof(request));
-            }
-
             TValue? response = await Mediator.Send(request);
 
             if (response is null)
@@ -62,8 +55,6 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         protected virtual async Task<IActionResult> ProcessCommandAndReturnCreatedAsync(ICommand<Result<EntityCreatedResponse>> request, string actionName)
         {
-            AssertRequestIsCommand(request);
-
             Result<EntityCreatedResponse> result = await Mediator.Send(request);
 
             if (result.IsFailure)
@@ -83,8 +74,6 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         protected async Task<IActionResult> ProcessCommandAndReturnNoContentAsync(ICommand<Result> request)
         {
-            AssertRequestIsCommand(request);
-
             Result result = await Mediator.Send(request);
 
             if (result.IsFailure)
@@ -93,22 +82,6 @@ namespace ExpenseTracker.Api.Controllers
             }
 
             return NoContent();
-        }
-
-        /// <summary>
-        /// Asserts that the specified request is a command, otherwise throws an exception.
-        /// </summary>
-        /// <typeparam name="T">The request type.</typeparam>
-        /// <param name="request">The request instance.</param>
-        /// <exception cref="ArgumentException"> if <paramref name="request"/> is a query.</exception>
-        private static void AssertRequestIsCommand<T>(IRequest<T> request)
-        {
-            if (request.IsCommand())
-            {
-                return;
-            }
-
-            throw new ArgumentException($"The type {request.GetType().Name} is not a valid command.", nameof(request));
         }
     }
 }
