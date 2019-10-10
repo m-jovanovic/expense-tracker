@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ExpenseTracker.Application.Abstractions;
 using ExpenseTracker.Application.Documents;
 
@@ -9,13 +8,20 @@ namespace ExpenseTracker.Application.Expenses.Queries.GetExpenses
     /// <summary>
     /// Represents the query for getting expenses for a user.
     /// </summary>
-    [DataContract]
     public sealed class GetExpensesForUser : IQuery<IEnumerable<Expense>>
     {
         /// <summary>
-        /// Gets or sets the user identifier.
+        /// Initializes a new instance of the <see cref="GetExpensesForUser"/> class.
         /// </summary>
-        [DataMember]
-        public Guid UserId { get; set; }
+        /// <param name="userId">The user identifier.</param>
+        public GetExpensesForUser(Guid userId)
+        {
+            UserId = userId;
+        }
+
+        /// <summary>
+        /// Gets the user identifier.
+        /// </summary>
+        public Guid UserId { get; }
     }
 }
