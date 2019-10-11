@@ -1,7 +1,7 @@
 ﻿using ExpenseTracker.Domain.Aggregates.Expenses;
 using MediatR;
 
-namespace ExpenseTracker.Application.Expenses.Events
+namespace ExpenseTracker.Application.Expenses.Events.ExpenseCreated
 {
     /// <summary>
     /// Represents the event that fires after an expense is created.

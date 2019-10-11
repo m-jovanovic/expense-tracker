@@ -1,7 +1,7 @@
 ﻿using System;
 using MediatR;
 
-namespace ExpenseTracker.Application.Expenses.Events
+namespace ExpenseTracker.Application.Expenses.Events.ExpenseDeleted
 {
     /// <summary>
     /// Represents the event that fires after an expense is deleted.

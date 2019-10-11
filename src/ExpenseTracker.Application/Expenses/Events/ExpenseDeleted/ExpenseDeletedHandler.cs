@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Raven.Client.Documents.Session;
 
-namespace ExpenseTracker.Application.Expenses.Events
+namespace ExpenseTracker.Application.Expenses.Events.ExpenseDeleted
 {
     /// <summary>
     /// Represents the handler for the <see cref="ExpenseDeleted"/> event.

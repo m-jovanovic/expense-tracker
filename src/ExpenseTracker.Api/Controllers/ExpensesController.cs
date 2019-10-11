@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Expenses.Commands.CreateExpense;
 using ExpenseTracker.Application.Expenses.Commands.DeleteExpense;
+using ExpenseTracker.Application.Expenses.Commands.UpdateExpense;
 using ExpenseTracker.Application.Expenses.Queries.GetExpense;
 using ExpenseTracker.Application.Expenses.Queries.GetExpenses;
 using ExpenseTracker.Domain.Aggregates.Expenses;
@@ -47,6 +48,17 @@ namespace ExpenseTracker.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody]CreateExpense createExpense)
             => await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
+
+        /// <summary>
+        /// Updates the expense using the provided <see cref="UpdateExpense"/> command.
+        /// </summary>
+        /// <param name="updateExpense">The update expense command instance.</param>
+        /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update([FromBody] UpdateExpense updateExpense)
+            => await ProcessCommandAndReturnNoContentAsync(updateExpense);
 
         /// <summary>
         /// Deletes an expense using the provided <see cref="DeleteExpense"/> command.

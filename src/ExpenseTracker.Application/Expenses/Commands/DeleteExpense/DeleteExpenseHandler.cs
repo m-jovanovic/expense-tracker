@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
 using ExpenseTracker.Application.Expenses.Events;
+using ExpenseTracker.Application.Expenses.Events.ExpenseDeleted;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
 using ExpenseTracker.Domain.Primitives;

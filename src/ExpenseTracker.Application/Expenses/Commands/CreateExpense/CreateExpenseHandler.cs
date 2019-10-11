@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ExpenseTracker.Application.Exceptions;
 using ExpenseTracker.Application.Expenses.Events;
+using ExpenseTracker.Application.Expenses.Events.ExpenseCreated;
 using ExpenseTracker.Application.Infrastructure;
 using ExpenseTracker.Domain.Aggregates.Expenses;
 using ExpenseTracker.Domain.Aggregates.Users;
