@@ -25,8 +25,7 @@ namespace ExpenseTracker.Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetExpenses(Guid userId)
-            => await ProcessQueryAndReturnOkAsync(new GetExpensesForUser(userId));
+        public async Task<IActionResult> GetExpenses(Guid userId) => await ProcessQueryAndReturnOkAsync(new GetExpensesForUser(userId));
 
         /// <summary>
         /// Gets the expense with the specified identifier, if it exists.
@@ -46,8 +45,7 @@ namespace ExpenseTracker.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]CreateExpense createExpense)
-            => await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
+        public async Task<IActionResult> Create([FromBody]CreateExpense createExpense) => await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
 
         /// <summary>
         /// Updates the expense using the provided <see cref="UpdateExpense"/> command.
@@ -57,8 +55,7 @@ namespace ExpenseTracker.Api.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody] UpdateExpense updateExpense)
-            => await ProcessCommandAndReturnNoContentAsync(updateExpense);
+        public async Task<IActionResult> Update([FromBody] UpdateExpense updateExpense) => await ProcessCommandAndReturnNoContentAsync(updateExpense);
 
         /// <summary>
         /// Deletes an expense using the provided <see cref="DeleteExpense"/> command.
@@ -68,7 +65,6 @@ namespace ExpenseTracker.Api.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete([FromBody]DeleteExpense deleteExpense)
-            => await ProcessCommandAndReturnNoContentAsync(deleteExpense);
+        public async Task<IActionResult> Delete([FromBody]DeleteExpense deleteExpense) => await ProcessCommandAndReturnNoContentAsync(deleteExpense);
     }
 }

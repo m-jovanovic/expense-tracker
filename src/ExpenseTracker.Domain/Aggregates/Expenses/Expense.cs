@@ -73,6 +73,11 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
                 throw new DomainException("Amount can not be less than zero.");
             }
 
+            if (amount == Money.Amount)
+            {
+                return;
+            }
+
             Money = Money.ChangeAmount(amount);
         }
 
@@ -85,6 +90,11 @@ namespace ExpenseTracker.Domain.Aggregates.Expenses
             if (currency.Equals(Currency.None))
             {
                 throw new DomainException("Currency can not be empty.");
+            }
+
+            if (currency.Equals(Money.Currency))
+            {
+                return;
             }
 
             Money = Money.ChangeCurrency(currency);

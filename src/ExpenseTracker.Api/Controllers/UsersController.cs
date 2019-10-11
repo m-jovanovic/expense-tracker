@@ -32,7 +32,6 @@ namespace ExpenseTracker.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]CreateUser createUser)
-            => await ProcessCommandAndReturnCreatedAsync(createUser, nameof(Get));
+        public async Task<IActionResult> Create([FromBody]CreateUser createUser) => await ProcessCommandAndReturnCreatedAsync(createUser, nameof(Get));
     }
 }
