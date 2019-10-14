@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Application.Abstractions;
-using Application.Infrastructure;
+using Application.Commands;
+using Application.Commands.Infrastructure;
+using Application.Queries;
 using Domain.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Http;

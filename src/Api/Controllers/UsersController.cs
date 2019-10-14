@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Application.Documents;
-using Application.Users.Commands.CreateUser;
-using Application.Users.Queries.GetUser;
+using Application.Commands.Users.CreateUser;
+using Application.Documents.Documents;
+using Application.Queries.Users.GetUser;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

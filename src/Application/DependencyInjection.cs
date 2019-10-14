@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Application.Abstractions;
+﻿using Application.Abstractions;
 using Application.Behaviours;
 using AutoMapper;
 using MediatR;
@@ -12,8 +11,8 @@ namespace Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(Documents.AssemblyProvider.GetDocumentsAssembly());
+            services.AddMediatR(Commands.AssemblyProvider.GetCommandsAssembly(), Queries.AssemblyProvider.GetQueriesAssembly());
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehaviour<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
@@ -23,7 +22,7 @@ namespace Application
 
             var documentStoreProvider = serviceProvider.GetService<IDocumentStoreProvider>();
 
-            IndexCreation.CreateIndexes(Assembly.GetExecutingAssembly(), documentStoreProvider.GetDocumentStore());
+            IndexCreation.CreateIndexes(Queries.AssemblyProvider.GetQueriesAssembly(), documentStoreProvider.GetDocumentStore());
 
             return services;
         }

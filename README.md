@@ -1,2 +1,3 @@
-# expense-tracker
-Expense tracking solution based on .NET Core and Vue.
+# Expense Tracker
+
+Expense tracking solution based on .NET Core and Blazor.

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Application.Documents;
-using Application.Expenses.Commands.CreateExpense;
-using Application.Expenses.Commands.DeleteExpense;
-using Application.Expenses.Commands.UpdateExpense;
-using Application.Expenses.Queries.GetExpense;
-using Application.Expenses.Queries.GetExpenses;
+using Application.Commands.Expenses.CreateExpense;
+using Application.Commands.Expenses.DeleteExpense;
+using Application.Commands.Expenses.UpdateExpense;
+using Application.Documents.Documents;
+using Application.Queries.Expenses.GetExpense;
+using Application.Queries.Expenses.GetExpenses;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,5 @@
-﻿using Application.Abstractions;
+﻿using Application.Commands;
+using Application.Queries;
 using MediatR;
 
 namespace Application.Extensions
@@ -27,7 +28,7 @@ namespace Application.Extensions
         /// <returns>True if the request instance is a command, otherwise false.</returns>
         public static bool IsCommand<T>(this IRequest<T> request)
         {
-            return !request.IsQuery();
+            return request is ICommand<T> && !request.IsQuery();
         }
     }
 }
