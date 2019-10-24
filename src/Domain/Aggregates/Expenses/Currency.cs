@@ -8,10 +8,9 @@ namespace Domain.Aggregates.Expenses
     public sealed class Currency : Enumeration
     {
         public static readonly Currency None = new Currency(default, string.Empty, string.Empty);
-
         public static readonly Currency Rsd = new Currency(1, "Serbian Dinar", "RSD");
-
         public static readonly Currency Eur = new Currency(2, "Euro", "€");
+        public static readonly Currency Usd = new Currency(3, "Dollar", "$");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Currency"/> class.

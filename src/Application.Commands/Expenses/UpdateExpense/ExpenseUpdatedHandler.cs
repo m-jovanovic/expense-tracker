@@ -2,15 +2,16 @@
 using System.Threading.Tasks;
 using Application.Documents.Documents;
 using AutoMapper;
+using Domain.Events;
 using MediatR;
 using Raven.Client.Documents.Session;
 
 namespace Application.Commands.Expenses.UpdateExpense
 {
     /// <summary>
-    /// Represents the handler for the <see cref="ExpenseCreated"/> event.
+    /// Represents the handler for the <see cref="ExpenseUpdated"/> event.
     /// </summary>
-    public sealed class ExpenseUpdatedHandler : INotificationHandler<Domain.Events.ExpenseUpdated>
+    public sealed class ExpenseUpdatedHandler : INotificationHandler<ExpenseUpdated>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncDocumentSession _session;
@@ -27,7 +28,7 @@ namespace Application.Commands.Expenses.UpdateExpense
         }
 
         /// <inheritdoc />
-        public async Task Handle(Domain.Events.ExpenseUpdated notification, CancellationToken cancellationToken)
+        public async Task Handle(ExpenseUpdated notification, CancellationToken cancellationToken)
         {
             Expense document = await _session.LoadAsync<Expense>(notification.Expense.Id.ToString(), cancellationToken);
 

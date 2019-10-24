@@ -21,7 +21,12 @@ namespace Domain.UnitTests.ValueObjects
             new object[] { Currency.Eur, Currency.Rsd },
             new object[] { Currency.Rsd, Currency.Eur },
             new object[] { Currency.Eur, Currency.Eur },
-            new object[] { Currency.Rsd, Currency.Rsd }
+            new object[] { Currency.Rsd, Currency.Rsd },
+            new object[] { Currency.Rsd, Currency.Usd },
+            new object[] { Currency.Eur, Currency.Usd },
+            new object[] { Currency.Usd, Currency.Rsd },
+            new object[] { Currency.Usd, Currency.Eur },
+            new object[] { Currency.Usd, Currency.Usd }
         };
 
         [Fact]

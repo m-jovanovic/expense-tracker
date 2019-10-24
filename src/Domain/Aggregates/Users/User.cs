@@ -15,9 +15,29 @@ namespace Domain.Aggregates.Users
         /// <param name="firstName">The user first name.</param>
         /// <param name="lastName">The user last name.</param>
         /// <param name="email">The user email.</param>
+        /// <exception cref="ArgumentException"> if any of the parameters is either null or empty.</exception>
         public User(Guid id, string firstName, string lastName, Email email)
-            : this()
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("The identifier is required.", nameof(id));
+            }
+
+            if (string.IsNullOrWhiteSpace(firstName))
+            {
+                throw new ArgumentException("The first name is required.", nameof(firstName));
+            }
+
+            if (string.IsNullOrWhiteSpace(lastName))
+            {
+                throw new ArgumentException("The last name is required.", nameof(lastName));
+            }
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("The email is required.", nameof(email));
+            }
+
             Id = id;
             FirstName = firstName;
             LastName = lastName;

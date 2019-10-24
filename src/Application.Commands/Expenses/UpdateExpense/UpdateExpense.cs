@@ -23,12 +23,6 @@ namespace Application.Commands.Expenses.UpdateExpense
         public decimal Amount { get; private set; }
 
         /// <summary>
-        /// Gets the currency identifier.
-        /// </summary>
-        [DataMember]
-        public int CurrencyId { get; private set; }
-
-        /// <summary>
         /// Gets the expense date.
         /// </summary>
         [DataMember]

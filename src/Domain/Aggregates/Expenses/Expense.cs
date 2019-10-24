@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Events;
 using Domain.Exceptions;
 using Domain.Primitives;
 
@@ -18,8 +19,19 @@ namespace Domain.Aggregates.Expenses
         /// <param name="userId">The user identifier.</param>
         /// <param name="money">The money of the expense.</param>
         /// <param name="date">The date of the expense.</param>
+        /// <exception cref="ArgumentException"> if the identifier or the user identifier is empty.</exception>
         public Expense(Guid id, Guid userId, Money money, DateTime date)
         {
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentException("The identifier is required.", nameof(id));
+            }
+
+            if (userId == Guid.Empty)
+            {
+                throw new ArgumentException("The user identifier is required.", nameof(userId));
+            }
+
             Id = id;
             UserId = userId;
             Money = money;
@@ -66,11 +78,12 @@ namespace Domain.Aggregates.Expenses
         /// Changes the amount of the expense.
         /// </summary>
         /// <param name="amount">The amount.</param>
+        /// <exception cref="NegativeAmountException"> if the specified amount is negative.</exception>
         public void ChangeAmount(decimal amount)
         {
             if (amount < decimal.Zero)
             {
-                throw new DomainException("Amount can not be less than zero.");
+                throw new NegativeAmountException(amount);
             }
 
             if (amount == Money.Amount)
@@ -78,26 +91,11 @@ namespace Domain.Aggregates.Expenses
                 return;
             }
 
+            decimal amountDifference = Money.Amount - amount;
+
             Money = Money.ChangeAmount(amount);
-        }
 
-        /// <summary>
-        /// Changes the currency of the expense.
-        /// </summary>
-        /// <param name="currency">The currency.</param>
-        public void ChangeCurrency(Currency currency)
-        {
-            if (currency.Equals(Currency.None))
-            {
-                throw new DomainException("Currency can not be empty.");
-            }
-
-            if (currency.Equals(Money.Currency))
-            {
-                return;
-            }
-
-            Money = Money.ChangeCurrency(currency);
+            AddDomainEvent(new ExpenseAmountChanged(Id, amountDifference));
         }
     }
 }

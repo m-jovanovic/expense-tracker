@@ -5,7 +5,7 @@ namespace Domain.Exceptions
     /// <summary>
     /// Represents an error that occurs in the domain layer.
     /// </summary>
-    public sealed class DomainException : Exception
+    public class DomainException : Exception
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DomainException"/> class.

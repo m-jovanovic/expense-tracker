@@ -37,15 +37,6 @@ namespace Application.Commands.Expenses.UpdateExpense
                 throw new EntityNotFoundException(nameof(Expense), request.ExpenseId);
             }
 
-            var currency = Enumeration.FromValue<Currency>(request.CurrencyId);
-
-            if (currency is null)
-            {
-                return Result.Fail($"Could not find currency with id {request.CurrencyId}.");
-            }
-
-            expense.ChangeCurrency(currency);
-
             expense.ChangeAmount(request.Amount);
 
             await _mediator.Publish(new ExpenseUpdated(expense), cancellationToken);

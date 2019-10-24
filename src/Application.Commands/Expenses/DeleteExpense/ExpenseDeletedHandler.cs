@@ -10,7 +10,7 @@ namespace Application.Commands.Expenses.DeleteExpense
     /// <summary>
     /// Represents the handler for the <see cref="ExpenseDeleted"/> event.
     /// </summary>
-    public sealed class ExpenseDeletedHandler : INotificationHandler<Domain.Events.ExpenseDeleted>
+    public sealed class ExpenseDeletedHandler : INotificationHandler<ExpenseDeleted>
     {
         private readonly IAsyncDocumentSession _session;
 

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Application.Documents.Documents;
 using AutoMapper;
+using Domain.Events;
 using MediatR;
 using Raven.Client.Documents.Session;
 
@@ -10,7 +11,7 @@ namespace Application.Commands.Expenses.CreateExpense
     /// <summary>
     /// Represents the handler for the <see cref="ExpenseCreated"/> event.
     /// </summary>
-    public sealed class ExpenseCreatedHandler : INotificationHandler<Domain.Events.ExpenseCreated>
+    public sealed class ExpenseCreatedHandler : INotificationHandler<ExpenseCreated>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncDocumentSession _session;
@@ -27,7 +28,7 @@ namespace Application.Commands.Expenses.CreateExpense
         }
 
         /// <inheritdoc />
-        public async Task Handle(Domain.Events.ExpenseCreated notification, CancellationToken cancellationToken)
+        public async Task Handle(ExpenseCreated notification, CancellationToken cancellationToken)
         {
             var document = _mapper.Map<Expense>(notification.Expense);
 

@@ -13,7 +13,6 @@ namespace Application.Commands.Expenses.UpdateExpense
         public UpdateExpenseValidator()
         {
             RuleFor(c => c.ExpenseId).NotEmpty();
-            RuleFor(c => c.CurrencyId).NotEmpty();
             RuleFor(c => c.Date).NotEmpty();
         }
     }

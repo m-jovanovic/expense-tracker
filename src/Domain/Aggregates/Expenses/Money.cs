@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Domain.Exceptions;
 using Domain.Primitives;
 
 namespace Domain.Aggregates.Expenses
@@ -18,8 +20,20 @@ namespace Domain.Aggregates.Expenses
         /// </summary>
         /// <param name="amount">The amount.</param>
         /// <param name="currency">The currency.</param>
+        /// <exception cref="NegativeAmountException"> if the specified amount is negative.</exception>
+        /// <exception cref="ArgumentException"> if the specified currency does not exist.</exception>
         public Money(decimal amount, Currency currency)
         {
+            if (amount < decimal.Zero)
+            {
+                throw new NegativeAmountException(amount);
+            }
+
+            if (currency.Equals(Currency.None))
+            {
+                throw new ArgumentException("The currency is required.", nameof(currency));
+            }
+
             Amount = amount;
             Currency = currency;
         }
