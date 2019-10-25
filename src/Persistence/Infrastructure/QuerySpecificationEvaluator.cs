@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Application.QuerySpecifications;
-using Domain.Primitives;
+using Domain.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Infrastructure

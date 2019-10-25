@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Domain.Extensions;
-using Domain.Primitives;
+using Domain.Core.Extensions;
+using Domain.Core.Primitives;
 
 namespace Domain.Aggregates.Users
 {

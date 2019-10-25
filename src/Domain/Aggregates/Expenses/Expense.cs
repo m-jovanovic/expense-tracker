@@ -1,7 +1,7 @@
 ﻿using System;
+using Domain.Core.Primitives;
 using Domain.Events;
 using Domain.Exceptions;
-using Domain.Primitives;
 
 namespace Domain.Aggregates.Expenses
 {
@@ -95,7 +95,7 @@ namespace Domain.Aggregates.Expenses
 
             Money = Money.ChangeAmount(amount);
 
-            AddDomainEvent(new ExpenseAmountChanged(Id, amountDifference));
+            AddDomainEvent(new ExpenseAmountChangedEvent(Id, amountDifference));
         }
     }
 }

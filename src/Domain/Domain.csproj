@@ -9,6 +9,10 @@
     <PackageReference Include="MediatR" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Core\Domain.Core.csproj" />
+  </ItemGroup>
+
   <Import Project="..\..\CodeAnalysis.targets" />
 
 </Project>

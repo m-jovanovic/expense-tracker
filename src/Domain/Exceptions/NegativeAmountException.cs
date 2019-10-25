@@ -1,4 +1,6 @@
-﻿namespace Domain.Exceptions
+﻿using Domain.Core.Exceptions;
+
+namespace Domain.Exceptions
 {
     /// <summary>
     /// Represents the exception for a negative amount.

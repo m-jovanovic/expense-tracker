@@ -18,9 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application.Commands\Application.Commands.csproj" />
     <ProjectReference Include="..\Application.Documents\Application.Documents.csproj" />
+    <ProjectReference Include="..\Application.Commands\Application.Commands.csproj" />
     <ProjectReference Include="..\Application.Queries\Application.Queries.csproj" />
+    <ProjectReference Include="..\Application.Events\Application.Events.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 

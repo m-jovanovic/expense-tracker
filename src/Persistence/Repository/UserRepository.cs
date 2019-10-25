@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Abstractions;
-using Application.QuerySpecifications;
 using Domain.Aggregates.Users;
+using Persistence.QuerySpecifications;
 
 namespace Persistence.Repository
 {

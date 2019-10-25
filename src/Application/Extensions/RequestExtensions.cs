@@ -17,7 +17,7 @@ namespace Application.Extensions
         /// <returns>True if the request instance is a query, otherwise false.</returns>
         public static bool IsQuery<T>(this IRequest<T> request)
         {
-            return request is IQuery<T>;
+            return request is IQuery<T> && !(request is ICommand<T>);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Application.Extensions
         /// <returns>True if the request instance is a command, otherwise false.</returns>
         public static bool IsCommand<T>(this IRequest<T> request)
         {
-            return request is ICommand<T> && !request.IsQuery();
+            return !request.IsQuery();
         }
     }
 }

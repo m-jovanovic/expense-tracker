@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Primitives;
+using Domain.Core.Primitives;
 
 namespace Domain.Aggregates.Users
 {

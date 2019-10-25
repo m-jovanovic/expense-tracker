@@ -1,4 +1,4 @@
-﻿using Domain.Primitives;
+﻿using Domain.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

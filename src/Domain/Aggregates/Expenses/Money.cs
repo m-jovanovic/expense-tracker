@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Domain.Core.Primitives;
 using Domain.Exceptions;
-using Domain.Primitives;
 
 namespace Domain.Aggregates.Expenses
 {

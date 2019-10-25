@@ -17,10 +17,6 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstractions\" />
-  </ItemGroup>
-
   <Import Project="..\..\CodeAnalysis.targets" />
 
 </Project>

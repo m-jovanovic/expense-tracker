@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions;
-using Application.Behaviours;
+using Application.Behaviors;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,11 +12,14 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(Documents.AssemblyProvider.GetDocumentsAssembly());
-            services.AddMediatR(Commands.AssemblyProvider.GetCommandsAssembly(), Queries.AssemblyProvider.GetQueriesAssembly());
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehaviour<,>));
+            services.AddMediatR(
+                Commands.AssemblyProvider.GetCommandsAssembly(),
+                Queries.AssemblyProvider.GetQueriesAssembly(),
+                Events.AssemblyProvider.GetEventsAssembly());
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();
 

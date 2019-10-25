@@ -2,7 +2,7 @@
 using Application.Commands;
 using Application.Commands.Infrastructure;
 using Application.Queries;
-using Domain.Primitives;
+using Domain.Core.Primitives;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

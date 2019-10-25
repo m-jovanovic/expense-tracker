@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application.QuerySpecifications;
-using Domain.Primitives;
+using Domain.Core.Primitives;
 
 namespace Application.Abstractions
 {

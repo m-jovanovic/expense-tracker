@@ -22,16 +22,16 @@ namespace Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(User), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetUser(id));
+        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetUserQuery(id));
 
         /// <summary>
-        /// Creates a new user using the provided <see cref="CreateUser"/> command.
+        /// Creates a new user using the provided <see cref="CreateUserCommand"/> command.
         /// </summary>
-        /// <param name="createUser">The create user command instance.</param>
+        /// <param name="createUserCommand">The create user command instance.</param>
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]CreateUser createUser) => await ProcessCommandAndReturnCreatedAsync(createUser, nameof(Get));
+        public async Task<IActionResult> Create([FromBody]CreateUserCommand createUserCommand) => await ProcessCommandAndReturnCreatedAsync(createUserCommand, nameof(Get));
     }
 }

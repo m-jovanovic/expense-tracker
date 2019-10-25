@@ -25,7 +25,7 @@ namespace Api.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetExpenses(Guid userId) => await ProcessQueryAndReturnOkAsync(new GetExpensesForUser(userId));
+        public async Task<IActionResult> GetExpenses(Guid userId) => await ProcessQueryAndReturnOkAsync(new GetExpensesForUserQuery(userId));
 
         /// <summary>
         /// Gets the expense with the specified identifier, if it exists.
@@ -35,36 +35,36 @@ namespace Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(Expense), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetExpense(id));
+        public async Task<IActionResult> Get(Guid id) => await ProcessQueryAndReturnOkAsync(new GetExpenseQuery(id));
 
         /// <summary>
-        /// Creates a new expense using the provided <see cref="CreateExpense"/> command.
+        /// Creates a new expense using the provided <see cref="CreateExpenseCommand"/> command.
         /// </summary>
-        /// <param name="createExpense">The create expense command instance.</param>
+        /// <param name="createExpenseCommand">The create expense command instance.</param>
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody]CreateExpense createExpense) => await ProcessCommandAndReturnCreatedAsync(createExpense, nameof(Get));
+        public async Task<IActionResult> Create([FromBody]CreateExpenseCommand createExpenseCommand) => await ProcessCommandAndReturnCreatedAsync(createExpenseCommand, nameof(Get));
 
         /// <summary>
-        /// Updates the expense using the provided <see cref="UpdateExpense"/> command.
+        /// Updates the expense using the provided <see cref="UpdateExpenseCommand"/> command.
         /// </summary>
-        /// <param name="updateExpense">The update expense command instance.</param>
+        /// <param name="updateExpenseCommand">The update expense command instance.</param>
         /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Update([FromBody]UpdateExpense updateExpense) => await ProcessCommandAndReturnNoContentAsync(updateExpense);
+        public async Task<IActionResult> Update([FromBody]UpdateExpenseCommand updateExpenseCommand) => await ProcessCommandAndReturnNoContentAsync(updateExpenseCommand);
 
         /// <summary>
-        /// Deletes an expense using the provided <see cref="DeleteExpense"/> command.
+        /// Deletes an expense using the provided <see cref="DeleteExpenseCommand"/> command.
         /// </summary>
-        /// <param name="deleteExpense">The delete expense command instance.</param>
+        /// <param name="deleteExpenseCommand">The delete expense command instance.</param>
         /// <returns>A 204 (No Content) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Delete([FromBody]DeleteExpense deleteExpense) => await ProcessCommandAndReturnNoContentAsync(deleteExpense);
+        public async Task<IActionResult> Delete([FromBody]DeleteExpenseCommand deleteExpenseCommand) => await ProcessCommandAndReturnNoContentAsync(deleteExpenseCommand);
     }
 }
