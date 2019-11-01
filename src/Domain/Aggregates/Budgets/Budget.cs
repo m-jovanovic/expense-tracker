@@ -14,18 +14,17 @@ namespace Domain.Aggregates.Budgets
         /// <summary>
         /// Initializes a new instance of the <see cref="Budget"/> class.
         /// </summary>
-        /// <param name="currency">The currency instance.</param>
-        /// <param name="amount">The budget amount.</param>
+        /// <param name="amount">The amount of amount for the budget.</param>
         /// <param name="startsOnUtc">The date and time the budget starts on in UTC format.</param>
         /// <param name="endsOnUtc">The date and time the budget ends on in UTC format.</param>
-        /// <exception cref="ArgumentException"> if currency is empty.</exception>
+        /// <exception cref="ArgumentException"> if amount is empty.</exception>
         /// <exception cref="EndDatePrecedesStartDateException"> if end date precedes start date.</exception>
-        /// <exception cref="NegativeAmountException"> if the amount is negative.</exception>
-        public Budget(Currency currency, decimal amount, DateTime startsOnUtc, DateTime endsOnUtc)
+        public Budget(Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
+            : this()
         {
-            if (currency.Equals(Currency.None))
+            if (amount == Money.Empty)
             {
-                throw new ArgumentException("The currency is required.", nameof(currency));
+                throw new ArgumentException("The amount is required", nameof(amount));
             }
 
             if (endsOnUtc < startsOnUtc)
@@ -33,12 +32,6 @@ namespace Domain.Aggregates.Budgets
                 throw new EndDatePrecedesStartDateException(startsOnUtc, endsOnUtc);
             }
 
-            if (amount < decimal.Zero)
-            {
-                throw new NegativeAmountException(amount);
-            }
-
-            Currency = currency;
             Amount = amount;
             StartsOnUtc = startsOnUtc;
             EndsOnUtc = endsOnUtc;
@@ -49,28 +42,24 @@ namespace Domain.Aggregates.Budgets
         /// </summary>
         private Budget()
         {
-            Currency = Currency.None;
+            Amount = Money.Empty;
+            Spent = Money.Empty;
         }
 
         /// <summary>
-        /// Gets the currency.
+        /// Gets the amount of amount for the budget.
         /// </summary>
-        public Currency Currency { get; private set; }
+        public Money Amount { get; private set; }
 
         /// <summary>
-        /// Gets the budget amount.
+        /// Gets the amount of amount spent from the budget.
         /// </summary>
-        public decimal Amount { get; private set; }
+        public Money Spent { get; private set; }
 
         /// <summary>
-        /// Gets the spent amount of the budget.
+        /// Gets the remaining amount of amount from the budget.
         /// </summary>
-        public decimal Spent { get; private set; }
-
-        /// <summary>
-        /// Gets the remaining amount of the budget.
-        /// </summary>
-        public decimal Remaining => Amount - Spent;
+        public Money Remaining => Amount - Spent;
 
         /// <summary>
         /// Gets the date and time the budget starts on in UTC format.
@@ -91,44 +80,38 @@ namespace Domain.Aggregates.Budgets
         /// <summary>
         /// Creates the budget for the current month using the specified parameters.
         /// </summary>
-        /// <param name="currency">The currency.</param>
-        /// <param name="amount">The budget amount.</param>
+        /// <param name="amount">The amount of amount for the budget.</param>
         /// <param name="utcNow">The current date and time in UTC format.</param>
         /// <returns>The budget for the current month with the specified amount and currency.</returns>
-        public static Budget CreateForCurrentMonth(Currency currency, decimal amount, DateTime utcNow)
+        public static Budget CreateForCurrentMonth(Money amount, DateTime utcNow)
         {
             var startsOn = new DateTime(utcNow.Year, utcNow.Month, 1);
 
             DateTime endsOn = startsOn.AddMonths(1).AddDays(-1);
 
-            return new Budget(currency, amount, startsOn, endsOn);
+            return new Budget(amount, startsOn, endsOn);
         }
 
         /// <summary>
         /// Withdraws the specified amount of money from the budget.
         /// </summary>
-        /// <param name="money">The money to withdraw.</param>
-        public void Withdraw(Money money)
+        /// <param name="amount">The amount to withdraw.</param>
+        public void Withdraw(Money amount)
         {
-            if (!money.Currency.Equals(Currency))
-            {
-                return;
-            }
+            Spent += amount;
 
-            Spent += money.Amount;
-
-            AddDomainEvent(new BudgetUpdated(Id));
+            AddDomainEvent(new BudgetAmountWithdrawn(Id));
         }
 
         /// <summary>
-        /// Deposits the specified amount to the budget.
+        /// Deposits the specified amount of money to the budget.
         /// </summary>
-        /// <param name="amount">The amount to deposit.</param>
-        public void Deposit(decimal amount)
+        /// <param name="amount">The amount of amount to deposit.</param>
+        public void Deposit(Money amount)
         {
             Spent -= amount;
 
-            AddDomainEvent(new BudgetUpdated(Id));
+            AddDomainEvent(new BudgetAmountDeposited(Id));
         }
     }
 }

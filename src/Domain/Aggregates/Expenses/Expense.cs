@@ -95,7 +95,7 @@ namespace Domain.Aggregates.Expenses
 
             Money = Money.ChangeAmount(amount);
 
-            AddDomainEvent(new ExpenseAmountChangedEvent(Id, amountDifference));
+            AddDomainEvent(new ExpenseAmountChangedEvent(Id, new Money(amountDifference, Money.Currency)));
         }
     }
 }

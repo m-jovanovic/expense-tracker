@@ -3,9 +3,9 @@ using Domain.Core.Events;
 
 namespace Domain.Events
 {
-    public sealed class BudgetUpdated : BaseDomainEvent
+    public sealed class BudgetAmountDeposited : BaseDomainEvent
     {
-        public BudgetUpdated(Guid budgetId)
+        public BudgetAmountDeposited(Guid budgetId)
         {
             BudgetId = budgetId;
         }

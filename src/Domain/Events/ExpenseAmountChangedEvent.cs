@@ -1,11 +1,12 @@
 ﻿using System;
+using Domain.Aggregates.Expenses;
 using Domain.Core.Events;
 
 namespace Domain.Events
 {
     public sealed class ExpenseAmountChangedEvent : BaseDomainEvent
     {
-        public ExpenseAmountChangedEvent(Guid expenseId, decimal amountDifference)
+        public ExpenseAmountChangedEvent(Guid expenseId, Money amountDifference)
         {
             ExpenseId = expenseId;
             AmountDifference = amountDifference;
@@ -13,6 +14,6 @@ namespace Domain.Events
 
         public Guid ExpenseId { get; }
 
-        public decimal AmountDifference { get; }
+        public Money AmountDifference { get; }
     }
 }

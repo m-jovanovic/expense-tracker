@@ -16,7 +16,7 @@ namespace Persistence.QuerySpecifications
         /// <param name="dateTime">The date and time that falls within the budgets duration.</param>
         /// <param name="currency">The currency of the budget.</param>
         public BudgetQuerySpecification(DateTime dateTime, Currency currency)
-            : base(b => b.Currency.Value == currency.Value && b.StartsOnUtc >= dateTime && b.EndsOnUtc <= dateTime)
+            : base(b => b.Amount.Currency.Value == currency.Value && b.StartsOnUtc >= dateTime && b.EndsOnUtc <= dateTime)
         {
             ApplyOrderBy(b => b.StartsOnUtc);
         }

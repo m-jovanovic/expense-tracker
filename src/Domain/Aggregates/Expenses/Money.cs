@@ -43,6 +43,26 @@ namespace Domain.Aggregates.Expenses
             Currency = Currency.None;
         }
 
+        public static Money operator +(Money money1, Money money2)
+        {
+            if (money1.Currency.Equals(money2.Currency))
+            {
+                throw new InvalidOperationException();
+            }
+
+            return new Money(money1.Amount + money2.Amount, money1.Currency);
+        }
+
+        public static Money operator -(Money money1, Money money2)
+        {
+            if (money1.Currency.Equals(money2.Currency) || money1.Amount < money2.Amount)
+            {
+                throw new InvalidOperationException();
+            }
+
+            return new Money(money1.Amount - money2.Amount, money1.Currency);
+        }
+
         /// <summary>
         /// Gets the amount.
         /// </summary>
