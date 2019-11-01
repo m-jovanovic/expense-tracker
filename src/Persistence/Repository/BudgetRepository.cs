@@ -15,13 +15,14 @@ namespace Persistence.Repository
     {
         private readonly IDbContext _dbContext;
 
-        public BudgetRepository(IDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BudgetRepository"/> class.
+        /// </summary>
+        /// <param name="dbContext">The database context.</param>
+        public BudgetRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
-        public async Task<IEnumerable<Budget>> FindForDateAndCurrencyAsync(DateTime dateTime, Currency currency)
+        public async Task<IEnumerable<Budget>> GetByDateAndCurrencyAsync(DateTime dateTime, Currency currency)
         {
             if (currency.Equals(Currency.None))
             {

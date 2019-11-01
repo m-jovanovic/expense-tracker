@@ -18,6 +18,7 @@ namespace Persistence.QuerySpecifications
         public BudgetQuerySpecification(DateTime dateTime, Currency currency)
             : base(b => b.Currency.Value == currency.Value && b.StartsOnUtc >= dateTime && b.EndsOnUtc <= dateTime)
         {
+            ApplyOrderBy(b => b.StartsOnUtc);
         }
     }
 }

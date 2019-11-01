@@ -30,7 +30,7 @@ namespace Application.Events.Expenses
                 throw new DomainException($"The expense with id {notification.ExpenseId} was not found.");
             }
 
-            IEnumerable<Budget> budgets = await _budgetRepository.FindForDateAndCurrencyAsync(expense.Date, expense.Money.Currency);
+            IEnumerable<Budget> budgets = await _budgetRepository.GetByDateAndCurrencyAsync(expense.Date, expense.Money.Currency);
 
             foreach (Budget budget in budgets)
             {

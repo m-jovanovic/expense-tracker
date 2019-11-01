@@ -7,6 +7,6 @@ namespace Domain.Aggregates.Budgets
 {
     public interface IBudgetRepository
     {
-        Task<IEnumerable<Budget>> FindForDateAndCurrencyAsync(DateTime dateTime, Currency currency);
+        Task<IEnumerable<Budget>> GetByDateAndCurrencyAsync(DateTime dateTime, Currency currency);
     }
 }
