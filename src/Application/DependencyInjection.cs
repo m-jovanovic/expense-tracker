@@ -19,6 +19,7 @@ namespace Application
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(PerformanceMonitorBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UnitOfWorkBehavior<,>));
 
             ServiceProvider serviceProvider = services.BuildServiceProvider();

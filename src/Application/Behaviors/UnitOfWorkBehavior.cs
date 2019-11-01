@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Abstractions;
-using Application.Extensions;
+using Application.Commands;
 using MediatR;
 using Raven.Client.Documents.Session;
 
@@ -13,7 +13,7 @@ namespace Application.Behaviors
     /// <typeparam name="TRequest">The request type.</typeparam>
     /// <typeparam name="TResponse">The response type.</typeparam>
     public sealed class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : IRequest<TResponse>
+        where TRequest : ICommand<TResponse>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncDocumentSession _session;
@@ -33,11 +33,6 @@ namespace Application.Behaviors
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
             TResponse response = await next();
-
-            if (request.IsQuery())
-            {
-                return response;
-            }
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
