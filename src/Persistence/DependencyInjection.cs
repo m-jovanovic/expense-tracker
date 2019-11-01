@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions;
+using Domain.Aggregates.Budgets;
 using Domain.Aggregates.Expenses;
 using Domain.Aggregates.Users;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ namespace Persistence
             services.AddScoped<IUnitOfWork>(factory => factory.GetRequiredService<ExpenseTrackerDbContext>());
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<IBudgetRepository, BudgetRepository>();
 
             return services;
         }

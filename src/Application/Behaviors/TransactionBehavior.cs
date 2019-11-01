@@ -1,18 +1,18 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using Application.Commands;
+using Application.Extensions;
 using MediatR;
 
 namespace Application.Behaviors
 {
     /// <summary>
-    /// Represents a trasnaction behavior that wraps a request and manages the transaction.
+    /// Represents a transaction behavior that wraps a request and manages the transaction.
     /// </summary>
     /// <typeparam name="TRequest">The request type.</typeparam>
     /// <typeparam name="TResponse">The response type.</typeparam>
     public sealed class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-        where TRequest : ICommand<TResponse>
+        where TRequest : IRequest<TResponse>
     {
         private readonly TransactionOptions _transactionOptions;
 
@@ -31,6 +31,11 @@ namespace Application.Behaviors
         /// <inheritdoc />
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
+            if (request.IsQuery())
+            {
+                return await next();
+            }
+
             using var transactionScope = new TransactionScope(
                 TransactionScopeOption.Required, _transactionOptions, TransactionScopeAsyncFlowOption.Enabled);
 
