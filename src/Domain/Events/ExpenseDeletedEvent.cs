@@ -1,6 +1,5 @@
 ﻿using System;
 using Domain.Core.Events;
-using MediatR;
 
 namespace Domain.Events
 {

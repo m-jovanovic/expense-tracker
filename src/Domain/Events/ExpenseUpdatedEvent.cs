@@ -1,6 +1,5 @@
 ﻿using Domain.Aggregates.Expenses;
 using Domain.Core.Events;
-using MediatR;
 
 namespace Domain.Events
 {

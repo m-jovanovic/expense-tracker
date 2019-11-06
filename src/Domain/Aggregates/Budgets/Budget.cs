@@ -17,14 +17,14 @@ namespace Domain.Aggregates.Budgets
         /// <param name="amount">The amount of amount for the budget.</param>
         /// <param name="startsOnUtc">The date and time the budget starts on in UTC format.</param>
         /// <param name="endsOnUtc">The date and time the budget ends on in UTC format.</param>
-        /// <exception cref="ArgumentException"> if amount is empty.</exception>
+        /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         /// <exception cref="EndDatePrecedesStartDateException"> if end date precedes start date.</exception>
         public Budget(Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
             : this()
         {
             if (amount == Money.Empty)
             {
-                throw new ArgumentException("The amount is required", nameof(amount));
+                throw new EmptyMoneyException();
             }
 
             if (endsOnUtc < startsOnUtc)

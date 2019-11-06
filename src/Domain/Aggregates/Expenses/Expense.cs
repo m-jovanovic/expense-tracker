@@ -20,6 +20,7 @@ namespace Domain.Aggregates.Expenses
         /// <param name="money">The money of the expense.</param>
         /// <param name="date">The date of the expense.</param>
         /// <exception cref="ArgumentException"> if the identifier or the user identifier is empty.</exception>
+        /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         public Expense(Guid id, Guid userId, Money money, DateTime date)
         {
             if (id == Guid.Empty)
@@ -30,6 +31,11 @@ namespace Domain.Aggregates.Expenses
             if (userId == Guid.Empty)
             {
                 throw new ArgumentException("The user identifier is required.", nameof(userId));
+            }
+
+            if (Money == Money.Empty)
+            {
+                throw new EmptyMoneyException();
             }
 
             Id = id;
