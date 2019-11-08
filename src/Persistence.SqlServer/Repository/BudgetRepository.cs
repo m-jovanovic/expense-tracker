@@ -24,7 +24,7 @@ namespace Persistence.SqlServer.Repository
         /// <inheritdoc />
         public async Task<IEnumerable<Budget>> GetByDateAndCurrencyAsync(DateTime dateTime, Currency currency)
         {
-            if (currency.Equals(Currency.None))
+            if (currency.Equals(Currency.Empty))
             {
                 return new List<Budget>();
             }

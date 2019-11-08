@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Domain.Core.Primitives;
 using Domain.Exceptions;
+using Domain.Infrastructure;
 
 namespace Domain.Expenses
 {
@@ -24,15 +25,8 @@ namespace Domain.Expenses
         /// <exception cref="ArgumentException"> if the specified currency does not exist.</exception>
         public Money(decimal amount, Currency currency)
         {
-            if (amount < decimal.Zero)
-            {
-                throw new NegativeAmountException(amount);
-            }
-
-            if (currency.Equals(Currency.None))
-            {
-                throw new ArgumentException("The currency is required.", nameof(currency));
-            }
+            Check.AmountGreaterThanZero(amount);
+            Check.NotEmpty(currency, "The currency is required", nameof(currency));
 
             Amount = amount;
             Currency = currency;
@@ -40,7 +34,7 @@ namespace Domain.Expenses
 
         private Money()
         {
-            Currency = Currency.None;
+            Currency = Currency.Empty;
         }
 
         public static Money operator +(Money money1, Money money2)

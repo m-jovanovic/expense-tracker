@@ -1,5 +1,6 @@
 ﻿using System;
 using Domain.Core.Primitives;
+using Domain.Infrastructure;
 
 namespace Domain.Users
 {
@@ -18,25 +19,10 @@ namespace Domain.Users
         /// <exception cref="ArgumentException"> if any of the parameters is either null or empty.</exception>
         public User(Guid id, string firstName, string lastName, Email email)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("The identifier is required.", nameof(id));
-            }
-
-            if (string.IsNullOrWhiteSpace(firstName))
-            {
-                throw new ArgumentException("The first name is required.", nameof(firstName));
-            }
-
-            if (string.IsNullOrWhiteSpace(lastName))
-            {
-                throw new ArgumentException("The last name is required.", nameof(lastName));
-            }
-
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                throw new ArgumentException("The email is required.", nameof(email));
-            }
+            Check.NotEmpty(id, "The identifier is required", nameof(id));
+            Check.NotEmpty(firstName, "The first name is required", nameof(firstName));
+            Check.NotEmpty(lastName, "The last name is required", nameof(lastName));
+            Check.NotEmpty(email, "The email is required", nameof(email));
 
             Id = id;
             FirstName = firstName;

@@ -3,6 +3,7 @@ using Domain.Budgets.Events;
 using Domain.Core.Primitives;
 using Domain.Exceptions;
 using Domain.Expenses;
+using Domain.Infrastructure;
 
 namespace Domain.Budgets
 {
@@ -22,15 +23,8 @@ namespace Domain.Budgets
         public Budget(Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
             : this()
         {
-            if (amount == Money.Empty)
-            {
-                throw new EmptyMoneyException();
-            }
-
-            if (endsOnUtc < startsOnUtc)
-            {
-                throw new EndDatePrecedesStartDateException(startsOnUtc, endsOnUtc);
-            }
+            Check.NotEmpty(amount);
+            Check.StartDatePrecedesEndDate(startsOnUtc, endsOnUtc);
 
             Amount = amount;
             StartsOnUtc = startsOnUtc;
@@ -78,16 +72,17 @@ namespace Domain.Budgets
         public DateTime? ModifiedOnUtc { get; private set; }
 
         /// <summary>
-        /// Creates the budget for the current month using the specified parameters.
+        /// Creates the budget for the current month using with the specified money amount.
         /// </summary>
-        /// <param name="amount">The amount of amount for the budget.</param>
-        /// <param name="utcNow">The current date and time in UTC format.</param>
+        /// <param name="amount">The money amount for the budget.</param>
         /// <returns>The budget for the current month with the specified amount and currency.</returns>
-        public static Budget CreateForCurrentMonth(Money amount, DateTime utcNow)
+        public static Budget CreateForCurrentMonth(Money amount)
         {
-            var startsOn = new DateTime(utcNow.Year, utcNow.Month, 1);
+            DateTime utcNow = DateTime.UtcNow;
 
-            DateTime endsOn = startsOn.AddMonths(1).AddDays(-1);
+            var startsOn = new DateTime(utcNow.Year, utcNow.Month, 1, 0, 0, 0);
+
+            DateTime endsOn = startsOn.AddMonths(1).AddSeconds(-1);
 
             return new Budget(amount, startsOn, endsOn);
         }

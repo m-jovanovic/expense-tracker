@@ -7,7 +7,7 @@ namespace Domain.Expenses
     /// </summary>
     public sealed class Currency : Enumeration
     {
-        public static readonly Currency None = new Currency(default, string.Empty, string.Empty);
+        public static readonly Currency Empty = new Currency(default, string.Empty, string.Empty);
         public static readonly Currency Rsd = new Currency(1, "Serbian Dinar", "RSD");
         public static readonly Currency Eur = new Currency(2, "Euro", "€");
         public static readonly Currency Usd = new Currency(3, "Dollar", "$");

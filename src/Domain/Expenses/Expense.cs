@@ -2,6 +2,7 @@
 using Domain.Core.Primitives;
 using Domain.Exceptions;
 using Domain.Expenses.Events;
+using Domain.Infrastructure;
 
 namespace Domain.Expenses
 {
@@ -25,25 +26,10 @@ namespace Domain.Expenses
         /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         public Expense(Guid id, Guid userId, string name, Money money, DateTime date)
         {
-            if (id == Guid.Empty)
-            {
-                throw new ArgumentException("The identifier is required.", nameof(id));
-            }
-
-            if (userId == Guid.Empty)
-            {
-                throw new ArgumentException("The user identifier is required.", nameof(userId));
-            }
-
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("The expense name is required.", nameof(name));
-            }
-
-            if (Money == Money.Empty)
-            {
-                throw new EmptyMoneyException();
-            }
+            Check.NotEmpty(id, "The identifier is required", nameof(id));
+            Check.NotEmpty(userId, "The first name is required", nameof(userId));
+            Check.NotEmpty(name, "The expense name is required", nameof(name));
+            Check.NotEmpty(money);
 
             Id = id;
             UserId = userId;
