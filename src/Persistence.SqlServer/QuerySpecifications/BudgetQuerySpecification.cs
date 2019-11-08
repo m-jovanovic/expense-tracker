@@ -3,7 +3,7 @@ using Application.QuerySpecifications;
 using Domain.Budgets;
 using Domain.Expenses;
 
-namespace Persistence.QuerySpecifications
+namespace Persistence.SqlServer.QuerySpecifications
 {
     /// <summary>
     /// Represents the query specification for the <see cref="Budget"/> entity.

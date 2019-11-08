@@ -3,7 +3,7 @@ using Application.QuerySpecifications;
 using Domain.Core.Primitives;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Infrastructure
+namespace Persistence.SqlServer.Infrastructure
 {
     /// <summary>
     /// Represents an <see cref="IQuerySpecification{TEntity}"/> evaluator.

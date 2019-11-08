@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Infrastructure
+namespace Persistence.SqlServer.Infrastructure
 {
     /// <summary>
     /// Represents an interface for applying an entity type configuration.

@@ -2,9 +2,9 @@
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Persistence.Infrastructure;
+using Persistence.SqlServer.Infrastructure;
 
-namespace Persistence.Configuration
+namespace Persistence.SqlServer.Configuration
 {
     /// <summary>
     /// Represents the <see cref="Expense"/> entity configuration.

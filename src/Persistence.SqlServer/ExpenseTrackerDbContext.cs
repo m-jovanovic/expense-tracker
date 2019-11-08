@@ -11,9 +11,9 @@ using Domain.Core.Primitives;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Persistence.Infrastructure;
+using Persistence.SqlServer.Infrastructure;
 
-namespace Persistence
+namespace Persistence.SqlServer
 {
     /// <summary>
     /// Represents the application database context.

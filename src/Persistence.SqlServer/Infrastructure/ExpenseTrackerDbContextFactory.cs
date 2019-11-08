@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Persistence.Infrastructure
+namespace Persistence.SqlServer.Infrastructure
 {
     /// <summary>
     /// Represents the <see cref="ExpenseTrackerDbContext"/> design time factory implementation.

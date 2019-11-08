@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Persistence.Infrastructure
+namespace Persistence.SqlServer.Infrastructure
 {
     /// <summary>
     /// Represents an entity type configuration.

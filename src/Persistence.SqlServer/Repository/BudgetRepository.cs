@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using Application.Abstractions;
 using Domain.Budgets;
 using Domain.Expenses;
-using Persistence.QuerySpecifications;
+using Persistence.SqlServer.QuerySpecifications;
 
-namespace Persistence.Repository
+namespace Persistence.SqlServer.Repository
 {
     /// <summary>
     /// Represents the budget repository.

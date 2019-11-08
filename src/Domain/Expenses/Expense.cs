@@ -110,6 +110,11 @@ namespace Domain.Expenses
         /// <param name="date">The date to set for the expense.</param>
         public void ChangeDate(DateTime date)
         {
+            if (Date.Date == date.Date)
+            {
+                return;
+            }
+
             Date = date;
 
             AddDomainEvent(new ExpenseDateChangedEvent(Id, date));

@@ -5,13 +5,13 @@ using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Persistence.Repository;
+using Persistence.SqlServer.Repository;
 
-namespace Persistence
+namespace Persistence.SqlServer
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSqlServer(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ExpenseTrackerDbContext>(options =>
             {

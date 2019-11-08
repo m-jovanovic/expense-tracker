@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Application.Abstractions;
 using Domain.Users;
-using Persistence.QuerySpecifications;
+using Persistence.SqlServer.QuerySpecifications;
 
-namespace Persistence.Repository
+namespace Persistence.SqlServer.Repository
 {
     /// <summary>
     /// Represents the user repository.

@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\Persistence.RavenDb\Persistence.RavenDb.csproj" />
-    <ProjectReference Include="..\Persistence\Persistence.csproj" />
+    <ProjectReference Include="..\Persistence.SqlServer\Persistence.SqlServer.csproj" />
   </ItemGroup>
 
 </Project>

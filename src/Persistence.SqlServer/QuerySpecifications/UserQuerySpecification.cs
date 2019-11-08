@@ -1,7 +1,7 @@
 ﻿using Application.QuerySpecifications;
 using Domain.Users;
 
-namespace Persistence.QuerySpecifications
+namespace Persistence.SqlServer.QuerySpecifications
 {
     /// <summary>
     /// Represents the query specification for the <see cref="User"/> entity.

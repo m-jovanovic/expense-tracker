@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Application.Abstractions;
 using Domain.Expenses;
 
-namespace Persistence.Repository
+namespace Persistence.SqlServer.Repository
 {
     /// <summary>
     /// Represents the expense repository.
