@@ -52,11 +52,12 @@ namespace Application.Commands.Expenses.CreateExpense
 
             var money = new Money(request.Amount, currency);
 
-            var expense = new Expense(Guid.NewGuid(), user.Id, money, request.Date);
+            var expense = new Expense(Guid.NewGuid(), user.Id, request.Name, money, request.Date);
 
             _expenseRepository.Insert(expense);
 
-            await _mediator.Publish(new ExpenseCreatedEvent(expense.Id, expense.UserId, expense.Money, expense.Date), cancellationToken);
+            await _mediator.Publish(
+                new ExpenseCreatedEvent(expense.Id, expense.UserId, expense.Name, expense.Money, expense.Date), cancellationToken);
 
             return Result.Ok<EntityCreatedResponse>(expense.Id);
         }

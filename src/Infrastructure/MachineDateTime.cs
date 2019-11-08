@@ -6,7 +6,7 @@ namespace Infrastructure
     /// <summary>
     /// Represents the date time on the current machine.
     /// </summary>
-    internal class MachineDateTime : IDateTime
+    internal sealed class MachineDateTime : IDateTime
     {
         /// <inheritdoc />
         public DateTime UtcNow()

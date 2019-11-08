@@ -8,10 +8,14 @@ namespace Application.Documents.Documents
     /// </summary>
     public sealed class Expense : IMappable
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Expense"/> class.
+        /// </summary>
         public Expense()
         {
             Id = string.Empty;
             UserId = string.Empty;
+            Name = string.Empty;
             CurrencySymbol = string.Empty;
             Date = string.Empty;
         }
@@ -25,6 +29,11 @@ namespace Application.Documents.Documents
         /// Gets or sets the user identifier.
         /// </summary>
         public string UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name.
+        /// </summary>
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the amount.
@@ -49,10 +58,6 @@ namespace Application.Documents.Documents
         /// <inheritdoc />
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Expenses.Expense, Expense>()
-                .ForMember(d => d.Amount, o => o.MapFrom(s => s.Money.Amount))
-                .ForMember(d => d.CurrencySymbol, o => o.MapFrom(s => s.Money.Currency.Symbol))
-                .ForMember(d => d.FormattedExpense, o => o.Ignore());
         }
     }
 }

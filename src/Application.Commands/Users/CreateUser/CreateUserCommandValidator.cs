@@ -12,9 +12,9 @@ namespace Application.Commands.Users.CreateUser
         /// </summary>
         public CreateUserCommandValidator()
         {
-            RuleFor(c => c.FirstName).NotNull().NotEmpty().MaximumLength(100);
-            RuleFor(c => c.LastName).NotNull().NotEmpty().MaximumLength(100);
-            RuleFor(c => c.Email).NotNull().NotEmpty().MaximumLength(255);
+            RuleFor(c => c.FirstName).NotEmpty().MaximumLength(100);
+            RuleFor(c => c.LastName).NotEmpty().MaximumLength(100);
+            RuleFor(c => c.Email).NotEmpty().MaximumLength(255);
         }
     }
 }

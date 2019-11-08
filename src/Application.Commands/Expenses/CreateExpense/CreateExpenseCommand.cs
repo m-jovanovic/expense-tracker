@@ -12,10 +12,24 @@ namespace Application.Commands.Expenses.CreateExpense
     public sealed class CreateExpenseCommand : ICommand<Result<EntityCreatedResponse>>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="CreateExpenseCommand"/> class.
+        /// </summary>
+        public CreateExpenseCommand()
+        {
+            Name = string.Empty;
+        }
+
+        /// <summary>
         /// Gets the user identifier.
         /// </summary>
         [DataMember]
         public Guid UserId { get; private set; }
+
+        /// <summary>
+        /// Gets the expense name.
+        /// </summary>
+        [DataMember]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the expense amount.

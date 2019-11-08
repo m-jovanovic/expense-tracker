@@ -13,12 +13,14 @@ namespace Domain.Expenses.Events
         /// </summary>
         /// <param name="expenseId">The expense identifier.</param>
         /// <param name="userId">The user identifier.</param>
+        /// <param name="name">The expense name.</param>
         /// <param name="money">The expense money.</param>
         /// <param name="date">The expense date.</param>
-        public ExpenseCreatedEvent(Guid expenseId, Guid userId, Money money, DateTime date)
+        public ExpenseCreatedEvent(Guid expenseId, Guid userId, string name, Money money, DateTime date)
         {
             ExpenseId = expenseId;
             UserId = userId;
+            Name = name;
             Money = money;
             Date = date;
         }
@@ -29,9 +31,14 @@ namespace Domain.Expenses.Events
         public Guid ExpenseId { get; }
 
         /// <summary>
-        /// Gets the user identifier.
+        /// Gets the expense' user identifier.
         /// </summary>
         public Guid UserId { get; }
+
+        /// <summary>
+        /// Gets the expense name.
+        /// </summary>
+        public string Name { get; }
 
         /// <summary>
         /// Gets the expense money.

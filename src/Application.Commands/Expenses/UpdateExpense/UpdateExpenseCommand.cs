@@ -11,10 +11,24 @@ namespace Application.Commands.Expenses.UpdateExpense
     public sealed class UpdateExpenseCommand : ICommand<Result>
     {
         /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateExpenseCommand"/> class.
+        /// </summary>
+        public UpdateExpenseCommand()
+        {
+            Name = string.Empty;
+        }
+
+        /// <summary>
         /// Gets the expense identifier.
         /// </summary>
         [DataMember]
         public Guid ExpenseId { get; private set; }
+
+        /// <summary>
+        /// Gets the expense name.
+        /// </summary>
+        [DataMember]
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets the expense amount.

@@ -18,6 +18,8 @@ namespace Persistence.SqlServer.Configuration
 
             builder.HasKey(e => e.Id);
 
+            builder.Property(e => e.Name).HasMaxLength(100).IsRequired();
+
             builder.Property(e => e.Date).IsRequired();
 
             builder.Property(e => e.CreatedOnUtc).IsRequired();

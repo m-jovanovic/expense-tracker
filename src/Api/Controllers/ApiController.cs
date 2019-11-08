@@ -54,7 +54,8 @@ namespace Api.Controllers
         /// <returns>A 201 (Created) if the operation was successful, otherwise a 400 (Bad Request).</returns>
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        protected virtual async Task<IActionResult> ProcessCommandAndReturnCreatedAsync(ICommand<Result<EntityCreatedResponse>> request, string actionName)
+        protected virtual async Task<IActionResult> ProcessCommandAndReturnCreatedAsync(
+            ICommand<Result<EntityCreatedResponse>> request, string actionName)
         {
             Result<EntityCreatedResponse> result = await Mediator.Send(request);
 

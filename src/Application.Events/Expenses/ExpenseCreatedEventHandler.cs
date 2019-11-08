@@ -30,6 +30,7 @@ namespace Application.Events.Expenses
             {
                 Id = notification.ExpenseId.ToString(),
                 UserId = notification.UserId.ToString(),
+                Name = notification.Name,
                 Amount = notification.Money.Amount,
                 CurrencySymbol = notification.Money.Currency.Symbol
             };

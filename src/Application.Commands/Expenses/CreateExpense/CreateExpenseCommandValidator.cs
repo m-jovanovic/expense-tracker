@@ -13,6 +13,7 @@ namespace Application.Commands.Expenses.CreateExpense
         public CreateExpenseCommandValidator()
         {
             RuleFor(c => c.UserId).NotEmpty();
+            RuleFor(c => c.Name).NotEmpty().MaximumLength(100);
             RuleFor(c => c.CurrencyId).NotEmpty();
             RuleFor(c => c.Date).NotEmpty();
         }

@@ -33,6 +33,8 @@ namespace Application.Commands.Expenses.UpdateExpense
                 throw new EntityNotFoundException(nameof(Expense), request.ExpenseId);
             }
 
+            expense.ChangeName(request.Name);
+
             expense.ChangeAmount(request.Amount);
 
             expense.ChangeDate(request.Date);
