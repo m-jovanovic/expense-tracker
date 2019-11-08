@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Core.Events;
 
-namespace Domain.Events
+namespace Domain.Expenses.Events
 {
     /// <summary>
     /// Represents the event that fires after an expense is deleted.

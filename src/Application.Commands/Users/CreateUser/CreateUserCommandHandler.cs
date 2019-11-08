@@ -2,9 +2,9 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.Infrastructure;
-using Domain.Aggregates.Users;
 using Domain.Core.Primitives;
-using Domain.Events;
+using Domain.Users;
+using Domain.Users.Events;
 using MediatR;
 
 namespace Application.Commands.Users.CreateUser
@@ -60,7 +60,7 @@ namespace Application.Commands.Users.CreateUser
 
             _userRepository.Insert(user);
 
-            await _mediator.Publish(new UserCreatedEvent(user), cancellationToken);
+            await _mediator.Publish(new UserCreatedEvent(user.Id, user.FirstName, user.LastName, user.Email), cancellationToken);
 
             // TODO: Send confirmation email? Decide on this.
             return Result.Ok<EntityCreatedResponse>(user.Id);

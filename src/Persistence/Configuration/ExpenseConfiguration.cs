@@ -1,5 +1,5 @@
-﻿using Domain.Aggregates.Expenses;
-using Domain.Aggregates.Users;
+﻿using Domain.Expenses;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Persistence.Infrastructure;

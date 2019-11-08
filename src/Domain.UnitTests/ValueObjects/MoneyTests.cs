@@ -1,5 +1,5 @@
-﻿using Domain.Aggregates.Expenses;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Domain.Expenses;
 using Shouldly;
 using Xunit;
 

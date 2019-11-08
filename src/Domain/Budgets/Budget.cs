@@ -1,10 +1,10 @@
 ﻿using System;
-using Domain.Aggregates.Expenses;
+using Domain.Budgets.Events;
 using Domain.Core.Primitives;
-using Domain.Events;
 using Domain.Exceptions;
+using Domain.Expenses;
 
-namespace Domain.Aggregates.Budgets
+namespace Domain.Budgets
 {
     /// <summary>
     /// Represents the budget entity.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Abstractions;
-using Domain.Aggregates.Users;
+using Domain.Users;
 using Persistence.QuerySpecifications;
 
 namespace Persistence.Repository

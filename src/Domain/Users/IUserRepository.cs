@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Domain.Aggregates.Users
+namespace Domain.Users
 {
     /// <summary>
     /// Represents the user repository interface.

@@ -39,7 +39,7 @@ namespace Application.Documents.Documents
         /// <inheritdoc />
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Aggregates.Users.User, User>();
+            profile.CreateMap<Domain.Users.User, User>();
         }
     }
 }

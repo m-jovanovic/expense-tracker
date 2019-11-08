@@ -2,11 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Commands.Infrastructure;
-using Domain.Aggregates.Expenses;
-using Domain.Aggregates.Users;
 using Domain.Core.Exceptions;
 using Domain.Core.Primitives;
-using Domain.Events;
+using Domain.Expenses;
+using Domain.Expenses.Events;
+using Domain.Users;
 using MediatR;
 
 namespace Application.Commands.Expenses.CreateExpense
@@ -56,7 +56,7 @@ namespace Application.Commands.Expenses.CreateExpense
 
             _expenseRepository.Insert(expense);
 
-            await _mediator.Publish(new ExpenseCreatedEvent(expense), cancellationToken);
+            await _mediator.Publish(new ExpenseCreatedEvent(expense.Id, expense.UserId, expense.Money, expense.Date), cancellationToken);
 
             return Result.Ok<EntityCreatedResponse>(expense.Id);
         }

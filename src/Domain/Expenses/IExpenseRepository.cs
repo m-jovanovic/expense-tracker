@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Domain.Aggregates.Expenses
+namespace Domain.Expenses
 {
     /// <summary>
     /// Represents the expense repository interface.

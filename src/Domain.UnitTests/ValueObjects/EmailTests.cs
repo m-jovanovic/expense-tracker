@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Linq;
-using Domain.Aggregates.Users;
 using Domain.Core.Primitives;
+using Domain.Users;
 using Shouldly;
 using Xunit;
 

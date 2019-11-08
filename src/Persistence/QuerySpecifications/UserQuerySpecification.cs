@@ -1,5 +1,5 @@
 ﻿using Application.QuerySpecifications;
-using Domain.Aggregates.Users;
+using Domain.Users;
 
 namespace Persistence.QuerySpecifications
 {

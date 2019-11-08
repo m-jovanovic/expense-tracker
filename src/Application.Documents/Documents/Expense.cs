@@ -49,7 +49,7 @@ namespace Application.Documents.Documents
         /// <inheritdoc />
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Domain.Aggregates.Expenses.Expense, Expense>()
+            profile.CreateMap<Domain.Expenses.Expense, Expense>()
                 .ForMember(d => d.Amount, o => o.MapFrom(s => s.Money.Amount))
                 .ForMember(d => d.CurrencySymbol, o => o.MapFrom(s => s.Money.Currency.Symbol))
                 .ForMember(d => d.FormattedExpense, o => o.Ignore());

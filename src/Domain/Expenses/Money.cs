@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Domain.Core.Primitives;
 using Domain.Exceptions;
 
-namespace Domain.Aggregates.Expenses
+namespace Domain.Expenses
 {
     /// <summary>
     /// Represents money.

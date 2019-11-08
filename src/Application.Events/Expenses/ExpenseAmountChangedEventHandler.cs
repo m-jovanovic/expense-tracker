@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Domain.Aggregates.Budgets;
-using Domain.Aggregates.Expenses;
+using Domain.Budgets;
 using Domain.Core.Events;
 using Domain.Core.Exceptions;
-using Domain.Events;
+using Domain.Expenses;
+using Domain.Expenses.Events;
 
 namespace Application.Events.Expenses
 {

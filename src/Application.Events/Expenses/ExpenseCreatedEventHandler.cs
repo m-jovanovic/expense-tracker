@@ -1,9 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Application.Documents.Documents;
-using AutoMapper;
 using Domain.Core.Events;
-using Domain.Events;
+using Domain.Expenses.Events;
 using Raven.Client.Documents.Session;
 
 namespace Application.Events.Expenses
@@ -13,24 +12,27 @@ namespace Application.Events.Expenses
     /// </summary>
     public sealed class ExpenseCreatedEventHandler : IDomainEventHandler<ExpenseCreatedEvent>
     {
-        private readonly IMapper _mapper;
         private readonly IAsyncDocumentSession _session;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseCreatedEventHandler"/> class.
         /// </summary>
-        /// <param name="mapper">The mapper instance.</param>
         /// <param name="session">The async document session instance.</param>
-        public ExpenseCreatedEventHandler(IMapper mapper, IAsyncDocumentSession session)
+        public ExpenseCreatedEventHandler(IAsyncDocumentSession session)
         {
-            _mapper = mapper;
             _session = session;
         }
 
         /// <inheritdoc />
         public async Task Handle(ExpenseCreatedEvent notification, CancellationToken cancellationToken)
         {
-            var document = _mapper.Map<Expense>(notification.Expense);
+            var document = new Expense
+            {
+                Id = notification.ExpenseId.ToString(),
+                UserId = notification.UserId.ToString(),
+                Amount = notification.Money.Amount,
+                CurrencySymbol = notification.Money.Currency.Symbol
+            };
 
             await _session.StoreAsync(document, cancellationToken);
         }

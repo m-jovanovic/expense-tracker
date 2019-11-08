@@ -1,9 +1,9 @@
 ﻿using System;
 using Domain.Core.Primitives;
-using Domain.Events;
 using Domain.Exceptions;
+using Domain.Expenses.Events;
 
-namespace Domain.Aggregates.Expenses
+namespace Domain.Expenses
 {
     /// <summary>
     /// Represents the expense entity.
@@ -19,7 +19,7 @@ namespace Domain.Aggregates.Expenses
         /// <param name="userId">The user identifier.</param>
         /// <param name="money">The money of the expense.</param>
         /// <param name="date">The date of the expense.</param>
-        /// <exception cref="ArgumentException"> if the identifier or the user identifier is empty.</exception>
+        /// <exception cref="ArgumentException"> if the expense identifier or the user identifier is empty.</exception>
         /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         public Expense(Guid id, Guid userId, Money money, DateTime date)
         {
@@ -81,9 +81,9 @@ namespace Domain.Aggregates.Expenses
         public DateTime? DeletedOnUtc { get; private set; }
 
         /// <summary>
-        /// Changes the amount of the expense.
+        /// Changes the money of the expense.
         /// </summary>
-        /// <param name="amount">The amount.</param>
+        /// <param name="amount">The money.</param>
         /// <exception cref="NegativeAmountException"> if the specified amount is negative.</exception>
         public void ChangeAmount(decimal amount)
         {
@@ -102,6 +102,17 @@ namespace Domain.Aggregates.Expenses
             Money = Money.ChangeAmount(amount);
 
             AddDomainEvent(new ExpenseAmountChangedEvent(Id, new Money(amountDifference, Money.Currency)));
+        }
+
+        /// <summary>
+        /// Changes the date of the expense.
+        /// </summary>
+        /// <param name="date">The date to set for the expense.</param>
+        public void ChangeDate(DateTime date)
+        {
+            Date = date;
+
+            AddDomainEvent(new ExpenseDateChangedEvent(Id, date));
         }
     }
 }

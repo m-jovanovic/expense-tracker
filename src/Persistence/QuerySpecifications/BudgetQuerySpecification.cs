@@ -1,7 +1,7 @@
 ﻿using System;
 using Application.QuerySpecifications;
-using Domain.Aggregates.Budgets;
-using Domain.Aggregates.Expenses;
+using Domain.Budgets;
+using Domain.Expenses;
 
 namespace Persistence.QuerySpecifications
 {

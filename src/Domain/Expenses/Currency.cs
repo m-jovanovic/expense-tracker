@@ -1,6 +1,6 @@
 ﻿using Domain.Core.Primitives;
 
-namespace Domain.Aggregates.Expenses
+namespace Domain.Expenses
 {
     /// <summary>
     /// Represents a currency.

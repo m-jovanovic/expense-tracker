@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Core.Primitives;
 
-namespace Domain.Aggregates.Users
+namespace Domain.Users
 {
     /// <summary>
     /// Represents the user entity.

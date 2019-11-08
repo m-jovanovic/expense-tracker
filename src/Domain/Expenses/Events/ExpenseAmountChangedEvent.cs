@@ -1,8 +1,7 @@
 ﻿using System;
-using Domain.Aggregates.Expenses;
 using Domain.Core.Events;
 
-namespace Domain.Events
+namespace Domain.Expenses.Events
 {
     /// <summary>
     /// Represents an event that is raised when an expense amount is changed.

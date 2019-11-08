@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.Abstractions;
-using Domain.Aggregates.Budgets;
-using Domain.Aggregates.Expenses;
+using Domain.Budgets;
+using Domain.Expenses;
 using Persistence.QuerySpecifications;
 
 namespace Persistence.Repository

@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Domain.Core.Events;
-using Domain.Events;
+using Domain.Expenses.Events;
 using Raven.Client.Documents.Session;
 
 namespace Application.Events.Expenses
@@ -24,7 +24,7 @@ namespace Application.Events.Expenses
         }
 
         /// <inheritdoc />
-        public Task Handle(Domain.Events.ExpenseDeletedEvent notification, CancellationToken cancellationToken)
+        public Task Handle(ExpenseDeletedEvent notification, CancellationToken cancellationToken)
         {
             if (notification.ExpenseId == Guid.Empty)
             {

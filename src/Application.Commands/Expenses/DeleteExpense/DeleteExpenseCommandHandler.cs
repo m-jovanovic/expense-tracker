@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Domain.Aggregates.Expenses;
-using Domain.Aggregates.Users;
 using Domain.Core.Exceptions;
 using Domain.Core.Primitives;
-using Domain.Events;
+using Domain.Expenses;
+using Domain.Expenses.Events;
+using Domain.Users;
 using MediatR;
 
 namespace Application.Commands.Expenses.DeleteExpense

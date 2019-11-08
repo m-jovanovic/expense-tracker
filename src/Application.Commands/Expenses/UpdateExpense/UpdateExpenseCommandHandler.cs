@@ -1,9 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Domain.Aggregates.Expenses;
 using Domain.Core.Exceptions;
 using Domain.Core.Primitives;
-using Domain.Events;
+using Domain.Expenses;
 using MediatR;
 
 namespace Application.Commands.Expenses.UpdateExpense
@@ -14,17 +13,14 @@ namespace Application.Commands.Expenses.UpdateExpense
     public sealed class UpdateExpenseCommandHandler : IRequestHandler<UpdateExpenseCommand, Result>
     {
         private readonly IExpenseRepository _expenseRepository;
-        private readonly IMediator _mediator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateExpenseCommandHandler"/> class.
         /// </summary>
         /// <param name="expenseRepository">The expense repository instance.</param>
-        /// <param name="mediator">The mediator instance.</param>
-        public UpdateExpenseCommandHandler(IExpenseRepository expenseRepository, IMediator mediator)
+        public UpdateExpenseCommandHandler(IExpenseRepository expenseRepository)
         {
             _expenseRepository = expenseRepository;
-            _mediator = mediator;
         }
 
         /// <inheritdoc />
@@ -39,7 +35,7 @@ namespace Application.Commands.Expenses.UpdateExpense
 
             expense.ChangeAmount(request.Amount);
 
-            await _mediator.Publish(new ExpenseUpdatedEvent(expense), cancellationToken);
+            expense.ChangeDate(request.Date);
 
             return Result.Ok();
         }

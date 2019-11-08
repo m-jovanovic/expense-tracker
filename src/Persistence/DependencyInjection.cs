@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions;
-using Domain.Aggregates.Budgets;
-using Domain.Aggregates.Expenses;
-using Domain.Aggregates.Users;
+using Domain.Budgets;
+using Domain.Expenses;
+using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using Domain.Core.Extensions;
 using Domain.Core.Primitives;
 
-namespace Domain.Aggregates.Users
+namespace Domain.Users
 {
     /// <summary>
     /// Represents an email.

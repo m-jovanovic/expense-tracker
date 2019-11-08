@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Core.Events;
 
-namespace Domain.Events
+namespace Domain.Budgets.Events
 {
     /// <summary>
     /// Represents the event that is raised when an amount is deposited to the budget.

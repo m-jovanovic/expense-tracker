@@ -5,8 +5,8 @@
     "indentation": {
       "useTabs": true
     },
-	"orderingRules": {
-		"usingDirectivesPlacement": "outsideNamespace"
-	}
+	  "orderingRules": {
+		  "usingDirectivesPlacement": "outsideNamespace"
+	  }
   }
 }

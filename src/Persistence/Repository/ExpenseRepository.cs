@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Abstractions;
-using Domain.Aggregates.Expenses;
+using Domain.Expenses;
 
 namespace Persistence.Repository
 {
