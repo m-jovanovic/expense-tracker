@@ -22,6 +22,9 @@ namespace Persistence.SqlServer.Repository
         public BudgetRepository(IDbContext dbContext) => _dbContext = dbContext;
 
         /// <inheritdoc />
+        public void Insert(Budget budget) => _dbContext.Insert(budget);
+
+        /// <inheritdoc />
         public async Task<IEnumerable<Budget>> GetByDateAndCurrencyAsync(DateTime dateTime, Currency currency)
         {
             if (currency.Equals(Currency.Empty))

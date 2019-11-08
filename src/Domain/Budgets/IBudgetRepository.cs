@@ -11,6 +11,12 @@ namespace Domain.Budgets
     public interface IBudgetRepository
     {
         /// <summary>
+        /// Inserts the specified budget to the database.
+        /// </summary>
+        /// <param name="budget">The budget to insert.</param>
+        void Insert(Budget budget);
+
+        /// <summary>
         /// Gets the budgets that fall within the specified date and time and have the specified currency.
         /// </summary>
         /// <param name="dateTime">The date and time that is within the budget.</param>

@@ -15,17 +15,23 @@ namespace Domain.Budgets
         /// <summary>
         /// Initializes a new instance of the <see cref="Budget"/> class.
         /// </summary>
+        /// <param name="id">The budget identifier.</param>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="amount">The amount of amount for the budget.</param>
         /// <param name="startsOnUtc">The date and time the budget starts on in UTC format.</param>
         /// <param name="endsOnUtc">The date and time the budget ends on in UTC format.</param>
+        /// <exception cref="ArgumentException"> if the budget identifier or the user identifier is empty.</exception>
         /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         /// <exception cref="EndDatePrecedesStartDateException"> if end date precedes start date.</exception>
-        public Budget(Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
+        public Budget(Guid id, Guid userId, Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
             : this()
         {
+            Check.NotEmpty(id, "The identifier is required", nameof(id));
+            Check.NotEmpty(userId, "The user identifier is required", nameof(userId));
             Check.NotEmpty(amount);
             Check.StartDatePrecedesEndDate(startsOnUtc, endsOnUtc);
 
+            Id = id;
             Amount = amount;
             StartsOnUtc = startsOnUtc;
             EndsOnUtc = endsOnUtc;
@@ -39,6 +45,11 @@ namespace Domain.Budgets
             Amount = Money.Empty;
             Spent = Money.Empty;
         }
+
+        /// <summary>
+        /// Gets the user identifier.
+        /// </summary>
+        public Guid UserId { get; private set; }
 
         /// <summary>
         /// Gets the amount of amount for the budget.
@@ -74,9 +85,10 @@ namespace Domain.Budgets
         /// <summary>
         /// Creates the budget for the current month using with the specified money amount.
         /// </summary>
+        /// <param name="userId">The user identifier.</param>
         /// <param name="amount">The money amount for the budget.</param>
         /// <returns>The budget for the current month with the specified amount and currency.</returns>
-        public static Budget CreateForCurrentMonth(Money amount)
+        public static Budget CreateForCurrentMonth(Guid userId, Money amount)
         {
             DateTime utcNow = DateTime.UtcNow;
 
@@ -84,7 +96,7 @@ namespace Domain.Budgets
 
             DateTime endsOn = startsOn.AddMonths(1).AddSeconds(-1);
 
-            return new Budget(amount, startsOn, endsOn);
+            return new Budget(Guid.NewGuid(), userId, amount, startsOn, endsOn);
         }
 
         /// <summary>
