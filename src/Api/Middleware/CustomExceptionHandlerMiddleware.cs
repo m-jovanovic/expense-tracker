@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Core.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 namespace Api.Middleware
 {
@@ -49,7 +49,7 @@ namespace Api.Middleware
 
                     context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
-                    result = JsonConvert.SerializeObject(validationException.Failures);
+                    result = JsonSerializer.Serialize(validationException.Failures);
 
                     break;
                 case EntityNotFoundException _:
@@ -64,7 +64,7 @@ namespace Api.Middleware
 
             if (result.Length == 0)
             {
-                result = JsonConvert.SerializeObject(new
+                result = JsonSerializer.Serialize(new
                 {
                     error = exception.Message
                 });

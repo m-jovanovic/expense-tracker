@@ -37,7 +37,10 @@ namespace Api
             services.AddApplication();
 
             services.AddControllers()
-                .AddNewtonsoftJson()
+                .AddJsonOptions(config =>
+                {
+                    config.JsonSerializerOptions.WriteIndented = true;
+                })
                 .AddFluentValidation(config =>
                 {
                     config.RegisterValidatorsFromAssemblyContaining<IDbContext>();
