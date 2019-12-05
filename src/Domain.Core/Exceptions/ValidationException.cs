@@ -26,19 +26,9 @@ namespace Domain.Core.Exceptions
         public ValidationException(IReadOnlyCollection<ValidationFailure> failures)
             : this()
         {
-            IEnumerable<string> propertyNames = failures
-                .Select(e => e.PropertyName)
-                .Distinct();
-
-            foreach (string propertyName in propertyNames)
-            {
-                string[] propertyFailures = failures
-                    .Where(e => e.PropertyName == propertyName)
-                    .Select(e => e.ErrorMessage)
-                    .ToArray();
-
-                Failures.Add(propertyName, propertyFailures);
-            }
+            Failures = failures
+                .GroupBy(f => f.PropertyName)
+                .ToDictionary(g => g.Key, g => g.Select(f => f.ErrorMessage).ToArray());
         }
 
         /// <summary>
