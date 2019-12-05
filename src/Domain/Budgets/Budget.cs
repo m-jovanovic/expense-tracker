@@ -26,10 +26,10 @@ namespace Domain.Budgets
         public Budget(Guid id, Guid userId, Money amount, DateTime startsOnUtc, DateTime endsOnUtc)
             : this()
         {
-            Check.NotEmpty(id, "The identifier is required", nameof(id));
-            Check.NotEmpty(userId, "The user identifier is required", nameof(userId));
-            Check.NotEmpty(amount);
-            Check.StartDatePrecedesEndDate(startsOnUtc, endsOnUtc);
+            Ensure.NotEmpty(id, "The identifier is required", nameof(id));
+            Ensure.NotEmpty(userId, "The user identifier is required", nameof(userId));
+            Ensure.NotEmpty(amount);
+            Ensure.StartDatePrecedesEndDate(startsOnUtc, endsOnUtc);
 
             Id = id;
             Amount = amount;

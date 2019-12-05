@@ -25,8 +25,8 @@ namespace Domain.Expenses
         /// <exception cref="ArgumentException"> if the specified currency does not exist.</exception>
         public Money(decimal amount, Currency currency)
         {
-            Check.AmountGreaterThanZero(amount);
-            Check.NotEmpty(currency, "The currency is required", nameof(currency));
+            Ensure.AmountGreaterThanZero(amount);
+            Ensure.NotEmpty(currency, "The currency is required", nameof(currency));
 
             Amount = amount;
             Currency = currency;

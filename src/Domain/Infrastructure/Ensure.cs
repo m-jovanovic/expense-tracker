@@ -7,7 +7,7 @@ namespace Domain.Infrastructure
     /// <summary>
     /// Contains assertions for the most common application checks.
     /// </summary>
-    public static class Check
+    public static class Ensure
     {
         /// <summary>
         /// Checks that the specified <see cref="Guid"/> amount is not empty.

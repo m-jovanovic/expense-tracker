@@ -26,10 +26,10 @@ namespace Domain.Expenses
         /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         public Expense(Guid id, Guid userId, string name, Money money, DateTime date)
         {
-            Check.NotEmpty(id, "The identifier is required", nameof(id));
-            Check.NotEmpty(userId, "The first name is required", nameof(userId));
-            Check.NotEmpty(name, "The expense name is required", nameof(name));
-            Check.NotEmpty(money);
+            Ensure.NotEmpty(id, "The identifier is required", nameof(id));
+            Ensure.NotEmpty(userId, "The first name is required", nameof(userId));
+            Ensure.NotEmpty(name, "The expense name is required", nameof(name));
+            Ensure.NotEmpty(money);
 
             Id = id;
             UserId = userId;
