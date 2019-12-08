@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using Domain.Core.Primitives;
 using Domain.Exceptions;
 using Domain.Expenses.Events;
@@ -25,17 +26,14 @@ namespace Domain.Expenses
         /// the expense name are empty.</exception>
         /// <exception cref="EmptyMoneyException"> is the specified money instance is empty.</exception>
         public Expense(Guid id, Guid userId, string name, Money money, DateTime date)
+            : this()
         {
             Ensure.NotEmpty(id, "The identifier is required", nameof(id));
             Ensure.NotEmpty(userId, "The first name is required", nameof(userId));
             Ensure.NotEmpty(name, "The expense name is required", nameof(name));
             Ensure.NotEmpty(money);
 
-            Id = id;
-            UserId = userId;
-            Name = name;
-            Money = money;
-            Date = date;
+            RaiseDomainEvent(new ExpenseCreatedEvent(id, userId, name, money, date));
         }
 
         /// <summary>
@@ -99,9 +97,7 @@ namespace Domain.Expenses
                 return;
             }
 
-            Name = name;
-
-            AddDomainEvent(new ExpenseNameChangedEvent(Id, Name));
+            RaiseDomainEvent(new ExpenseNameChangedEvent(Id, Name));
         }
 
         /// <summary>
@@ -121,11 +117,7 @@ namespace Domain.Expenses
                 return;
             }
 
-            decimal amountDifference = Money.Amount - amount;
-
-            Money = Money.ChangeAmount(amount);
-
-            AddDomainEvent(new ExpenseAmountChangedEvent(Id, new Money(amountDifference, Money.Currency)));
+            RaiseDomainEvent(new ExpenseAmountChangedEvent(Id, new Money(amount, Money.Currency)));
         }
 
         /// <summary>
@@ -139,9 +131,31 @@ namespace Domain.Expenses
                 return;
             }
 
-            Date = date;
+            RaiseDomainEvent(new ExpenseDateChangedEvent(Id, Date));
+        }
 
-            AddDomainEvent(new ExpenseDateChangedEvent(Id, Date));
+        private void ApplyDomainEvent(ExpenseCreatedEvent @event)
+        {
+            Id = @event.ExpenseId;
+            UserId = @event.UserId;
+            Name = @event.Name;
+            Money = @event.Money;
+            Date = @event.Date;
+        }
+
+        private void ApplyDomainEvent(ExpenseAmountChangedEvent @event)
+        {
+            Money = Money.ChangeAmount(@event.AmountDifference.Amount);
+        }
+
+        private void ApplyDomainEvent(ExpenseDateChangedEvent @event)
+        {
+            Date = @event.Date;
+        }
+
+        private void ApplyDomainEvent(ExpenseNameChangedEvent @event)
+        {
+            Name = @event.Name;
         }
     }
 }

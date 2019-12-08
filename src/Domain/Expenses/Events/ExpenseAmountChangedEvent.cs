@@ -6,7 +6,7 @@ namespace Domain.Expenses.Events
     /// <summary>
     /// Represents an event that is raised when an expense amount is changed.
     /// </summary>
-    public sealed class ExpenseAmountChangedEvent : BaseDomainEvent
+    public sealed class ExpenseAmountChangedEvent : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseAmountChangedEvent"/> class.

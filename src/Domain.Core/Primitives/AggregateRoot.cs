@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using Domain.Core.Events;
 
 namespace Domain.Core.Primitives
@@ -6,30 +7,58 @@ namespace Domain.Core.Primitives
     /// <summary>
     /// Represents the base class that all aggregate roots derive from.
     /// </summary>
-    public abstract class AggregateRoot : Entity
+    public abstract class AggregateRoot : Entity, IAggregateRoot
     {
-        private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
+        private readonly List<IDomainEvent> _appliedDomainEvents = new List<IDomainEvent>();
 
-        /// <summary>
-        /// Gets the domain events. This collection is readonly.
-        /// </summary>
-        public virtual IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+        /// <inheritdoc />
+        public int Version { get; private set; } = 1;
 
-        /// <summary>
-        /// Clears all the domain events from the <see cref="AggregateRoot"/>.
-        /// </summary>
-        public virtual void ClearDomainEvents()
+        /// <inheritdoc />
+        public virtual string Identifier => $"{GetType().Name.ToLower(CultureInfo.InvariantCulture)}-{Id}";
+
+        /// <inheritdoc />
+        public IReadOnlyList<IDomainEvent> AppliedDomainEvents => _appliedDomainEvents.AsReadOnly();
+
+        /// <inheritdoc />
+        public void ClearAppliedDomainEvents()
         {
-            _domainEvents.Clear();
+            _appliedDomainEvents.Clear();
+        }
+
+        /// <inheritdoc />
+        public void ApplyDomainEvent(IDomainEvent domainEvent)
+        {
+            ApplyDomainEvent(domainEvent, false);
         }
 
         /// <summary>
-        /// Adds the specified <see cref="IDomainEvent"/> to the <see cref="AggregateRoot"/>.
+        /// Raises the specified <see cref="IDomainEvent"/> instance within the aggregate root.
         /// </summary>
-        /// <param name="domainEvent">The domain event.</param>
-        protected virtual void AddDomainEvent(IDomainEvent domainEvent)
+        /// <param name="domainEvent">The domain event to raise.</param>
+        protected void RaiseDomainEvent(IDomainEvent domainEvent)
         {
-            _domainEvents.Add(domainEvent);
+            ApplyDomainEvent(domainEvent, true);
+        }
+
+        /// <summary>
+        /// Applies the specified <see cref="IDomainEvent"/> instance and adds it
+        /// to the list of applied events if <paramref name="isNewDomainEvent"/> is true.
+        /// </summary>
+        /// <param name="domainEvent">The domain event to apply.</param>
+        /// <param name="isNewDomainEvent">The flag specifying whether or not the domain event is new.</param>
+        private void ApplyDomainEvent(IDomainEvent domainEvent, bool isNewDomainEvent)
+        {
+            ((dynamic)this).ApplyDomainEvent((dynamic)domainEvent);
+
+            Version++;
+
+            if (!isNewDomainEvent)
+            {
+                return;
+            }
+
+            _appliedDomainEvents.Add(domainEvent);
         }
     }
 }

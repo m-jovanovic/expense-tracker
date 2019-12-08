@@ -243,14 +243,14 @@ namespace Persistence.SqlServer
         {
             List<EntityEntry<AggregateRoot>> aggregateRoots = ChangeTracker
                 .Entries<AggregateRoot>()
-                .Where(x => x.Entity.DomainEvents != null && x.Entity.DomainEvents.Any())
+                .Where(x => x.Entity.AppliedDomainEvents != null && x.Entity.AppliedDomainEvents.Any())
                 .ToList();
 
             List<IDomainEvent> domainEvents = aggregateRoots
-                .SelectMany(entityEntry => entityEntry.Entity.DomainEvents)
+                .SelectMany(entityEntry => entityEntry.Entity.AppliedDomainEvents)
                 .ToList();
 
-            aggregateRoots.ForEach(entityEntry => entityEntry.Entity.ClearDomainEvents());
+            aggregateRoots.ForEach(entityEntry => entityEntry.Entity.ClearAppliedDomainEvents());
 
             IEnumerable<Task> tasks = domainEvents
                 .Select(async domainEvent => await _mediator.Publish(domainEvent, cancellationToken));

@@ -107,7 +107,7 @@ namespace Domain.Budgets
         {
             Spent += amount;
 
-            AddDomainEvent(new BudgetAmountWithdrawn(Id));
+            ApplyDomainEvent(new BudgetAmountWithdrawn(Id));
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Domain.Budgets
         {
             Spent -= amount;
 
-            AddDomainEvent(new BudgetAmountDeposited(Id));
+            ApplyDomainEvent(new BudgetAmountDeposited(Id));
         }
     }
 }

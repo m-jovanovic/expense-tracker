@@ -6,7 +6,7 @@ namespace Domain.Users.Events
     /// <summary>
     /// Represents the event that fires when a user is created.
     /// </summary>
-    public sealed class UserCreatedEvent : BaseDomainEvent
+    public sealed class UserCreatedEvent : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UserCreatedEvent"/> class.

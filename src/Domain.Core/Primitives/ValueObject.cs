@@ -52,7 +52,6 @@ namespace Domain.Core.Primitives
         {
             HashCode hashCode = default;
 
-            // Since a value object may contain more than 8 properties we can't use HashCode.Combine.
             foreach (object obj in GetAtomicValues())
             {
                 hashCode.Add(obj);

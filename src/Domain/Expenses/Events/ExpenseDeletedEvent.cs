@@ -6,7 +6,7 @@ namespace Domain.Expenses.Events
     /// <summary>
     /// Represents the event that fires after an expense is deleted.
     /// </summary>
-    public sealed class ExpenseDeletedEvent : BaseDomainEvent
+    public sealed class ExpenseDeletedEvent : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExpenseDeletedEvent"/> class.

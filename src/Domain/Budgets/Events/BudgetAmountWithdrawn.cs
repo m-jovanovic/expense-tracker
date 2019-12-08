@@ -6,7 +6,7 @@ namespace Domain.Budgets.Events
     /// <summary>
     /// Represents the event that is raised when an amount is withdrawn from the budget.
     /// </summary>
-    public sealed class BudgetAmountWithdrawn : BaseDomainEvent
+    public sealed class BudgetAmountWithdrawn : DomainEvent
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BudgetAmountWithdrawn"/> class.

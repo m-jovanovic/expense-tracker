@@ -8,7 +8,7 @@ namespace Domain.Core.Primitives
     public interface ISoftDeletableEntity
     {
         /// <summary>
-        /// Gets the flag indicating if the entity was deleted.
+        /// Gets a value indicating whether the entity is deleted.
         /// </summary>
         bool IsDeleted { get; }
 
