@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
@@ -8,7 +7,7 @@ namespace Domain.Core.Exceptions
     /// <summary>
     /// Represents an exception that occurs when a validation fails.
     /// </summary>
-    public sealed class ValidationException : Exception
+    public sealed class ValidationException : DomainException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ValidationException"/> class.
@@ -23,7 +22,7 @@ namespace Domain.Core.Exceptions
         /// Initializes a new instance of the <see cref="ValidationException"/> class.
         /// </summary>
         /// <param name="failures">The collection of validation failures.</param>
-        public ValidationException(IReadOnlyCollection<ValidationFailure> failures)
+        public ValidationException(IEnumerable<ValidationFailure> failures)
             : this()
         {
             Failures = failures

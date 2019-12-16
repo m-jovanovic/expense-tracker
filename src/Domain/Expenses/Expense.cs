@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using Domain.Core.Primitives;
 using Domain.Exceptions;
 using Domain.Expenses.Events;

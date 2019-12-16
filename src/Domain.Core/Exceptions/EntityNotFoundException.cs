@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace Domain.Core.Exceptions
+﻿namespace Domain.Core.Exceptions
 {
     /// <summary>
     /// Represents an exception that occurs when an entity is not found.
     /// </summary>
-    public sealed class EntityNotFoundException : Exception
+    public sealed class EntityNotFoundException : DomainException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EntityNotFoundException"/> class.

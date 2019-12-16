@@ -15,7 +15,7 @@ namespace Domain.Core.Primitives
         public int Version { get; private set; } = 1;
 
         /// <inheritdoc />
-        public virtual string Identifier => $"{GetType().Name.ToLower(CultureInfo.InvariantCulture)}-{Id}";
+        public virtual string Identifier => $"{GetType().Name.ToLower(CultureInfo.InvariantCulture)}";
 
         /// <inheritdoc />
         public IReadOnlyList<IDomainEvent> AppliedDomainEvents => _appliedDomainEvents.AsReadOnly();
