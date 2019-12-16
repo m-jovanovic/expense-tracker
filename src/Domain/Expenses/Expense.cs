@@ -27,9 +27,9 @@ namespace Domain.Expenses
         public Expense(Guid id, Guid userId, string name, Money money, DateTime date)
             : this()
         {
-            Ensure.NotEmpty(id, "The identifier is required", nameof(id));
-            Ensure.NotEmpty(userId, "The first name is required", nameof(userId));
-            Ensure.NotEmpty(name, "The expense name is required", nameof(name));
+            Ensure.NotEmpty(id, "The identifier is required.", nameof(id));
+            Ensure.NotEmpty(userId, "The first name is required.", nameof(userId));
+            Ensure.NotEmpty(name, "The expense name is required.", nameof(name));
             Ensure.NotEmpty(money);
 
             RaiseDomainEvent(new ExpenseCreatedEvent(id, userId, name, money, date));
@@ -86,10 +86,7 @@ namespace Domain.Expenses
         /// <param name="name">The new name of the expense.</param>
         public void ChangeName(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("The expense name is required.", nameof(name));
-            }
+            Ensure.NotEmpty(name, "The expense name is required.", nameof(name));
 
             if (string.Equals(Name, name, StringComparison.InvariantCulture))
             {
@@ -106,10 +103,7 @@ namespace Domain.Expenses
         /// <exception cref="NegativeAmountException"> if the specified amount is negative.</exception>
         public void ChangeAmount(decimal amount)
         {
-            if (amount < decimal.Zero)
-            {
-                throw new NegativeAmountException(amount);
-            }
+            Ensure.AmountGreaterThanZero(amount);
 
             if (amount == Money.Amount)
             {

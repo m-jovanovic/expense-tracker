@@ -10,12 +10,12 @@ namespace Domain.Infrastructure
     public static class Ensure
     {
         /// <summary>
-        /// Checks that the specified <see cref="Guid"/> amount is not empty.
+        /// Ensures that the specified <see cref="Guid"/> value is not empty.
         /// </summary>
         /// <param name="value">The amount to check.</param>
         /// <param name="message">The message to show if the check fails.</param>
         /// <param name="argumentName">The name of the argument being checked.</param>
-        /// <exception cref="ArgumentException"> if the specified amount is empty.</exception>
+        /// <exception cref="ArgumentException"> if the specified value is empty.</exception>
         public static void NotEmpty(Guid value, string message, string argumentName)
         {
             if (value == Guid.Empty)
@@ -25,22 +25,22 @@ namespace Domain.Infrastructure
         }
 
         /// <summary>
-        /// Checks that the specified <see cref="string"/> amount is not empty.
+        /// Ensures that the specified <see cref="string"/> value is not empty.
         /// </summary>
-        /// <param name="value">The amount to check.</param>
+        /// <param name="value">The string to check.</param>
         /// <param name="message">The message to show if the check fails.</param>
         /// <param name="argumentName">The name of the argument being checked.</param>
-        /// <exception cref="ArgumentException"> if the specified amount is empty.</exception>
+        /// <exception cref="ArgumentException"> if the specified value is empty.</exception>
         public static void NotEmpty(string value, string message, string argumentName)
         {
-            if (string.IsNullOrWhiteSpace(value))
+            if (value.Trim().Length == 0)
             {
                 throw new ArgumentException(message, argumentName);
             }
         }
 
         /// <summary>
-        /// Checks that the specified <see cref="Currency"/> amount is not empty.
+        /// Ensures that the specified <see cref="Currency"/> instance is not empty.
         /// </summary>
         /// <param name="currency">The currency to check.</param>
         /// <param name="message">The message to show if the check fails.</param>
@@ -55,7 +55,7 @@ namespace Domain.Infrastructure
         }
 
         /// <summary>
-        /// Checks that the specified <see cref="Money"/> amount is not empty.
+        /// Ensures that the specified <see cref="Money"/> instance is not empty.
         /// </summary>
         /// <param name="money">The money to check.</param>
         /// <exception cref="EmptyMoneyException"> if the specified money is empty.</exception>
@@ -68,7 +68,7 @@ namespace Domain.Infrastructure
         }
 
         /// <summary>
-        /// Checks that the specified <see cref="decimal"/> amount is greater than zero.
+        /// Ensures that the specified <see cref="decimal"/> value is greater than zero.
         /// </summary>
         /// <param name="amount">The amount to check.</param>
         /// <exception cref="NegativeAmountException"> if the specified amount is less than zero.</exception>
@@ -81,7 +81,7 @@ namespace Domain.Infrastructure
         }
 
         /// <summary>
-        /// Checks that the specified start date precedes the specified end date.
+        /// Ensures that the specified start date precedes the specified end date.
         /// </summary>
         /// <param name="startDate">The start date to check.</param>
         /// <param name="endDate">The end date to check.</param>
